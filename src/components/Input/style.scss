@@ -1,0 +1,65 @@
+.wrapper-input {
+  --bg-focus: trans;
+  position: relative;
+  input {
+    width: 100%;
+    position: relative;
+  }
+  .label {
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    position: absolute;
+    transition: 0.2s;
+  }
+  & > input:not(:placeholder-shown) ~ .label {
+    top: -1rem;
+    left: 0rem;
+  }
+  & > input:focus ~ .label {
+    top: -1rem;
+    left: 0rem;
+  }
+
+  & > input:focus ~ .line-input {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 1px;
+    display: block;
+    background: linear-gradient(
+      90deg,
+      rgb(93, 85, 248) 0%,
+      rgb(84, 84, 220) 0%,
+      rgba(239, 0, 255, 0.6252626050420168) 30%
+    );
+    z-index: 2;
+    transition: 0.2s;
+    animation: showLine 0.2s linear forwards;
+  }
+  .icon-lock {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    z-index: 2;
+  }
+
+  @keyframes showLine {
+    from {
+      opacity: 0;
+      width: 0;
+      left: 50%;
+      right: 50%;
+    }
+    to {
+      opacity: 1;
+      width: 100%;
+      left: 0%;
+      right: 0%;
+    }
+  }
+}

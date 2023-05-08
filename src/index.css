@@ -1,0 +1,357 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100;200;300;500;700;800;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --dark-text: #fff;
+  --dark-primary: #1e1e1e;
+  --dark-second: #0085ff;
+  --dark-third: #e0ffff;
+  --dark-blur: rgba(255, 255, 255, 0.2);
+  --bg-dark-hover: rgba(255, 255, 255, 0.5);
+
+  --light-text: #000;
+  --light-primary: #fff;
+  --light-second: #0085ff;
+  --light-third: #e0ffff;
+  --light-blur: rgba(0, 0, 0, 0.2);
+  --bg-light-hover: rgba(0, 0, 0, 0.5);
+
+  --linear: linear-gradient(
+    90deg,
+    rgba(40, 28, 237, 0.8) 0%,
+    rgba(239, 0, 255, 0.8) 78%
+  );
+}
+
+/* Các lớp CSS khác */
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.mode-dark .text-primary {
+  color: var(--dark-text);
+}
+
+.mode-dark .bg-primary {
+  background-color: var(--dark-primary);
+}
+.mode-dark .bg-second {
+  background-color: var(--dark-second);
+}
+.mode-dark .bg-third {
+  background-color: var(--dark-third);
+}
+.mode-dark .bg-blur {
+  background-color: var(--dark-blur);
+  backdrop-filter: blur(10px);
+}
+.mode-dark .hover-bg:hover {
+  background-color: var(--bg-dark-hover) !important;
+}
+
+/* Light mode */
+.mode-light .text-primary {
+  color: var(--light-text);
+}
+
+.mode-light .bg-primary {
+  background-color: var(--light-primary);
+}
+.mode-light .bg-second {
+  background-color: var(--light-second);
+}
+.mode-light .bg-third {
+  background-color: var(--light-third);
+}
+.mode-light .bg-blur {
+  background-color: var(--light-blur);
+  backdrop-filter: blur(10px);
+}
+.mode-light .hover-bg:hover {
+  background-color: var(--bg-light-hover) !important;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.start {
+  display: fleẋ;
+  justify-content: flex-start;
+  align-items: center;
+}
+.end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.column-center {
+  display: flex;
+  justify-content: flex-center;
+  align-items: center;
+  flex-direction: column;
+}
+.column-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.column-end {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-center;
+  flex-direction: column;
+}
+
+.reset {
+  outline: none;
+  border: none;
+}
+.reset:focus {
+  outline: none;
+  border: none;
+}
+
+.bubble:before,
+.bubble:after {
+  content: "";
+  width: 30vw;
+  height: 30vw;
+  filter: blur(2rem);
+  position: absolute;
+  border-radius: 30% 70% 64% 36% / 30% 35% 65% 70%;
+  background: linear-gradient(
+    90deg,
+    rgba(40, 28, 237, 0.1) 0%,
+    rgba(239, 0, 255, 0.1) 78%
+  );
+  animation: morph 15s linear infinite alternate, spin 20s linear infinite;
+  z-index: -1;
+  will-change: border-radius, transform;
+  pointer-events: none;
+  top: -50%;
+  left: 10%;
+}
+
+@keyframes morph {
+  0% {
+    border-radius: 40% 60% 60% 40%/70% 30% !important;
+  }
+
+  to {
+    border-radius: 40% 60% !important;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.show-icon-left .icon {
+  font-size: 2rem;
+  opacity: 0;
+  transition: 0.4s;
+  display: none;
+}
+.show-icon-left:hover ~ .icon,
+.show-icon-left:hover + .icon,
+.show-icon-left:hover .icon {
+  transform: translateY(0);
+  opacity: 1;
+  display: block;
+  transition: 0.4s;
+}
+
+.show-icon-left {
+  overflow: hidden;
+  width: max-content;
+}
+.show-icon {
+  position: relative;
+  overflow: hidden;
+}
+.show-icon:hover ~ .icon,
+.show-icon:hover + .icon,
+.show-icon:hover .icon {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.show-icon.icon {
+  font-size: 2rem;
+  transform: translateY(-20rem);
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  transition: 0.4s;
+  position: absolute;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 30px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 30px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 2px #757575;
+  background: #ccc;
+  border-radius: 30px;
+}
+
+.hidden-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-button-change::-webkit-outer-spin-button,
+.hide-button-change::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.phone {
+  animation: phone-vibrate 1s infinite;
+}
+@keyframes phone-vibrate {
+  0% {
+    -webkit-transform: rotate(0) scale(0.5) skew(1deg);
+    -webkit-opacity: 0.5;
+  }
+  30% {
+    -webkit-transform: rotate(0) scale(0.7) skew(1deg);
+    -webkit-opacity: 1;
+  }
+  100% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+    -webkit-opacity: 0.5;
+  }
+}
