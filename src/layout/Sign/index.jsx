@@ -4,8 +4,8 @@ import signIn from "../../assets/svg/login/signIn.svg";
 import signUp from "../../assets/svg/login/signUp.svg";
 import Header from "../../components/Header";
 
-import Login from "./login";
-import Register from "./Register";
+import Login from "./Login.jsx";
+import Register from "./Register.jsx";
 import AlertCustom from "../../components/AlertCustom";
 
 function Sign() {
