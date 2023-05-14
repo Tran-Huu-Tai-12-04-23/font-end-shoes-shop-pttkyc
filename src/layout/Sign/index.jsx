@@ -8,43 +8,12 @@ import Login from "./Login.jsx";
 import Register from "./Register.jsx";
 import AlertCustom from "../../components/AlertCustom";
 
-function Sign() {
-  const [alert, setAlert] = useState(null);
+function Sign({ alert, setAlert }) {
   const [activeLogin, setActiveLogin] = useState(true);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setAlert(null);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [alert]);
 
   return (
     <div className="center min-h-100vh h-100vh w-100vh ">
       <Header />
-      <div
-        className="w-full center fixed  z-10"
-        style={{
-          left: "50%",
-          bottom: "2rem",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <AlertCustom
-          message={alert?.message}
-          width="30rem"
-          type={alert?.type}
-          onClose={(e) => setAlert(null)}
-          style={{
-            transform: alert ? "translateY(0)" : "translateY(10rem)",
-            transition: ".4s",
-            zIndex: "2",
-          }}
-        />
-      </div>
 
       <div className="rounded-xl w-4/6 h-5/6 min-w-1/2 miu-h-1/2 p-8 bg-blur  shadow-sm shadow-slate-300 center">
         <div className="flex justify-between w-full h-full">

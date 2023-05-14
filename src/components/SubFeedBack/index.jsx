@@ -13,7 +13,7 @@ function SubFeedBack() {
         alt="Cindy Baker"
         src="https://vcdn1-giaitri.vnecdn.net/2022/09/23/-2181-1663929656.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=apYgDs9tYQiwn7pcDOGbNg"
       />
-      <h5 className="text-xl text-center p-4 select-none ">
+      <h5 className="text-xl text-center p-4 select-none font-normal">
         Lorem Ipsum is simply dummy text of the printing and typesetting
         ndustry. Lorem Ipsum has been the industry's standard dummy text ever
         since the 1500s, when an unknown printer.

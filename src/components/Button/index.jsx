@@ -10,11 +10,15 @@ function ButtonCustom({
   iconLeft,
   iconRight,
   sx = {},
+  hoverBg,
 }) {
   const MyButton = styled(Button)({
     fontFamily: `"Barlow Condensed", "sans-serif"`,
     color: "#000",
     ...style,
+    "&:hover": {
+      backgroundColor: hoverBg ? hoverBg : "#ffae3c",
+    },
   });
   return (
     <MyButton variant={type} onClick={onClick} className={className} sx={sx}>

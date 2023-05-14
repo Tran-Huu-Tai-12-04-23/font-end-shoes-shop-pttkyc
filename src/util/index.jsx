@@ -1,3 +1,5 @@
+import unidecode from "unidecode";
+
 class Utils {
   checkMinLength(username, minLength) {
     return username.length >= minLength;
@@ -126,6 +128,68 @@ class Utils {
     });
     return sortedProducts;
   }
+
+  searchItems(items, search) {
+    return items.filter(
+      (item) =>
+        item.name.toLowerCase().includes(search.toLowerCase()) ||
+        item.brand.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  searchByNameAddress(addresses, searchText) {
+    if (searchText && addresses) {
+      const searchStr = unidecode(searchText.toLowerCase().trim());
+      const result = addresses.filter((address) => {
+        const name = unidecode(address.name.toLowerCase());
+        return name.includes(searchStr);
+      });
+      return result;
+    }
+    return addresses;
+  }
+  async processImage(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const image = new Image();
+        image.onload = function () {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          // Tính toán kích thước mới cho ảnh (ví dụ: giảm kích thước xuống 50%)
+          const newWidth = image.width * 0.5;
+          const newHeight = image.height * 0.5;
+          // Thiết lập kích thước mới cho canvas
+          canvas.width = newWidth;
+          canvas.height = newHeight;
+          // Vẽ ảnh đã thu nhỏ lên canvas
+          ctx.drawImage(image, 0, 0, newWidth, newHeight);
+          // Lấy dữ liệu ảnh từ canvas
+          const processedDataUrl = canvas.toDataURL("image/jpeg");
+          resolve(dataURItoFile(processedDataUrl, file.name));
+        };
+        image.src = e.target.result;
+      };
+      reader.onerror = function (error) {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+}
+
+function dataURItoFile(dataURI, fileName) {
+  // Convert Base64-encoded data to binary data
+  const binaryData = atob(dataURI.split(",")[1]);
+  const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+  const array = [];
+  for (let i = 0; i < binaryData.length; i++) {
+    array.push(binaryData.charCodeAt(i));
+  }
+  const blob = new Blob([new Uint8Array(array)], { type: mimeString });
+  // Create new file from the blob object and set its name
+  const file = new File([blob], fileName, { type: mimeString });
+  return file;
 }
 
 export default Utils;

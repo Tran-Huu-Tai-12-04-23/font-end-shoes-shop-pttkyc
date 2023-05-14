@@ -53,16 +53,6 @@ function ShowItem() {
     }
   };
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setLoadItem(false);
-    }, 1500);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [loadItem]);
-
   const applyFilter = () => {
     const filteredItems = Util.filterItems(itemsApi, filterCondition);
     setItems(filteredItems);
@@ -73,10 +63,19 @@ function ShowItem() {
     applyFilter();
   }, [filterCondition.brand]);
 
-  console.log(items.length);
   useEffect(() => {
     sortItem(items);
   }, [sort]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoadItem(false);
+    }, 1500);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [loadItem]);
 
   return (
     <>

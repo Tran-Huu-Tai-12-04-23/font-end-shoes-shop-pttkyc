@@ -5,10 +5,19 @@ import Sign from "./layout/Sign";
 import ShowItem from "./layout/ShowItem";
 import DetailItem from "./layout/DetailItem";
 import { IoIosArrowUp } from "react-icons/io";
+import Search from "./layout/Search";
+import Bag from "./layout/Bag";
+import CheckOut from "./layout/CheckOut";
+import User from "./layout/User";
+import Admin from "./layout/Admin";
+import WrapperApp from "./WrapperApp";
+import AlertCustom from "./components/AlertCustom";
+import { useContextStore } from "./Store";
 
 function App() {
   const [theme, setTheme] = useState("dark");
   const [scrollTop, setScrollTop] = useState(false);
+  const { alert, setAlert } = useContextStore();
 
   useEffect(() => {
     window.onscroll = () => {
@@ -19,12 +28,46 @@ function App() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setAlert(null);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [alert]);
+
   return (
     <div
       className={`${
         theme === "dark" ? "mode-dark" : "mode-light"
       } text-pr bubble hidden-scroll`}
     >
+      {
+        <div
+          className="w-full center fixed  z-10"
+          style={{
+            left: "50%",
+            bottom: "2rem",
+            transform: "translateX(-50%)",
+            transform: alert ? "translateY(0)" : "translateY(10rem)",
+          }}
+        >
+          <AlertCustom
+            message={alert?.message}
+            width="30rem"
+            type={alert?.type}
+            onClose={(e) => setAlert(null)}
+            style={{
+              transform: alert ? "translateY(0)" : "translateY(10rem)",
+              transition: ".4s",
+              zIndex: "2",
+            }}
+          />
+        </div>
+      }
       <div
         className="fixed rounded-1/2 bg-slate-700 opacity-40  blur-3xl -left-1/4 -bottom-1/4"
         style={{
@@ -46,13 +89,23 @@ function App() {
         }}
       ></div>
       <BrowserRouter>
+        <WrapperApp></WrapperApp>
         <Routes>
+          <Route path="/admin" element={<Admin />} />
           <Route path="/shop" element={<ShowItem />} />
-          <Route path="/sign" element={<Sign />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/check-out" element={<CheckOut />} />
+          <Route path="/bag" element={<Bag />} />
+          <Route path="/search" element={<Search />} />
+          <Route
+            path="/sign"
+            element={<Sign alert={alert} setAlert={setAlert} />}
+          />
           <Route path="/detail-item" element={<DetailItem />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
+
       {scrollTop && (
         <div
           className="p-3 center flex fixed bottom-5 cursor-pointer hover:bg-slate-500 right-5 rounded-full bg-slate-400"

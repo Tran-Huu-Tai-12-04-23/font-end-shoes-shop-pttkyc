@@ -6,7 +6,7 @@ import { CiShoppingCart } from "react-icons/ci";
 function Item({ className, item, discount = "14%" }) {
   return (
     <div
-      className={`p-4 rounded-xl transition-all cursor-pointer hover:shadow-xl bg-slate-100 ${className}
+      className={`p-4 rounded-xl transition-all cursor-pointer hover:shadow-xl bg-gray-50 ${className}
       ${discount ? "relative" : ""}
       `}
     >

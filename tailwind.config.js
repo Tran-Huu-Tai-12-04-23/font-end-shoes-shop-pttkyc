@@ -43,6 +43,7 @@ export default {
         20: "20rem",
       },
       minWidth: {
+        30: "30rem",
         "100vh": "100vh",
         15: "15rem",
         "1/8": "calc(100% / 8 )",
@@ -53,6 +54,10 @@ export default {
       },
       borderRadius: {
         "1/2": "50%",
+      },
+
+      borderBottom: {
+        custom: "1px solid #e0e0e0",
       },
     },
   },

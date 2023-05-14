@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuid } from "uuid";
 
 import header_login from "../../assets/svg/login/header-logo.svg";
 import Input from "../../components/Input";
@@ -16,13 +17,95 @@ import facebook_icon from "../../assets/icon/facebook_icon.svg";
 import Utils from "../../util/index";
 import Services from "../../Services";
 
+import { googleSignIn } from "../../Firebase/AuthGoogle";
+import { facebookSignIn } from "../../Firebase/AuthFacebook";
+import { auth } from "../../Firebase/index";
+import { onAuthStateChanged } from "firebase/auth";
+import { UseAuthUserContext } from "../../AuthUser";
+
 function Login({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
+  const { setUser, user } = UseAuthUserContext();
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
   const Util = new Utils();
   const Service = new Services();
   const history = useNavigate();
 
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleFacebookSignIn = async () => {
+    try {
+      await facebookSignIn();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        const { displayName, email, uid, photoURL } = currentUser;
+        let isNewUser =
+          currentUser.metadata.creationTime ===
+          currentUser.metadata.lastSignInTime;
+        setUser({
+          username: displayName,
+          password: password,
+          avatar: photoURL,
+          confirmPassword: password,
+          email: email,
+          id: uid,
+          role_account: null,
+        });
+        setAlert({
+          message: "Login successfully!",
+          type: "success",
+        });
+
+        if (isNewUser) {
+          let password = uuid();
+          registerUserLogin({
+            username: displayName,
+            password: password,
+            avatar: photoURL,
+            confirmPassword: password,
+            email: email,
+            id: uid,
+          });
+        }
+      } else {
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  const registerUserLogin = async (data) => {
+    try {
+      const res = await Service.addDataToTable(
+        "account",
+        "/api/user/register",
+        data
+      );
+      if (res.status === 200) {
+        setAlert({
+          type: "success",
+          message: "Login successfully!",
+        });
+        setActiveLogin(true);
+      } else {
+        setAlert({
+          message: res.message,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const handleLogin = async () => {
     if (!usernameOrEmail) {
       setAlert({
@@ -63,11 +146,18 @@ function Login({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
       });
       if (result) {
         if (result.status === 200) {
+          const { username, account_id, email, role_account } = result.data;
+          setUser({
+            id: account_id,
+            username: username,
+            email: email,
+            role_account,
+          });
           setAlert({
             message: result.message,
             type: "success",
           });
-          history("/");
+          // history("/");
         } else {
           setAlert({
             message: result.message,
@@ -78,7 +168,13 @@ function Login({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
       console.error(e);
     }
   };
-
+  useEffect(() => {
+    if (user && !user.role_account) {
+      history("/");
+    } else if (user && user.role_account > 0) {
+      history("/admin");
+    }
+  }, [user]);
   return (
     <>
       <div
@@ -148,8 +244,10 @@ function Login({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
             <div className="center flex w-full mt-2">
               <ButtonCustom
                 iconLeft={<img src={google_icon} className="w-9 h-9"></img>}
+                onClick={handleGoogleSignIn}
               />
               <ButtonCustom
+                onClick={handleFacebookSignIn}
                 iconLeft={<img src={facebook_icon} className="w-8 h-8"></img>}
               />
             </div>

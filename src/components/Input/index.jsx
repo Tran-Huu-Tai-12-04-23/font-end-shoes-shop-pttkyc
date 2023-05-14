@@ -4,6 +4,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { v4 as uuid } from "uuid";
 
 function Input({
+  line = true,
   iconLeft,
   label = "",
   type = "text",
@@ -63,7 +64,7 @@ function Input({
       {type === "password" && lock && (
         <FiEyeOff className="icon-lock" onClick={showPass} />
       )}
-      <span className="line-input"></span>
+      {line && <span className="line-input"></span>}
       <div className="flex start label">
         {iconInput}
         <label htmlFor={id}>{label}</label>
