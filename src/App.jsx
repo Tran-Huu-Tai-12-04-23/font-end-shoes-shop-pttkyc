@@ -13,6 +13,7 @@ import Admin from "./layout/Admin";
 import WrapperApp from "./WrapperApp";
 import AlertCustom from "./components/AlertCustom";
 import { useContextStore } from "./Store";
+import ForgetPass from "./layout/ForgetPass";
 
 function App() {
   const [theme, setTheme] = useState("dark");
@@ -47,11 +48,9 @@ function App() {
     >
       {
         <div
-          className="w-full center fixed  z-10"
+          className="w-full center fixed flex left-0 right-0 z-10"
           style={{
-            left: "50%",
             bottom: "2rem",
-            transform: "translateX(-50%)",
             transform: alert ? "translateY(0)" : "translateY(10rem)",
           }}
         >
@@ -92,6 +91,7 @@ function App() {
         <WrapperApp></WrapperApp>
         <Routes>
           <Route path="/admin" element={<Admin />} />
+          <Route path="/forget-pass" element={<ForgetPass />} />
           <Route path="/shop" element={<ShowItem />} />
           <Route path="/user" element={<User />} />
           <Route path="/check-out" element={<CheckOut />} />

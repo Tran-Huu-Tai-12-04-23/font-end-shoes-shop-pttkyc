@@ -2,17 +2,9 @@ import { FcOnlineSupport } from "react-icons/fc";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsTelephoneOutbound } from "react-icons/bs";
 
-function Support({ show }) {
+function Support({}) {
   return (
-    <div
-      className="grid grid-cols-2 gap-10"
-      style={{
-        transition: ".8s",
-        transform: show ? "" : "scale(0)",
-        opacity: show ? "" : "0",
-        position: show ? "" : "fixed",
-      }}
-    >
+    <div className="grid grid-cols-2 gap-10">
       <div className="start flex w-full p-4 rounded-xl bg-slate-300">
         <FcOnlineSupport className="text-5xl" />
         <div className=" ml-2">

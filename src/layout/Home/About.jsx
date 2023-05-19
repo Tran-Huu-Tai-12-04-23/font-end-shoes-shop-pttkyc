@@ -3,8 +3,10 @@ import makeColor from "../../assets/img/home/makeColor.png";
 import ButtonCustom from "../../components/Button";
 
 import { CiShoppingCart } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 function About() {
+  const history = useNavigate();
   return (
     <div className="w-full grid gird-cols-2 mt-5">
       <div className="grid grid-cols-2 pt-12 pb-10 ">
@@ -12,6 +14,7 @@ function About() {
           <img src={product4} alt="" className="center" />
           <ButtonCustom
             nameButton="Buy"
+            onClick={(e) => history("/shop")}
             style={{
               fontSize: "1.2rem",
               fontWeight: "bold",

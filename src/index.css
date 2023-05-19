@@ -166,7 +166,7 @@ table {
 }
 .mode-dark .bg-blur {
   background-color: var(--dark-blur);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(2rem);
 }
 .mode-dark .hover-bg:hover {
   background-color: var(--bg-dark-hover) !important;

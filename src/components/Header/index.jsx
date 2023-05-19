@@ -26,6 +26,7 @@ import { FaSleigh } from "react-icons/fa";
 import { UseAuthUserContext } from "../../AuthUser";
 
 function Header() {
+  const { setGender, itemsBag } = useContextStore();
   const { user, setUser } = UseAuthUserContext();
   const searchPopular = ["Nike air", "Bitis Hunter", "Adidas"];
   const { setSearch, search } = useContextStore();
@@ -73,27 +74,36 @@ function Header() {
         <ul className="justify-center items-center flex">
           <li
             onClick={(e) => history("/")}
-            className="pt-2 text-xl pb-2 pl-4 pr-4 font-barlow cursor-pointer hover:bg-slate-50 rounded-sm"
+            className="pt-2 text-md pb-2 pl-4 pr-4 font-barlow cursor-pointer hover:bg-slate-50 rounded-sm"
           >
             Home
           </li>
           <li
-            onClick={(e) => history("/shop")}
-            className="pt-2 text-xl pb-2 pl-4 pr-4 font-barlow cursor-pointer hover:bg-slate-50 rounded-sm"
+            onClick={(e) => {
+              setGender("unisex");
+              history("/shop");
+            }}
+            className="pt-2 text-md pb-2 pl-4 pr-4 font-barlow cursor-pointer hover:bg-slate-50 rounded-sm"
+          >
+            Unisex
+          </li>
+          <li
+            onClick={(e) => {
+              setGender("men");
+              history("/shop");
+            }}
+            className="pt-2 text-md pb-2 pl-4 pr-4 font-barlow cursor-pointer hover:bg-slate-50 rounded-sm"
           >
             Men
           </li>
           <li
-            onClick={(e) => history("/shop")}
-            className="pt-2 text-xl pb-2 pl-4 pr-4 font-barlow cursor-pointer hover:bg-slate-50 rounded-sm"
+            onClick={(e) => {
+              setGender("women");
+              history("/shop");
+            }}
+            className="pt-2 text-md pb-2 pl-4 pr-4 font-barlow cursor-pointer hover:bg-slate-50 rounded-sm"
           >
             Women
-          </li>
-          <li
-            onClick={(e) => history("/shop")}
-            className="pt-2 text-xl pb-2 pl-4 pr-4 font-barlow cursor-pointer hover:bg-slate-50 rounded-sm"
-          >
-            Kids
           </li>
         </ul>
       </div>
@@ -107,7 +117,7 @@ function Header() {
           onClick={(e) => {
             setActiveSearch(!activeSearch);
           }}
-          className="text-2xl hover:text-cyan-600 hover:scale-150 transition-all cursor-pointer rounded-sm"
+          className="text-2xl hover:text-orange-400 hover:scale-150 transition-all cursor-pointer rounded-sm"
         />
         <div
           className={` min-w-15 ${activeSearch ? "" : "-translate-y-28"}  ${
@@ -141,7 +151,7 @@ function Header() {
               onClick={handleSubmitSearch}
               className={`${
                 enterSearch ? "block" : "hidden"
-              } text-3xl hover:text-slate-600 cursor-pointer hover:scale-150 transition-all`}
+              } text-3xl hover:text-orange-400 cursor-pointer hover:scale-150 transition-all`}
             />
           </div>
 
@@ -156,7 +166,7 @@ function Header() {
             <h1 className="text-xl border-b-2 font-barlow border-solid border-slate-500 rounded-sm mt-5 mb-5">
               Popular search
             </h1>
-            {searchPopular?.map((his, key) => {
+            {searchPopular?.map((his) => {
               return (
                 <h5
                   className="text-xl font-barlow mr-2 p-2 hover:bg-slate-200 cursor-pointer rounded-md"
@@ -173,9 +183,17 @@ function Header() {
           </div>
         </div>
 
-        <Badge badgeContent={4} color="primary">
+        <Badge
+          badgeContent={itemsBag.length}
+          color="primary"
+          sx={{
+            "& span": {
+              background: "#fb923c",
+            },
+          }}
+        >
           <CiShoppingCart
-            className="text-2xl ml-3"
+            className="text-2xl ml-3 cursor-pointer hover:text-orange-400"
             onClick={(e) => {
               history("/bag");
             }}
@@ -187,7 +205,7 @@ function Header() {
             nameButton="Log In"
             style={{
               marginLeft: "1rem",
-              fontSize: "1.2rem",
+              fontSize: "1rem",
               padding: ".2rem 1rem",
             }}
             onClick={(e) => history("/sign")}
@@ -214,11 +232,9 @@ function Header() {
                   name: "Profile",
                   onClick: () => {},
                   icon: <CgProfile className="text-xl mr-3" />,
-                },
-                {
-                  name: "Store cart",
-                  onClick: () => {},
-                  icon: <MdOutlineLocalGroceryStore className="text-xl mr-3" />,
+                  action: (e) => {
+                    history("/user");
+                  },
                 },
                 {
                   name: "Settings",

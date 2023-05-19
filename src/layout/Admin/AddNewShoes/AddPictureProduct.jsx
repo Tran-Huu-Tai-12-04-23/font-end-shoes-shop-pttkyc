@@ -1,13 +1,11 @@
 import { useRef, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import ButtonCustom from "../../../components/Button";
-import Services from "../../../Services";
 import Utils from "../../../Util";
 
 function AddPictureProduct({ listPhoto, setListPhoto }) {
   const choosePhoto = useRef(null);
   const [listPhotoUrl, setListPhotoUrl] = useState([]);
-  const Service = new Services();
   const Util = new Utils();
   useEffect(() => {
     const handleImage = async () => {
@@ -92,15 +90,17 @@ function AddPictureProduct({ listPhoto, setListPhoto }) {
         ref={choosePhoto}
         accept="image/*"
         onChange={(e) => {
-          setListPhoto((prev) => {
-            return [
-              ...prev,
-              {
-                id: uuid(),
-                file: e.target.files[0],
-              },
-            ];
-          });
+          if (e.target.files[0]) {
+            setListPhoto((prev) => {
+              return [
+                ...prev,
+                {
+                  id: uuid(),
+                  file: e.target.files[0],
+                },
+              ];
+            });
+          }
         }}
       />
     </div>

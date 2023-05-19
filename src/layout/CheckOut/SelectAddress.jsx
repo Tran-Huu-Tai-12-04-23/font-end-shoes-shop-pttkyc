@@ -52,9 +52,8 @@ function a11yProps(index) {
   };
 }
 
-function SelectAddress({ address, setAddress }) {
+function SelectAddress({ address, setAddress}) {
   const [placeholderAddress, setPlaceholderAddress] = useState("");
-  const Service = new Services();
   const [provinces, setProvinces] = useState([]);
   const [district, setDistrict] = useState(null);
   const [commune, setCommune] = useState(null);
@@ -113,7 +112,7 @@ function SelectAddress({ address, setAddress }) {
   const BASE_API_URL = "https://provinces.open-api.vn/api";
 
   useEffect(() => {
-    Service.getDataFromApiOrder(BASE_API_URL + "/p ").then((res) => {
+    Services.getDataFromApiOrder(BASE_API_URL + "/p ").then((res) => {
       setProvinces(res);
       setLoadProvinceSearch(false);
     });
@@ -121,7 +120,7 @@ function SelectAddress({ address, setAddress }) {
 
   useEffect(() => {
     if (provincesSelected) {
-      Service.getDataFromApiOrder(
+      Services.getDataFromApiOrder(
         BASE_API_URL + "/p/" + provincesSelected.code + "/?depth=2"
       ).then((res) => {
         setDistrictFollowProvince(res?.districts);
@@ -133,10 +132,11 @@ function SelectAddress({ address, setAddress }) {
 
   useEffect(() => {
     if (districtSelected) {
-      Service.getDataFromApiOrder(
+      Services.getDataFromApiOrder(
         BASE_API_URL + "/d/" + districtSelected.code + "/?depth=2"
       ).then((res) => {
         setCommune(res.wards);
+        setCommuneFollowDistrict(res.wards);
         setLoadCommuneSearch(false);
       });
     }
@@ -156,11 +156,10 @@ function SelectAddress({ address, setAddress }) {
       window.removeEventListener("click", handleWindowClick);
     };
   }, []);
-
   useEffect(() => {
     if (!provincesSelected) {
       setLoadProvinceSearch(true);
-      Service.getDataFromApiOrder(
+      Services.getDataFromApiOrder(
         `${BASE_API_URL}/p/${address ? "search/?q=" + address.trim() : ""}`
       ).then((res) => {
         setProvinces(res);
@@ -172,7 +171,7 @@ function SelectAddress({ address, setAddress }) {
       );
     } else if (countCommas(address) === 2) {
       setCommuneFollowDistrict(
-        Util.searchByNameAddress(district, address.split(",")[2])
+        Util.searchByNameAddress(commune, address.split(",")[2])
       );
     }
   }, [address]);

@@ -28,7 +28,6 @@ function Login({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
   const Util = new Utils();
-  const Service = new Services();
   const history = useNavigate();
 
   const handleGoogleSignIn = async () => {
@@ -46,13 +45,13 @@ function Login({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
     }
   };
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         const { displayName, email, uid, photoURL } = currentUser;
         let isNewUser =
           currentUser.metadata.creationTime ===
           currentUser.metadata.lastSignInTime;
-        setUser({
+        const dataUser = {
           username: displayName,
           password: password,
           avatar: photoURL,
@@ -60,41 +59,65 @@ function Login({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
           email: email,
           id: uid,
           role_account: null,
-        });
-        setAlert({
-          message: "Login successfully!",
-          type: "success",
-        });
-
+        };
         if (isNewUser) {
           let password = uuid();
-          registerUserLogin({
-            username: displayName,
-            password: password,
-            avatar: photoURL,
-            confirmPassword: password,
+          await registerUserLogin(
+            {
+              username: displayName,
+              password: password,
+              avatar: photoURL,
+              confirmPassword: password,
+              email: email,
+            },
+            dataUser
+          );
+        } else {
+          const result = await Services.callApi("/api/user/get-id-user", {
             email: email,
-            id: uid,
           });
+
+          console.log(result);
+
+          if (result.status === 200) {
+            setUser({
+              ...dataUser,
+              id: result.id,
+            });
+            setAlert({
+              message: "Login successfully!",
+              type: "success",
+            });
+          }
         }
-      } else {
       }
     });
     return () => {
       unsubscribe();
     };
   }, []);
-  const registerUserLogin = async (data) => {
+
+  const registerUserLogin = async (data, dataUser) => {
     try {
-      const res = await Service.addDataToTable(
+      const res = await Services.addDataToTable(
         "account",
         "/api/user/register",
-        data
+        {
+          ...data,
+        }
       );
       if (res.status === 200) {
         setAlert({
           type: "success",
           message: "Login successfully!",
+        });
+        setUser({
+          ...dataUser,
+          id: res.id,
+        });
+        setAlert({
+          message: "Login successfully!",
+          type: "success",
         });
         setActiveLogin(true);
       } else {
@@ -141,7 +164,7 @@ function Login({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
       password: password,
     };
     try {
-      const result = await Service.callApi("/api/user/login", {
+      const result = await Services.callApi("/api/user/login", {
         ...data,
       });
       if (result) {
@@ -237,6 +260,12 @@ function Login({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
             }}
             onClick={handleLogin}
           />
+          <div
+            onClick={(e) => history("/forget-pass")}
+            className="w-full cursor-pointer hover:text-orange-400 transition-all center mt-10 text-blue-700 font-barlow font-bold"
+          >
+            Forget password
+          </div>
           <div className="w-full flex mt-5 flex-col justify-center items-center mb-5">
             <h5 className="text-lg font-bold font-barlow w-full center">
               Login with :

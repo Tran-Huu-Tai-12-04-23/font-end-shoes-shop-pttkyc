@@ -132,17 +132,22 @@ function HeaderShop({
       return (
         <ButtonCustom
           key={uuid()}
+          hoverBg="rgba(0,0,0,.1)"
           nameButton={brandN.name}
           style={{
             padding: ".2rem 2rem",
             marginRight: "1rem",
             color: "black",
-            fontSize: "1.25rem",
+            fontSize: "1rem",
             border: "1px solid transparent",
             borderColor:
               filterCondition.brand?.toLowerCase() === brandN.name.toLowerCase()
                 ? "#1976d2"
                 : "transparent",
+
+            "&:hover": {
+              backgroundColor: "transparent",
+            },
           }}
           sx={{
             textTransform: "capitalize",
@@ -171,30 +176,31 @@ function HeaderShop({
       <div className="end flex">
         <ButtonCustom
           nameButton={showFilter ? "Filters" : "Hide Filters"}
+          hoverBg="rgba(0,0,0,.1)"
           style={{
             marginLeft: "1rem",
-            fontSize: "1.25rem",
+            fontSize: "1rem",
             width: "unset",
             marginRight: "1rem",
           }}
           sx={{
             textTransform: "capitalize",
           }}
-          iconRight={<img src={filter} className="w-6 ml-2"></img>}
+          iconRight={<img src={filter} className="w-5 ml-2"></img>}
           onClick={() => {
             setShowFilter(!showFilter);
           }}
         />
         <div
-          className="items-center justify-center flex w-15 pr-4"
+          className="items-center justify-center flex w-15 p-4 rounded-md hover:bg-blur"
           onClick={(e) => {
             setActiveMenuSort(e.target);
           }}
         >
-          <button className=" font-barlow text-xl ">
+          <button className=" font-barlow text-md ">
             Sort by {sort && " : " + sort}
           </button>
-          <IoIosArrowDown className="text-2xl mt-2" />
+          <IoIosArrowDown className="text-xl " />
         </div>
         <MenuCustom
           sx={{

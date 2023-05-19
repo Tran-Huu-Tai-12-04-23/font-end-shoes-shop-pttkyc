@@ -7,6 +7,11 @@ function GridItem({ data = [], showFilter = false }) {
       {data.map((item) => {
         return (
           <Item
+            discount={
+              item.price_sale
+                ? Math.round((item.price_sale / item.cost) * 100) + "%"
+                : false
+            }
             key={uuid()}
             item={item}
             className={`scale-90 ${

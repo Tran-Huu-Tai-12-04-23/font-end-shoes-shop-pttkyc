@@ -2,11 +2,6 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 
 import * as React from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { GrOverview, GrTransaction } from "react-icons/gr";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
@@ -22,58 +17,58 @@ function Nav({ active, handleNextStep }) {
     {
       id: uuid(),
       name: "Overview",
-      icon: <GrOverview className="text-xl"></GrOverview>,
+      icon: <GrOverview className="text-md"></GrOverview>,
       action: "",
     },
     {
       id: uuid(),
       name: "Products",
       icon: (
-        <MdOutlineProductionQuantityLimits className="text-xl"></MdOutlineProductionQuantityLimits>
+        <MdOutlineProductionQuantityLimits className="text-md"></MdOutlineProductionQuantityLimits>
       ),
       action: "",
     },
     {
       id: uuid(),
       name: "Orders",
-      icon: <CiShoppingCart className="text-xl mt-1"></CiShoppingCart>,
+      icon: <CiShoppingCart className="text-md mt-1"></CiShoppingCart>,
       action: "",
       submenu: <div>Hello</div>,
     },
     {
       id: uuid(),
       name: "Users",
-      icon: <FiUsers className="text-xl"></FiUsers>,
+      icon: <FiUsers className="text-md"></FiUsers>,
       action: "",
     },
     {
       id: uuid(),
       name: "Transactions",
-      icon: <GrTransaction className="text-xl"></GrTransaction>,
+      icon: <GrTransaction className="text-md"></GrTransaction>,
       action: "",
     },
     {
       id: uuid(),
       name: "Reports",
-      icon: <GoReport className="text-xl"></GoReport>,
+      icon: <GoReport className="text-md"></GoReport>,
       action: "",
     },
     {
       id: uuid(),
       name: "Reviews",
-      icon: <VscPreview className="text-xl"></VscPreview>,
+      icon: <VscPreview className="text-md"></VscPreview>,
       action: "",
     },
     {
       id: uuid(),
       name: "Note",
-      icon: <SlNotebook className="text-xl"></SlNotebook>,
+      icon: <SlNotebook className="text-md"></SlNotebook>,
       action: "",
     },
     {
       id: uuid(),
       name: "Settings",
-      icon: <IoSettingsOutline className="text-xl"></IoSettingsOutline>,
+      icon: <IoSettingsOutline className="text-md"></IoSettingsOutline>,
       action: "",
     },
   ]);
@@ -99,14 +94,14 @@ function Nav({ active, handleNextStep }) {
               }}
             >
               {nav.icon}
-              <h5 className={`${"text-xl  ml-3"} font-barlow cursor-pointer`}>
+              <h5 className={`${"text-md  ml-3"} font-barlow cursor-pointer`}>
                 {nav.name}
               </h5>
             </div>
           );
         })}
       </div>
-      <button className="ml-auto mr-auto center flex hover:text-orange-500 pt-1 w-32 pb-1 pr-4 pl-4 rounded-md cursor-pointer  font-barlow text-xl">
+      <button className="ml-auto mr-auto center flex hover:text-orange-500 pt-1 w-32 pb-1 pr-4 pl-4 rounded-md cursor-pointer  font-barlow text-md">
         <CiLogout className="text-3xl" />
         <h5 className="ml-4 cursor-pointer">Logout</h5>
       </button>

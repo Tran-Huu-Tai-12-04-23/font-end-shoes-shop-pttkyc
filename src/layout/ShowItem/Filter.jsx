@@ -6,6 +6,7 @@ import Tooltip from "@mui/material/Tooltip";
 import ReactDOM from "react-dom";
 
 function Filter({
+  setGender,
   applyFilter = () => {},
   activeHeader = () => {},
   setFilterCondition = () => {},
@@ -46,6 +47,7 @@ function Filter({
 
   const handleFilter = (e) => {
     const nameFilter = e.target.name;
+    setGender(null);
     if (e.target.checked === true) {
       setFilterCondition((prev) => {
         return {
@@ -133,6 +135,7 @@ function Filter({
               borderColor: filterCondition.color.includes(color)
                 ? "#fb923c"
                 : "transparent",
+              background: color,
             }}
           ></div>
         </Tooltip>
@@ -292,7 +295,7 @@ function Filter({
 
   return (
     <div
-      className="transition-all  p-2 w-full custom-scrollbar text-xl overflow-auto border-r-2 border-slate-400 border-solid"
+      className="transition-all  p-2 w-full custom-scrollbar text-md overflow-auto border-r-2 border-slate-400 border-solid"
       ref={filter}
       style={{
         maxHeight: activeHeader ? "calc(100vh - 4rem)" : "calc(100vh - 9rem)",

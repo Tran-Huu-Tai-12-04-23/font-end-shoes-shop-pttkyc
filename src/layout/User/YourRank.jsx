@@ -32,7 +32,7 @@ function a11yProps(index) {
   };
 }
 
-function YourRank({ show }) {
+function YourRank({}) {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -40,15 +40,7 @@ function YourRank({ show }) {
   };
 
   return (
-    <div
-      className="w-full flex flex-col"
-      style={{
-        transition: ".8s",
-        transform: show ? "" : "scale(0)",
-        opacity: show ? "" : "0",
-        position: show ? "" : "fixed",
-      }}
-    >
+    <div className="w-full flex flex-col">
       <div className="w-full rounded-bl-xl rounded-br-xl bg-orange-400 p-4 h-44">
         <div className="font-barlow w-full start flex">
           <Avatar

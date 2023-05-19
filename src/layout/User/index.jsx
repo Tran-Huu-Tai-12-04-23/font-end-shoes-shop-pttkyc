@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { v4 as uuid } from "uuid";
 
@@ -14,9 +14,12 @@ import OrderHistory from "./OrderHistory";
 import YourRank from "./YourRank";
 import UserManager from "./UserManager";
 import Support from "./Support";
+import Services from "../../Services";
+import { UseAuthUserContext } from "../../AuthUser";
 
 function User() {
   const [active, setActive] = useState(0);
+  const { user } = UseAuthUserContext();
   const [nav, setNav] = useState([
     {
       id: uuid(),
@@ -61,6 +64,31 @@ function User() {
       icon: <CiLogout className="text-xl" />,
     },
   ]);
+  const [userDetail, setUserDetail] = useState({});
+  const [order, setOrder] = useState([]);
+  useEffect(() => {
+    const initUser = async () => {
+      const result = await Services.getDataFromApi(
+        "/api/user/get-detail-user/" + `?id=${user?.id}`
+      );
+      if (result.status === 200) {
+        setUserDetail(JSON.parse(result.data));
+      }
+    };
+    initUser();
+  }, [user]);
+
+  useEffect(() => {
+    const initUser = async () => {
+      const result = await Services.getDataFromApi(
+        "/api/item/order/user" + `?id=${user?.id}`
+      );
+      if (result.status === 200) {
+        setOrder(JSON.parse(result.data));
+      }
+    };
+    initUser();
+  }, [user]);
 
   return (
     <div>
@@ -98,12 +126,19 @@ function User() {
               })}
             </ul>
           </div>
-          <div className="col-span-8 ">
-            <Overview show={active === 0} />
-            <OrderHistory show={active === 1} />
-            <YourRank show={active === 2}></YourRank>
-            <UserManager show={active === 3}></UserManager>
-            <Support show={active === 4}></Support>
+          <div className="col-span-8 mb-20">
+            {active === 0 && (
+              <Overview userDetail={userDetail} numberOrder={order.length} />
+            )}
+            {active === 1 && <OrderHistory setOrder={setOrder} order={order} />}
+            {active === 2 && <YourRank />}
+            {active === 3 && (
+              <UserManager
+                userDetail={userDetail}
+                setUserDetail={setUserDetail}
+              />
+            )}
+            {active === 4 && <Support />}
           </div>
         </div>
       </div>

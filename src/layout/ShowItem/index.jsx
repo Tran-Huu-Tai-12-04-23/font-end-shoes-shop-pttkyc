@@ -9,15 +9,19 @@ import PaginationCustom from "../../components/PaginationCustom";
 import GridItem from "../../components/GridItem";
 import GridSkeleton from "../../components/GridSkeleton";
 
-import { itemsApi } from "../../Services/fectchApi";
 import Utils from "../../util";
+import Services from "../../Services";
+import { useContextStore } from "../../Store";
+import { memo } from "react";
 
 function ShowItem() {
+  const { gender, setGender } = useContextStore();
   const [showFilter, setShowFilter] = useState(true);
   const [activeHeader, setActiveHeader] = useState(false);
   const [pageActive, setPageActive] = useState(1);
   const [loadItem, setLoadItem] = useState(true);
-  const [items, setItems] = useState(itemsApi);
+  const [items, setItems] = useState([]);
+  const [itemsApi, setItemsApi] = useState([]);
   const Util = new Utils();
   const [brand, setBrand] = useState("all");
 
@@ -77,6 +81,35 @@ function ShowItem() {
     };
   }, [loadItem]);
 
+  useEffect(() => {
+    setFilterCondition((prev) => {
+      return {
+        ...prev,
+        gender: [gender],
+      };
+    });
+    if (gender !== "unisex") {
+      setItems(itemsApi.filter((item) => item.gender === gender));
+    } else {
+      setItems(itemsApi);
+    }
+  }, [gender]);
+  useEffect(() => {
+    const initItem = async () => {
+      const result = await Services.getDataFromApi("/api/item/all", "");
+      if (result.status === 200) {
+        setItemsApi(JSON.parse(result.data));
+        if (gender && gender !== "unisex") {
+          setItems(
+            JSON.parse(result.data).filter((item) => item.gender === gender)
+          );
+        } else {
+          setItems(JSON.parse(result.data));
+        }
+      }
+    };
+    initItem();
+  }, []);
   return (
     <>
       <Header />
@@ -95,6 +128,7 @@ function ShowItem() {
             }}
           >
             <Filter
+              setGender={setGender}
               applyFilter={applyFilter}
               filterCondition={filterCondition}
               activeHeader={activeHeader}
@@ -196,4 +230,4 @@ function ShowItem() {
   );
 }
 
-export default ShowItem;
+export default memo(ShowItem);

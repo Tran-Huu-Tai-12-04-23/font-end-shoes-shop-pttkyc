@@ -3,7 +3,7 @@ import { IoMdAdd } from "react-icons/io";
 function SubTransaction({ data, className }) {
   return (
     <div
-      className={`rounded-xl p-4 flex items-center justify-between ${className}`}
+      className={`rounded-md p-4 flex items-center justify-between ${className}`}
     >
       <div className="start flex ">
         <div
@@ -12,11 +12,11 @@ function SubTransaction({ data, className }) {
             border: "1px solid #A0D8B3",
           }}
         >
-          <IoMdAdd className="text-xl text-green-500" />
+          <IoMdAdd className="text-md text-green-500" />
         </div>
 
         <div className="flex flex-col">
-          <h1 className="text-xl font-barlow font-bol">
+          <h1 className="text-md font-barlow font-bol">
             Code Order: XXX-XXX-XXXshoes111
           </h1>
           <h5 className="text-sm font-barlow text-slate-500">
@@ -24,7 +24,7 @@ function SubTransaction({ data, className }) {
           </h5>
         </div>
       </div>
-      <h5 className="text-green-500 text-2xl">+ $42</h5>
+      <h5 className="text-green-500 text-2md">+ $42</h5>
     </div>
   );
 }

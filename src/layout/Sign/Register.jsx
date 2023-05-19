@@ -17,7 +17,6 @@ function Register({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const Util = new Utils();
-  const Service = new Services();
   const form = useRef(null);
 
   const handleRegister = async () => {
@@ -77,7 +76,7 @@ function Register({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
       email: email,
     };
     try {
-      const res = await Service.addDataToTable(
+      const res = await Services.addDataToTable(
         "account",
         "/api/user/register",
         data

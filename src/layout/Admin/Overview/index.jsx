@@ -11,8 +11,92 @@ import BillingInformation from "./BillingInformation";
 import TransactionInformation from "./TransactionInformation";
 
 import { itemsApi } from "../../../Services/fectchApi";
+import { useEffect, useState } from "react";
+import Services from "../../../Services";
 
-function Overview({ show }) {
+function Overview({ show, setActive }) {
+  const [numberDelivery, setNumberDelivery] = useState("");
+  const [total, setTotal] = useState("");
+  const [balance, setBalance] = useState("");
+  const [order, setOrder] = useState([]);
+  const [numberItemSold, setNumberItemSold] = useState(0);
+  const [orderRecently, setOrderRecently] = useState([]);
+
+  useEffect(() => {
+    const init = async () => {
+      const result = await Services.getDataFromApi(
+        "/api/item/order/count-delivery"
+      );
+
+      if (result.status === 200) {
+        setNumberDelivery(result.count_delivery);
+      }
+    };
+    init();
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      const result = await Services.getDataFromApi(
+        "/api/item/order/count-total"
+      );
+      if (result.status === 200) {
+        setTotal(result.count_total);
+      }
+    };
+    init();
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      const result = await Services.getDataFromApi(
+        "/api/item/order/count-balance"
+      );
+      if (result.status === 200) {
+        setBalance(result.count_balance);
+      }
+    };
+    init();
+  }, []);
+
+  useEffect(() => {
+    const initOrder = async () => {
+      const res = await Services.getDataFromApi("/api/item/order/all-sold");
+      if (res.status === 200) {
+        setOrder(
+          JSON.parse(res.data).map((item, index) => {
+            return {
+              ...item,
+              id: index + 1,
+            };
+          })
+        );
+      }
+    };
+    initOrder();
+  }, []);
+
+  useEffect(() => {
+    const initOrder = async () => {
+      const res = await Services.getDataFromApi("/api/item/order/recently");
+      if (res.status === 200) {
+        setOrderRecently(JSON.parse(res.data));
+      }
+    };
+    initOrder();
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      const result = await Services.getDataFromApi(
+        "/api/item/order/count-item-sold"
+      );
+      if (result.status === 200) {
+        setNumberItemSold(result.number_item_sold);
+      }
+    };
+    init();
+  }, []);
   return (
     <div
       className="w-full mt-5"
@@ -37,7 +121,7 @@ function Overview({ show }) {
           <div className="ml-2 flex flex-col">
             <h5 className="text-xl font-barlow">Balance</h5>
             <h6 className="text-xl font-barlow font-bold text-orange-400">
-              $425
+              $ {balance}
             </h6>
           </div>
         </div>
@@ -48,7 +132,7 @@ function Overview({ show }) {
           <div className="ml-2 flex flex-col">
             <h5 className="text-xl font-barlow">Delivery</h5>
             <h6 className="text-xl font-barlow font-bold text-orange-400">
-              102
+              {numberDelivery ? numberDelivery : "Have ever order delivery"}
             </h6>
           </div>
         </div>
@@ -59,11 +143,11 @@ function Overview({ show }) {
           <div className="ml-2 flex flex-col">
             <h5 className="text-xl font-barlow">Sold</h5>
             <h6 className="text-xl font-barlow font-bold text-orange-400">
-              1.222
+              {numberItemSold} item sold
             </h6>
           </div>
         </div>
-        <div className="flex start hover:bg-slate-50 p-4 rounded-xl cursor-pointer w-1/3 scale-95">
+        {/* <div className="flex start hover:bg-slate-50 p-4 rounded-xl cursor-pointer w-1/3 scale-95">
           <div className="rounded-full xl p-4 bg-purple-300 ">
             <AiOutlineStock className="text-4xl text-white"></AiOutlineStock>
           </div>
@@ -73,7 +157,7 @@ function Overview({ show }) {
               1.222
             </h6>
           </div>
-        </div>
+        </div> */}
         <div className="flex start hover:bg-slate-50 p-4 rounded-xl cursor-pointer w-1/3 scale-95">
           <div className="rounded-full xl p-4 bg-orange-300 ">
             <FaCoins className="text-4xl text-white"></FaCoins>
@@ -81,7 +165,7 @@ function Overview({ show }) {
           <div className="ml-2 flex flex-col">
             <h5 className="text-xl font-barlow">Total Revenue</h5>
             <h6 className="text-xl font-barlow font-bold text-orange-400">
-              $425
+              ${total}
             </h6>
           </div>
         </div>
@@ -99,21 +183,23 @@ function Overview({ show }) {
         </h1>
 
         <div className="mt-10">
-          <LineCharts />
+          <LineCharts order={order} setOrder={setOrder} />
         </div>
-        <div className="pl-10 pr-10 grid-cols-2 grid gap-10">
-          <BarChart />
-          <PieChart />
+        <div className="mt-10 pl-12 mb-10">
+          <BarChart order={order} />
+        </div>
+        <div className="mt-10 pl-12 mb-10">
+          <PieChart order={order} />
         </div>
 
         <div className="mt-10">
-          <OrderRecently data={itemsApi.slice(0, 5)} />
+          <OrderRecently
+            data={orderRecently.slice(0, 5)}
+            setActive={setActive}
+          />
         </div>
 
-        <div className="mt-12 w-full grid-cols-2 grid gap-10">
-          <BillingInformation />
-          <TransactionInformation />
-        </div>
+        <BillingInformation orderRecently={orderRecently} />
       </div>
     </div>
   );

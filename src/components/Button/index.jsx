@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
 
 function ButtonCustom({
+  disabled,
   nameButton = "",
   type = "text",
   className = {},
@@ -17,7 +18,7 @@ function ButtonCustom({
     color: "#000",
     ...style,
     "&:hover": {
-      backgroundColor: hoverBg ? hoverBg : "#ffae3c",
+      backgroundColor: hoverBg ? hoverBg : "transparent",
     },
   });
   return (

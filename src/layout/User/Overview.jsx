@@ -7,7 +7,8 @@ import { CiGift, CiDeliveryTruck } from "react-icons/ci";
 import { GiRank1 } from "react-icons/gi";
 import ButtonCustom from "../../components/Button";
 
-function Overview({ show }) {
+function Overview({ userDetail, numberOrder }) {
+
   const [nav, setNav] = useState([
     {
       id: uuid(),
@@ -21,7 +22,6 @@ function Overview({ show }) {
       name: "Your order",
       icon: <CiDeliveryTruck className="text-8xl" />,
       action: null,
-      des: "2 order",
     },
     {
       id: uuid(),
@@ -32,16 +32,8 @@ function Overview({ show }) {
     },
   ]);
   return (
-    <div
-      className="w-full flex flex-col"
-      style={{
-        transition: ".8s",
-        transform: show ? "" : "scale(0)",
-        opacity: show ? "" : "0",
-        position: show ? "" : "fixed",
-      }}
-    >
-      <CardUser></CardUser>
+    <div className="w-full flex flex-col">
+      <CardUser data={userDetail}></CardUser>
 
       <div className="w-full flex justify-around mt-10 ">
         {nav.map((item, index) => {
@@ -72,7 +64,11 @@ function Overview({ show }) {
                 {item.name}
               </h5>
 
-              <h6 className="text-xl text-orange-500 mb-8 mt-5">{item.des}</h6>
+              <h6 className="text-xl text-orange-500 mb-8 mt-5">
+                {item.des}
+
+                {index === 1 && numberOrder + " order"}
+              </h6>
 
               <ButtonCustom
                 nameButton="Watch"

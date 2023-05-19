@@ -15,14 +15,15 @@ import PaginationCustom from "../../components/PaginationCustom";
 import { useContextStore } from "../../Store";
 
 function Search() {
+  const { product } = useContextStore();
   const [pageActive, setPageActive] = useState(1);
   const [loadItem, setLoadItem] = useState(false);
   const { search, setSearch } = useContextStore();
   const [searchText, setSearchText] = useState(search);
   const history = useNavigate();
-  const [itemResult, setItemsResult] = useState(itemsApi);
+  const [itemResult, setItemsResult] = useState(product ? product : []);
   const Util = new Utils();
-
+  console.log(product);
   useEffect(() => {
     setSearchText(search);
   }, [search]);
@@ -44,7 +45,7 @@ function Search() {
   }, []);
 
   useEffect(() => {
-    setItemsResult(Util.searchItems(itemsApi, search));
+    setItemsResult(Util.searchItems(product, search));
     setLoadItem(true);
   }, [search]);
 

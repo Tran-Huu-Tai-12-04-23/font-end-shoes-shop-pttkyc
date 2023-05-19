@@ -1,16 +1,19 @@
-import * as React from "react";
+import { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
+import { Alert, Modal } from "@mui/material";
 import Box from "@mui/material/Box";
 import { v4 as uuid } from "uuid";
 import Item from "./Item";
 
 import { CiDeliveryTruck } from "react-icons/ci";
 import { FaCoins } from "react-icons/fa";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function TabPanel(props) {
+  const history = useNavigate();
   const { children, value, index, ...other } = props;
 
   return (
@@ -39,66 +42,126 @@ function a11yProps(index) {
   };
 }
 
-function OrderHistory({ show }) {
+function OrderHistory({ order, setOrder }) {
+  const [orderWait, setOrderWait] = useState([]);
+  const [orderConfirmed, setConfirmed] = useState([]);
+  const [orderDelivery, setOrderDelivery] = useState([]);
+  const [orderReceived, setOrderReceived] = useState([]);
+  const [orderComplete, setOrderComplete] = useState([]);
+  const [orderCancelled, setOrderCancelled] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setOrderWait([]);
+    setConfirmed([]);
+    setOrderDelivery([]);
+    setOrderReceived([]);
+    setOrderComplete([]);
+    setOrderCancelled([]);
+    order.map((od) => {
+      if (od.status_process === 0) {
+        setOrderWait((prev) => [...prev, od]);
+      }
+      if (od.status_process === 1) {
+        setConfirmed((prev) => [...prev, od]);
+      }
+      if (od.status_process === 2) {
+        setOrderDelivery((prev) => [...prev, od]);
+      }
+      if (od.status_process === 3) {
+        setOrderReceived((prev) => [...prev, od]);
+      }
+      if (od.status_process === 4) {
+        setOrderComplete((prev) => [...prev, od]);
+      }
+      if (od.status_process === -1) {
+        setOrderCancelled((prev) => [...prev, od]);
+      }
+    });
+  }, [order]);
+
   const tabs = [
     {
       name: "All",
-      value: [
-        <Item
-          data={
-            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
-          }
-        ></Item>,
-        <Item
-          data={
-            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
-          }
-        />,
-        <Item
-          data={
-            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
-          }
-        />,
-      ],
+      value: order.map((od, index) => {
+        return (
+          <Item key={index} data={od} setOrder={setOrder} order={order}></Item>
+        );
+      }),
     },
     {
       name: "Wait for confirmation",
-      value: [],
+      value: orderWait.map((od, index) => {
+        return (
+          <Item key={index} data={od} setOrder={setOrder} order={order}></Item>
+        );
+      }),
     },
     {
       name: "Confirmed",
-      value: [],
+      value: orderConfirmed.map((od, index) => {
+        return (
+          <Item key={index} data={od} setOrder={setOrder} order={order}></Item>
+        );
+      }),
     },
     {
-      name: "being transported",
-      value: [],
+      name: "Delivery",
+      value: orderDelivery.map((od, index) => {
+        return (
+          <Item key={index} data={od} setOrder={setOrder} order={order}></Item>
+        );
+      }),
     },
     {
-      name: "Received",
-      value: [],
+      name: "Wait Received",
+      value: orderReceived.map((od, index) => {
+        return (
+          <Item key={index} data={od} setOrder={setOrder} order={order}></Item>
+        );
+      }),
+    },
+    {
+      name: "Complete",
+      value: orderComplete.map((od, index) => {
+        return (
+          <Item key={index} data={od} setOrder={setOrder} order={order}></Item>
+        );
+      }),
     },
     {
       name: "Cancelled",
-      value: [],
+      value: orderCancelled.map((od, index) => {
+        return (
+          <Item key={index} data={od} setOrder={setOrder} order={order}></Item>
+        );
+      }),
     },
   ];
 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  // handle cancel order up to quantity
+  const calTotalOrderComplete = useMemo(() => {
+    let totalOrder = 0;
+    order.map((od) => {
+      if (order.status_process === 5) {
+        return (totalOrder += od.total);
+      }
+    });
+
+    return totalOrder;
+  }, [order]);
+
+  useEffect(() => {
+    setTotal(calTotalOrderComplete);
+  }, [order]);
 
   return (
-    <div
-      className="w-full flex flex-col font-barlow"
-      style={{
-        transition: ".8s",
-        transform: show ? "" : "scale(0)",
-        opacity: show ? "" : "0",
-        position: show ? "" : "fixed",
-      }}
-    >
+    <div className="w-full flex flex-col font-barlow">
       <h1 className="text-2xl text-orange-400 font-bold ml-auto mr-auto">
         Manager Order
       </h1>
@@ -109,11 +172,11 @@ function OrderHistory({ show }) {
       <div className="w-full justify-evenly flex mt-10">
         <div className="flex flex-col items-center">
           <CiDeliveryTruck className="text-8xl text-orange-400" />
-          <h5 className="font-bold mt-2">2 order</h5>
+          <h5 className="font-bold mt-2">{order.length} order</h5>
         </div>
         <div className="flex flex-col items-center">
           <FaCoins className="text-8xl text-orange-400" />
-          <span className="font-bold mt-2">Bought : $ 45</span>
+          <span className="font-bold mt-2">$ {total}</span>
         </div>
       </div>
 
@@ -161,6 +224,16 @@ function OrderHistory({ show }) {
                       </div>
                     );
                   })}
+
+                {order.length === 0 && (
+                  <>
+                    <Alert severity="info">You have never order</Alert>
+                    <Button onClick={(e) => history("/shop")}>
+                      {" "}
+                      Go to order{" "}
+                    </Button>
+                  </>
+                )}
               </TabPanel>
             );
           })}

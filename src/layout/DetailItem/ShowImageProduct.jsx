@@ -13,9 +13,9 @@ function ShowImageProduct({ data = [] }) {
     >
       {data.map((item) => {
         return (
-          <div key={uuid()} className="w-full  rounded-xl  ">
+          <div key={uuid()} className="w-full  rounded-xl  " style={{}}>
             <img
-              className="rounded-xl xl:w-4/6 lg:w-5/6 w-full col-span-1 object-contain "
+              className="rounded-xl xl:w-4/6 lg:w-4/6  "
               src={item}
               style={{
                 margin: "0 auto",

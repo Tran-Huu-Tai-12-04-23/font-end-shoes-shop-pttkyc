@@ -3,7 +3,7 @@ import ButtonCustom from "../../../components/Button";
 import { v4 as uuid } from "uuid";
 import OrderItem from "./OrderItem";
 
-function OrderRecently({ data }) {
+function OrderRecently({ data, setActive }) {
   return (
     <div className="w-full   pb-10">
       <h1
@@ -20,6 +20,7 @@ function OrderRecently({ data }) {
         })}
       </div>
       <ButtonCustom
+        onClick={(e) => setActive(2)}
         nameButton="Watch all"
         style={{
           color: "white",

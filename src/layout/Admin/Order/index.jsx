@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Table from "../../../components/table";
 import { v4 as uuid } from "uuid";
 import { orders } from "../../../Services/fectchApi";
 
+import Services from "../../../Services";
+
 import MenuItem from "@mui/material/MenuItem";
 import ButtonCustom from "../../../components/Button";
 import CustomizedMenus from "../../../components/CustomizedMenu";
 
-function Order({ handleNextStep }) {
+function Order({ handleNextStep, setOrderDetail }) {
+  const [order, setOrder] = useState([]);
   const [orderSelected, setOrderSelected] = useState([]);
   const [activeFilter, settActiveFilter] = useState(true);
   const [filter, setFilter] = useState("");
+
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name_client", headerName: "Username", width: 130 },
@@ -33,6 +37,35 @@ function Order({ handleNextStep }) {
       width: 100,
     },
     {
+      field: "status",
+      headerName: "Status",
+      width: 200,
+      renderCell: (params) => (
+        <div
+          className="w-fix rounded-xl p-2 center "
+          style={{
+            color: "#fff",
+            background:
+              params.row.status_process === 0
+                ? "#2586f8"
+                : params.row.status_process === 1
+                ? "#964ce8"
+                : params.row.status_process === 2
+                ? "#ffae3c"
+                : params.row.status_process === 3
+                ? "#ffe500"
+                : params.row.status_process === 4
+                ? "#76a509"
+                : params.row.status_process === 5
+                ? "#76a509"
+                : "Red",
+          }}
+        >
+          {params.row.status}
+        </div>
+      ),
+    },
+    {
       field: "total",
       headerName: "Total",
       width: 100,
@@ -42,28 +75,17 @@ function Order({ handleNextStep }) {
       headerName: "Action",
       width: 250,
       renderCell: (params) => (
-        <>
-          <ButtonCustom
-            nameButton="Remove"
-            style={{
-              color: "red",
-            }}
-            onClick={(e) => {
-              handleRemove(params.row.order_id);
-            }}
-          ></ButtonCustom>
-          <ButtonCustom
-            style={{
-              marginLeft: "1rem",
-              background: "#fb923c",
-              color: "#fff",
-            }}
-            nameButton="Detail"
-            onClick={(e) => {
-              handleDetail(params.row.order_id);
-            }}
-          ></ButtonCustom>
-        </>
+        <ButtonCustom
+          style={{
+            marginLeft: "1rem",
+            background: "#fb923c",
+            color: "#fff",
+          }}
+          nameButton="Detail"
+          onClick={(e) => {
+            handleDetail(params.row.order_id);
+          }}
+        ></ButtonCustom>
       ),
     },
   ];
@@ -74,9 +96,26 @@ function Order({ handleNextStep }) {
 
   // Function to handle detail action
   function handleDetail(id) {
-    handleNextStep(3.1);
+    setOrderDetail(order.filter((item) => item.order_id === id)[0]);
+    handleNextStep(2.1);
   }
 
+  useEffect(() => {
+    const initOrder = async () => {
+      const res = await Services.getDataFromApi("/api/item/order/all");
+      if (res.status === 200) {
+        setOrder(
+          JSON.parse(res.data).map((item, index) => {
+            return {
+              ...item,
+              id: index + 1,
+            };
+          })
+        );
+      }
+    };
+    initOrder();
+  }, []);
   return (
     <div className="w-full mt-12">
       <div className="w-full end flex mb-4">
@@ -142,11 +181,11 @@ function Order({ handleNextStep }) {
         </CustomizedMenus>
       </div>
       <Table
-        data={orders}
+        data={order}
         columns={columns}
         pageSize={12}
         orderSelected={orderSelected}
-        setOrderSelected={setOrderSelected}
+        setSelection={setOrderSelected}
       ></Table>
     </div>
   );

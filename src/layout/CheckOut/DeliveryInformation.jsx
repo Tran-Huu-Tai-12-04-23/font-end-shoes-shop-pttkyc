@@ -1,22 +1,88 @@
-import { useState } from "react";
-import Input from "../../components/Input";
+import { useEffect } from "react";
+
 import SelectAddress from "./SelectAddress";
 
 import ButtonCustom from "../../components/Button";
+import Utils from "../../util";
 
 import TextField from "@mui/material/TextField";
+import { useContextStore } from "../../Store";
+function splitString(str) {
+  if (!str) {
+    return {
+      firstPart: "",
+      lastPart: "",
+    };
+  }
+  const parts = str.split(",");
+  const lastPart = parts.pop().trim();
+  const firstPart = parts.join(",").trim();
 
-function DeliveryInformation({ handleNext = () => {} }) {
-  const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [specStreet, setSpecStreet] = useState("");
-
+  return {
+    firstPart,
+    lastPart,
+  };
+}
+function DeliveryInformation({
+  userDetail,
+  setReadProvic,
+  handleNext = () => {},
+  name,
+  phoneNumber,
+  email,
+  address,
+  specStreet,
+  setName,
+  setPhoneNumber,
+  setEmail,
+  setAddress,
+  setSpecStreet,
+  readProvic,
+}) {
+  const { setAlert } = useContextStore();
+  useEffect(() => {
+    setName(
+      userDetail.first_name && userDetail.last_name
+        ? userDetail.first_name + " " + userDetail.last_name
+        : ""
+    );
+    setPhoneNumber(userDetail.phone_number ? userDetail.phone_number : "");
+    const { firstPart, lastPart } = splitString(userDetail.address);
+    setAddress(firstPart ? firstPart : "");
+    setEmail(userDetail.email ? userDetail.email : "");
+    setSpecStreet(lastPart ? lastPart : "");
+  }, [userDetail]);
   const handleContinue = () => {
-    // if (!name || !phoneNumber || !email || !address || !specStreet) {
-    //   return;
-    // }
+    if (!readProvic) {
+      setAlert({
+        type: "error",
+        message: "You have to commit to privacy!",
+      });
+      return;
+    }
+    if (!name || !phoneNumber || !email || !address || !specStreet) {
+      setAlert({
+        type: "error",
+        message: "Please enter full information!",
+      });
+      return;
+    }
+    const Util = new Utils();
+    if (!Util.isValidPhoneNumber(phoneNumber)) {
+      setAlert({
+        type: "error",
+        message: "Your number is invalid!",
+      });
+      return;
+    }
+    if (!Util.checkIsEmail(email)) {
+      setAlert({
+        type: "error",
+        message: "Your email is invalid!",
+      });
+      return;
+    }
+
     handleNext();
   };
 
@@ -49,7 +115,11 @@ function DeliveryInformation({ handleNext = () => {} }) {
           }}
         />
 
-        <SelectAddress address={address} setAddress={setAddress} />
+        <SelectAddress
+          address={address}
+          setAddress={setAddress}
+          userDetail={userDetail}
+        />
         <TextField
           label="Specific street name"
           variant="standard"
@@ -83,7 +153,10 @@ function DeliveryInformation({ handleNext = () => {} }) {
           }}
         />
         <div className="items-start w-full flex mt-3">
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            onChange={(e) => setReadProvic(e.target.checked)}
+          />
           <p className="text-xs text-clip text-gray-600 ml-3">
             I have read and consent to eShopWorid processing my information in
             accordance with the{" "}
@@ -97,19 +170,26 @@ function DeliveryInformation({ handleNext = () => {} }) {
             . eShopWortd is a trusted Nike partner.
           </p>
         </div>
-        <ButtonCustom
-          nameButton="Continue"
-          sx={{
+
+        <div className="text-sm text-blue-800">
+          - Currently, we only accept one type of payment, which is cash on
+          delivery.
+        </div>
+        <button
+          onClick={handleContinue}
+          style={{
             padding: ".5rem 3rem",
             marginTop: "2rem",
             background: "var(--linear)",
             color: "#fff",
-            width: "10rem",
+            width: "8rem",
             marginLeft: "auto",
             marginRight: "auto",
+            borderRadius: ".4rem",
           }}
-          onClick={handleContinue}
-        />
+        >
+          Next
+        </button>
       </div>
     </div>
   );

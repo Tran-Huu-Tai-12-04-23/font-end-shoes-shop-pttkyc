@@ -19,40 +19,10 @@ function Brand() {
           <div className="rounded-2xl p-4 h-48 bg-slate-200 center hover:shadow-xl cursor-pointer flex-col">
             <img className="object-contain w-40  " src={bitisLogo}></img>
           </div>
-          <div className="w-full center">
-            <ButtonCustom
-              nameButton="Get"
-              className={"show-icon-left"}
-              style={{
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                padding: ".1rem 2rem",
-                background: "var(--linear)",
-                color: "#fff",
-                marginTop: "1rem",
-              }}
-              iconRight={<BiRightArrowAlt className="icon text-2xl ml-2" />}
-            />
-          </div>
         </div>
         <div className="flex-col ">
           <div className="rounded-2xl p-4 h-48 bg-slate-200 center hover:shadow-xl cursor-pointer flex-col">
             <img className="object-contain w-40  " src={nikeLogo}></img>
-          </div>
-          <div className="w-full center">
-            <ButtonCustom
-              nameButton="Get"
-              className={"show-icon-left"}
-              style={{
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                padding: ".1rem 2rem",
-                background: "var(--linear)",
-                color: "#fff",
-                marginTop: "1rem",
-              }}
-              iconRight={<BiRightArrowAlt className="icon text-2xl ml-2" />}
-            />
           </div>
         </div>
         <div className="flex-col ">
@@ -62,21 +32,6 @@ function Brand() {
               src="https://images-na.ssl-images-amazon.com/images/S/abs-image-upload-na/3/AmazonStores/A1F83G8C2ARO7P/971f54abb384663b993701f80b0e634a.w722.h722.png"
             ></img>
           </div>
-          <div className="w-full center">
-            <ButtonCustom
-              nameButton="Get"
-              className={"show-icon-left"}
-              style={{
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                padding: ".1rem 2rem",
-                background: "var(--linear)",
-                color: "#fff",
-                marginTop: "1rem",
-              }}
-              iconRight={<BiRightArrowAlt className="icon text-2xl ml-2" />}
-            />
-          </div>
         </div>
         <div className="flex-col ">
           <div className="rounded-2xl p-4 h-48 bg-slate-200 center hover:shadow-xl cursor-pointer flex-col">
@@ -84,21 +39,6 @@ function Brand() {
               className="object-contain w-40 "
               src="https://cdn.shopify.com/s/files/1/0456/5070/6581/collections/Logo_Brand-02_1200x1200.png?v=1621918720"
             ></img>
-          </div>
-          <div className="w-full center">
-            <ButtonCustom
-              nameButton="Get"
-              className={"show-icon-left"}
-              style={{
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                padding: ".1rem 2rem",
-                background: "var(--linear)",
-                color: "#fff",
-                marginTop: "1rem",
-              }}
-              iconRight={<BiRightArrowAlt className="icon text-2xl ml-2" />}
-            />
           </div>
         </div>
       </div>

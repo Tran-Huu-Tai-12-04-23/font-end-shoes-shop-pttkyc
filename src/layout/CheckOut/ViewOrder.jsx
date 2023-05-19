@@ -1,7 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import ButtonCustom from "../../components/Button";
 
-function ViewOrder({ show, handleNext = () => {} }) {
+function ViewOrder({
+  checkOut,
+  show,
+  handleNext = () => {},
+  name,
+  phoneNumber,
+  email,
+  address,
+  specStreet,
+  total,
+}) {
   const history = useNavigate();
   return (
     <>
@@ -27,30 +37,30 @@ function ViewOrder({ show, handleNext = () => {} }) {
           <div className="w-full text- flex font-barlow flex-col">
             <h5 className="mt-5 text-xl ">
               User order :{" "}
-              <span className="text-orange-400 font-bold ml-2">
-                Tran Huu Tai
-              </span>
+              <span className="text-orange-400 font-bold ml-2">{name}</span>
             </h5>
             <h5 className="mt-5 text-xl ">
               Phone number :{" "}
-              <span className="text-orange-400 font-bold ml-2">0376100548</span>
+              <span className="text-orange-400 font-bold ml-2">
+                {phoneNumber}
+              </span>
             </h5>
             <h5 className="mt-5 text-xl ">
               Email :{" "}
-              <span className="text-orange-400 font-bold ml-2">
-                huutaitran201@gmail.com
-              </span>
+              <span className="text-orange-400 font-bold ml-2">{email}</span>
             </h5>
-            <h5 className="mt-5 text-xl ">
+            <div className="mt-5 text-xl ">
               Receiving address :
               <span className="text-orange-400 font-bold ml-2">
-                Binh dinh, my chau , phu my, 30/38 nga ba tam tuong
+                {address + "," + specStreet}
               </span>
               <h5 className="mt-5 text-xl ">
                 Total :
-                <span className="text-orange-400 font-bold ml-2">$ 45</span>
+                <span className="text-orange-400 font-bold ml-2">
+                  $ {total}
+                </span>
               </h5>
-            </h5>
+            </div>
           </div>
         </div>
       </div>
@@ -68,7 +78,14 @@ function ViewOrder({ show, handleNext = () => {} }) {
           <ButtonCustom
             nameButton="Commit Order"
             style={{ color: "#ffff", background: "var(--linear)" }}
-            onClick={handleNext}
+            onClick={async (e) => {
+              const res = await checkOut();
+
+              if (res === true) {
+                handleNext();
+                history("/bag");
+              }
+            }}
           />
           <ButtonCustom
             nameButton="Choose another items"

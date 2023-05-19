@@ -1,13 +1,7 @@
-import * as React from "react";
+import { memo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 
-export default function Table({
-  data,
-  columns,
-  pageSize = 10,
-
-  setOrderSelected,
-}) {
+function Table({ data, columns, pageSize = 10, setSelection }) {
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <DataGrid
@@ -19,11 +13,16 @@ export default function Table({
           },
         }}
         onRowSelectionModelChange={(newRowSelectionModel) => {
-          setOrderSelected(newRowSelectionModel);
+          setSelection(newRowSelectionModel);
         }}
         pageSizeOptions={[pageSize, 20]}
         checkboxSelection
+        sx={{
+          fontFamily: '"Barlow Condensed", "sans-serif"',
+        }}
       ></DataGrid>
     </div>
   );
 }
+
+export default memo(Table);

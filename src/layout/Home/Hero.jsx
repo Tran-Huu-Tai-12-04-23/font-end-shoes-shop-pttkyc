@@ -1,14 +1,14 @@
 import CarouselComponent from "../../components/CarouselComponent";
 import ButtonCustom from "../../components/Button";
 
+import { v4 as uuid } from "uuid";
+
 import { BsArrowRightShort } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
-import product1 from "../../assets/img/home/product1.png";
-import product2 from "../../assets/img/home/product2.png";
-import product3 from "../../assets/img/home/product3.png";
-
-function Hero() {
+function Hero({ productNewest }) {
+  const history = useNavigate();
   return (
     <>
       <div className="w-full pt-12">
@@ -48,30 +48,23 @@ function Hero() {
           </div>
         </div>
         <div className="col-span-1 container  mx-auto flex justify-center flex-wrap">
-          <div className="w-2/5 show-icon max-h-60 hover:bg-slate-200 cursor-pointer transition-all  bg-slate-100  rounded-xl  m-5">
-            <img
-              src={product1}
-              alt=""
-              className="w-full h-full object-contain show-icon"
-            />
-            <FiSearch className="icon hover:text-white hover:scale-125" />
-          </div>
-          <div className="w-2/5 show-icon max-h-60 hover:bg-slate-200 cursor-pointer transition-all  bg-slate-100  rounded-xl  m-5">
-            <img
-              src={product2}
-              alt=""
-              className="w-full h-full object-contain show-icon"
-            />
-            <FiSearch className="icon hover:text-white hover:scale-125" />
-          </div>
-          <div className="w-2/5 show-icon max-h-60 hover:bg-slate-200 cursor-pointer transition-all  bg-slate-100  rounded-xl m-5">
-            <img
-              src={product3}
-              alt=""
-              className="w-full h-full object-contain show-icon"
-            />
-            <FiSearch className="icon hover:text-white hover:scale-125" />
-          </div>
+          {productNewest.length > 0 &&
+            productNewest.map((product) => {
+              return (
+                <div
+                  onClick={(e) => history("/detail-item")}
+                  key={uuid()}
+                  className="w-2/5 show-icon max-h-60 hover:bg-slate-200 cursor-pointer transition-all  bg-slate-100  rounded-xl m-1"
+                >
+                  <img
+                    src={product?.link_photo}
+                    alt=""
+                    className="w-full h-full object-contain show-icon"
+                  />
+                  <FiSearch className="icon hover:text-white hover:scale-125" />
+                </div>
+              );
+            })}
         </div>
       </div>
     </>

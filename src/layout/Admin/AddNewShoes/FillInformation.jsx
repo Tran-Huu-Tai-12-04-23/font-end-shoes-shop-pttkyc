@@ -239,8 +239,8 @@ function FillInformation({
           label="Gender"
           onChange={(e) => setGender(e.target.value)}
         >
-          <MenuItem value={"male"}>Male</MenuItem>
-          <MenuItem value={"female"}>Female</MenuItem>
+          <MenuItem value={"men"}>Men</MenuItem>
+          <MenuItem value={"women"}>Women</MenuItem>
           <MenuItem value={"unisex"}>Unisex</MenuItem>
         </Select>
       </FormControl>

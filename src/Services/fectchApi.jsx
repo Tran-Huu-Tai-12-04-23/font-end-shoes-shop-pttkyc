@@ -16,7 +16,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "6d2d5513-ee5c-49bc-a2a7-7b34452fdcc5",
-    id: 0,
   },
   {
     status: "90%",
@@ -33,7 +32,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "98536b94-f800-44aa-8875-baab1b5eac6a",
-    id: 1,
   },
   {
     status: "90%",
@@ -50,7 +48,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "776e6f7f-e639-4b71-85be-1accab6e9c51",
-    id: 2,
   },
   {
     status: "90%",
@@ -67,7 +64,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "462a17a4-5793-427b-a108-9576be089922",
-    id: 3,
   },
   {
     status: "90%",
@@ -84,7 +80,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "e4139f72-7ae6-4742-9562-2363e9b71bc2",
-    id: 4,
   },
   {
     status: "90%",
@@ -101,7 +96,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "8aecd235-0084-43b1-9357-b7e324c9d124",
-    id: 5,
   },
   {
     status: "90%",
@@ -118,7 +112,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "ca3d8684-7bc7-4ced-b10c-45ce96b72e92",
-    id: 6,
   },
   {
     status: "90%",
@@ -135,7 +128,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "74c4129b-1773-41ad-a965-de2f657ccaa1",
-    id: 7,
   },
   {
     status: "90%",
@@ -152,7 +144,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "ce2afbaf-e0bd-4558-87f2-c6367a39a47c",
-    id: 8,
   },
   {
     status: "90%",
@@ -169,7 +160,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "3ad7e1cc-4431-409d-a608-989136992812",
-    id: 9,
   },
   {
     status: "90%",
@@ -186,7 +176,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "93fe7455-94bf-4bde-89f2-1f2016c4532e",
-    id: 10,
   },
   {
     status: "90%",
@@ -203,7 +192,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "f2431bd6-5670-4032-8782-5c0d086e0ce7",
-    id: 11,
   },
   {
     status: "90%",
@@ -220,7 +208,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "b95c313d-1893-42f3-8b01-8d87bb9a4272",
-    id: 12,
   },
   {
     status: "90%",
@@ -237,7 +224,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "3c34a7d7-e64c-4e46-b606-3777964ae9c0",
-    id: 13,
   },
   {
     status: "90%",
@@ -254,7 +240,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "d6103357-27b5-4ac8-baa1-1c54f1fe0d9f",
-    id: 14,
   },
   {
     status: "90%",
@@ -271,7 +256,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "0d6fe56d-bb7f-4284-baf9-388a49beb2d5",
-    id: 15,
   },
   {
     status: "90%",
@@ -288,7 +272,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "f45dadcc-7055-4d19-9aae-4e88dd58b1ca",
-    id: 16,
   },
   {
     status: "90%",
@@ -305,7 +288,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "7f779437-d59c-4633-85bb-c205f8903b97",
-    id: 17,
   },
   {
     status: "90%",
@@ -322,7 +304,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "c23356ac-3647-47c7-a697-15065551c313",
-    id: 18,
   },
   {
     status: "90%",
@@ -339,7 +320,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "2f69da71-aebc-412d-a29f-4a136c2286a0",
-    id: 19,
   },
   {
     status: "90%",
@@ -356,7 +336,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "23baf269-7cd7-449c-aae8-45956b73301d",
-    id: 20,
   },
   {
     status: "90%",
@@ -373,7 +352,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "934c1bf2-3b5f-47c2-9d3e-607c5bc90293",
-    id: 21,
   },
   {
     status: "90%",
@@ -390,7 +368,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "0e989a2a-5766-43b5-8c10-dab46e84687a",
-    id: 22,
   },
   {
     status: "90%",
@@ -407,7 +384,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "c9719da9-d2f7-4940-8512-1f14fa284cd7",
-    id: 23,
   },
   {
     status: "90%",
@@ -424,7 +400,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "9d6dda89-74e3-486b-9435-0455b5f2c387",
-    id: 24,
   },
   {
     status: "90%",
@@ -441,7 +416,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "6b74af5a-d8eb-4776-9f30-f800269e193a",
-    id: 25,
   },
   {
     status: "90%",
@@ -458,7 +432,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "4b031a02-06e3-4318-ad53-6d7548a69a29",
-    id: 26,
   },
   {
     status: "90%",
@@ -475,7 +448,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "6369b2bd-de65-4883-bdc6-73a2cf09df12",
-    id: 27,
   },
   {
     status: "90%",
@@ -492,7 +464,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "5fb76735-52fc-40bb-989c-c386c69caf38",
-    id: 28,
   },
   {
     status: "90%",
@@ -509,7 +480,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "bbd07e0b-9334-47cb-8589-51fbf0685f1a",
-    id: 29,
   },
   {
     status: "90%",
@@ -526,7 +496,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "d1640908-2fad-4f33-9d91-e2b1fc70c960",
-    id: 30,
   },
   {
     status: "90%",
@@ -543,7 +512,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "a35db4bd-aa40-403a-9c35-17ca399d9cff",
-    id: 31,
   },
   {
     status: "90%",
@@ -560,7 +528,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "8a409345-1eba-46bc-afb5-ac5e9816bce4",
-    id: 32,
   },
   {
     status: "90%",
@@ -577,7 +544,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "8e35b668-b4ef-4e20-8558-13f1c2fda977",
-    id: 33,
   },
   {
     status: "90%",
@@ -594,7 +560,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "adcab4ff-8864-4769-9de1-e3004a3cbf41",
-    id: 34,
   },
   {
     status: "90%",
@@ -611,7 +576,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "5761da14-73fe-42f4-8e27-f22bf054eee5",
-    id: 35,
   },
   {
     status: "90%",
@@ -628,7 +592,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "e8ed496c-604b-4270-9e3e-3d56a1c82865",
-    id: 36,
   },
   {
     status: "90%",
@@ -645,7 +608,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "636014e3-e2eb-49ae-a704-ecb6c6d2bdf7",
-    id: 37,
   },
   {
     status: "90%",
@@ -662,7 +624,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "839c278f-9766-41a7-8eaa-3bc5fa5e5e45",
-    id: 38,
   },
   {
     status: "90%",
@@ -679,7 +640,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "f3d97488-f1b8-40cb-af08-5f1ebe49cb63",
-    id: 39,
   },
   {
     status: "90%",
@@ -696,7 +656,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "66c22190-ddb2-4cfa-9ebe-ca264527efe7",
-    id: 40,
   },
   {
     status: "90%",
@@ -713,7 +672,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "b981016c-6e86-4250-92a0-24b9f89cf0d8",
-    id: 41,
   },
   {
     status: "90%",
@@ -730,7 +688,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "c76691fe-64c0-40dc-9fe1-13baf8aa43a0",
-    id: 42,
   },
   {
     status: "90%",
@@ -747,7 +704,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "af200e73-b362-4e1e-9005-8a8d44479676",
-    id: 43,
   },
   {
     status: "90%",
@@ -764,7 +720,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "b73be88d-7183-440d-9cce-513a5802d5a2",
-    id: 44,
   },
   {
     status: "90%",
@@ -781,7 +736,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "db9f1812-a882-4c23-ab99-dffab940a2f6",
-    id: 45,
   },
   {
     status: "90%",
@@ -798,7 +752,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "dd774173-7dd9-47c4-ba42-2ed713bdaa41",
-    id: 46,
   },
   {
     status: "90%",
@@ -815,7 +768,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "0e5372e2-f5d0-46f1-a018-20a504487e54",
-    id: 47,
   },
   {
     status: "90%",
@@ -832,7 +784,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "d9474140-11d4-4412-ad3a-58c7b8bdf119",
-    id: 48,
   },
   {
     status: "90%",
@@ -849,7 +800,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "93c68340-e3b1-4afe-806e-d15d6b9591bb",
-    id: 49,
   },
   {
     status: "90%",
@@ -866,7 +816,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "a22ed12f-7ae6-47f1-943c-97712bb7ddd2",
-    id: 50,
   },
   {
     status: "90%",
@@ -883,7 +832,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "83696618-f9aa-473d-ae91-10a35bf5e97f",
-    id: 51,
   },
   {
     status: "90%",
@@ -900,7 +848,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "beeed53d-8e3f-40c2-a50d-20a3233a4fd9",
-    id: 52,
   },
   {
     status: "90%",
@@ -917,7 +864,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "e664b5aa-7190-4e98-8d04-f7f1f5fad6de",
-    id: 53,
   },
   {
     status: "90%",
@@ -934,7 +880,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "58b9fe6c-acf3-4546-a4ae-0c8f1f6a0de4",
-    id: 54,
   },
   {
     status: "90%",
@@ -951,7 +896,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "39e5bcd3-21e1-4900-a629-72c69b38afd4",
-    id: 55,
   },
   {
     status: "90%",
@@ -968,7 +912,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "3f44be7e-8815-41cb-b803-afd6f285deb1",
-    id: 56,
   },
   {
     status: "90%",
@@ -985,7 +928,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "b6046248-92a4-4833-978d-02c38f62cecc",
-    id: 57,
   },
   {
     status: "90%",
@@ -1002,7 +944,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "c167263a-5704-499e-b66a-e34803ca1778",
-    id: 58,
   },
   {
     status: "90%",
@@ -1019,7 +960,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "0fece289-829d-4a7f-a0ae-6db994918e52",
-    id: 59,
   },
   {
     status: "90%",
@@ -1036,7 +976,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "bd46766f-a057-4884-924a-c0e8256c6956",
-    id: 60,
   },
   {
     status: "90%",
@@ -1053,7 +992,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "28ef46be-2c0b-45f4-a056-e9fe44940abb",
-    id: 61,
   },
   {
     status: "90%",
@@ -1070,7 +1008,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "09835aa2-878b-477f-baeb-bc55a2a77200",
-    id: 62,
   },
   {
     status: "90%",
@@ -1087,7 +1024,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "4ae257e4-dc16-43cc-a009-a89366473fe7",
-    id: 63,
   },
   {
     status: "90%",
@@ -1104,7 +1040,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "29d80866-86ed-42b2-ae3f-904534973f76",
-    id: 64,
   },
   {
     status: "90%",
@@ -1121,7 +1056,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "779483f1-c56c-4568-a84f-c6d801df0651",
-    id: 65,
   },
   {
     status: "90%",
@@ -1138,7 +1072,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "31b72aa2-a729-43f2-8d9e-3801b66dd8d1",
-    id: 66,
   },
   {
     status: "90%",
@@ -1155,7 +1088,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "e8f865db-1acc-4229-9a00-58d5eee7ff1c",
-    id: 67,
   },
   {
     status: "90%",
@@ -1172,7 +1104,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "0d5e0b24-4948-4e77-a4bd-f171ecfd5e89",
-    id: 68,
   },
   {
     status: "90%",
@@ -1189,7 +1120,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "79345962-19ed-49e1-a0a5-4e1016cf75b5",
-    id: 69,
   },
   {
     status: "90%",
@@ -1206,7 +1136,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "78c251ea-ddf7-45bb-8c01-438f8e5e1863",
-    id: 70,
   },
   {
     status: "90%",
@@ -1223,7 +1152,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "5d380f02-a138-4467-a578-85bd865651ac",
-    id: 71,
   },
   {
     status: "90%",
@@ -1240,7 +1168,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "0ef5d02e-f451-4c5d-8004-455635218950",
-    id: 72,
   },
   {
     status: "90%",
@@ -1257,7 +1184,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "42ff888e-3ef1-4a88-a9c3-64564e49de15",
-    id: 73,
   },
   {
     status: "90%",
@@ -1274,7 +1200,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "d4252f54-04c8-496e-93c8-1bf5c4d8c6c8",
-    id: 74,
   },
   {
     status: "90%",
@@ -1291,7 +1216,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "81945b33-ca9b-468d-a2bc-e395ed7e54c9",
-    id: 75,
   },
   {
     status: "90%",
@@ -1308,7 +1232,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "ccc8f4ee-beb6-49c5-90c2-6e680a19ea57",
-    id: 76,
   },
   {
     status: "90%",
@@ -1325,7 +1248,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "58ba87be-9824-426e-9100-0ae4fb964db4",
-    id: 77,
   },
   {
     status: "90%",
@@ -1342,7 +1264,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "85316bf0-05e1-4a71-9087-259d2c000f95",
-    id: 78,
   },
   {
     status: "90%",
@@ -1359,7 +1280,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "6f16161b-7cba-4af7-b2d0-a1b28ebd31d0",
-    id: 79,
   },
   {
     status: "90%",
@@ -1376,7 +1296,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "80c20cca-9d42-4ed1-a51a-f1a5c73f9470",
-    id: 80,
   },
   {
     status: "90%",
@@ -1393,7 +1312,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "453d1983-3821-4a1e-95f6-a1b771b2dc79",
-    id: 81,
   },
   {
     status: "90%",
@@ -1410,7 +1328,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "6165bfc8-b21b-4529-b183-4a3a5a4782d9",
-    id: 82,
   },
   {
     status: "90%",
@@ -1427,7 +1344,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "afbd3f29-836e-4ea7-989c-60a786f62f67",
-    id: 83,
   },
   {
     status: "90%",
@@ -1444,7 +1360,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "3d2ed8d7-e4d6-41d7-9091-32b82123f377",
-    id: 84,
   },
   {
     status: "90%",
@@ -1461,7 +1376,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "401f1562-8bbe-4082-b651-05589beb3264",
-    id: 85,
   },
   {
     status: "90%",
@@ -1478,7 +1392,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "bf30a34c-3b86-4bbd-a2ca-ed53b1b19585",
-    id: 86,
   },
   {
     status: "90%",
@@ -1495,7 +1408,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "caf03bea-d49d-4f47-967a-4a801a9f99a7",
-    id: 87,
   },
   {
     status: "90%",
@@ -1512,7 +1424,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "15f5452c-bc28-413d-b6c5-1c9cef6512af",
-    id: 88,
   },
   {
     status: "90%",
@@ -1529,7 +1440,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "986927a3-73f3-4e00-bb02-32c5f793dc06",
-    id: 89,
   },
   {
     status: "90%",
@@ -1546,7 +1456,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "4f90ec42-2d95-4613-8363-a56686304b62",
-    id: 90,
   },
   {
     status: "90%",
@@ -1563,7 +1472,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "0582c863-f4ff-40f1-90d0-6495a692fe16",
-    id: 91,
   },
   {
     status: "90%",
@@ -1580,7 +1488,6 @@ export const itemsApi = [
     age: "adult",
     add_date: "2023-05-07 12:34:56",
     item_id: "de449933-2fef-4db0-9388-28b02ee4645b",
-    id: 92,
   },
   {
     status: "90%",
@@ -1597,7 +1504,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "57929703-3a99-4b59-ba92-8f3ff29355e9",
-    id: 93,
   },
   {
     status: "90%",
@@ -1614,7 +1520,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "c3804442-776c-4e2f-ad3a-8f1e1018aa7f",
-    id: 94,
   },
   {
     status: "90%",
@@ -1631,7 +1536,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "4bb33264-c5c9-485a-85dc-39bdeadcb691",
-    id: 95,
   },
   {
     status: "90%",
@@ -1648,7 +1552,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "e3f7ac89-949c-42ec-ba8a-e8055853719b",
-    id: 96,
   },
   {
     status: "90%",
@@ -1665,7 +1568,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "8188d96f-ebc0-4a48-88ee-a5b1ea98c3be",
-    id: 97,
   },
   {
     status: "90%",
@@ -1682,7 +1584,6 @@ export const itemsApi = [
     age: "kid",
     add_date: "2023-05-07 12:34:56",
     item_id: "bc3c9016-05b4-4b06-9d4a-db9f306c3857",
-    id: 98,
   },
   {
     status: "90%",
@@ -1699,7 +1600,6 @@ export const itemsApi = [
     age: "teenager",
     add_date: "2023-05-07 12:34:56",
     item_id: "46007679-dab2-4d24-b33b-dc50e5f197c0",
-    id: 99,
   },
 ];
 

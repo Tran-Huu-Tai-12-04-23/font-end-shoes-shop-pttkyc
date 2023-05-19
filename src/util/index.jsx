@@ -1,6 +1,50 @@
 import unidecode from "unidecode";
 
 class Utils {
+  isValidDate(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      return "Invalid date"; // Kiểm tra ngày không hợp lệ
+    }
+
+    if (end < start) {
+      return "Date end must after date start"; // Ngày cuối phải lớn hơn ngày đầu
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (start < today) {
+      return "Date start invalid"; // Ngày đầu phải lớn hơn hoặc bằng ngày hôm nay
+    }
+    if (end < today) {
+      return "Date end invalid"; // Ngày đầu phải lớn hơn hoặc bằng ngày hôm nay
+    }
+
+    return true; // Ngày hợp lệ
+  }
+  isValidPhoneNumber(phoneNumber) {
+    const cleanedNumber = phoneNumber.replace(/\D/g, "");
+    const phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(cleanedNumber);
+  }
+
+  calculateDateDifference(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Chuyển đổi các ngày thành mili giây
+    const startMs = start.getTime();
+    const endMs = end.getTime();
+
+    // Tính toán khoảng cách (số ngày)
+    const differenceMs = Math.abs(endMs - startMs);
+    const differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
+
+    return differenceDays;
+  }
+
   checkMinLength(username, minLength) {
     return username.length >= minLength;
   }

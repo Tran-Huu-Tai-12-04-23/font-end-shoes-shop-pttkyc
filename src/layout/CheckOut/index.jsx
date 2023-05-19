@@ -24,7 +24,11 @@ import ButtonCustom from "../../components/Button";
 import ItemCheckOut from "./ItemCheckOut";
 import OrderSuccess from "./OrderSuccess";
 
+import { useContextStore } from "../../Store";
 import ViewOrder from "./ViewOrder";
+import { useRadioGroup } from "@mui/material";
+import { UseAuthUserContext } from "../../AuthUser";
+import Services from "../../Services";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -95,23 +99,68 @@ function ColorlibStepIcon(props) {
 function getSteps() {
   return ["Fill information", "Confirm Check", "Complete"];
 }
-
 export default function CheckOut() {
+  const { user } = UseAuthUserContext();
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [specStreet, setSpecStreet] = useState("");
+  const [readProvic, setReadProvic] = useState(false);
+  //
+  const { itemsBag, setItemsBag, setAlert } = useContextStore();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   const history = useNavigate();
-  const images = [
-    product1,
-    product2,
-    product3,
-    product1,
-    product2,
-    product3,
-    product2,
-  ];
+  const [total, setTotal] = useState(0);
+  const [userDetail, setUserDetail] = useState({});
+
+  useEffect(() => {
+    const initUser = async () => {
+      const result = await Services.getDataFromApi(
+        "/api/user/get-detail-user/" + `?id=${user?.id}`
+      );
+      if (result.status === 200) {
+        setUserDetail(JSON.parse(result.data));
+      }
+    };
+    initUser();
+  }, [user]);
+
+  useEffect(() => {
+    let calculatedTotal = 0;
+    itemsBag.forEach((item) => {
+      if (item.price_sale) {
+        calculatedTotal += item.price_sale;
+      } else {
+        calculatedTotal += item.cost;
+      }
+    });
+    setTotal(calculatedTotal);
+    return () => {};
+  }, [itemsBag]);
+
+  useEffect(() => {
+    const itemFilter = itemsBag.reduce((accumulator, currentItem) => {
+      if (!accumulator.some((item) => item.item_id === currentItem.item_id)) {
+        const count = itemsBag.filter(
+          (item) => item.item_id === currentItem.item_id
+        ).length;
+        const updatedItem = { ...currentItem, quantityOrder: 1 };
+        return [...accumulator, updatedItem];
+      }
+      return accumulator;
+    }, []);
+
+    setItemsBag(itemFilter);
+  }, []);
+
   const [showFormInformation, setShowFormInformation] = useState(true);
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    if (activeStep === 1) {
+      // const result = await
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -137,7 +186,49 @@ export default function CheckOut() {
       };
     }
   }, [activeStep]);
+  const checkOut = async () => {
+    const nameCheck = [];
+    const itemIdCheck = [];
+    const priceCheck = [];
+    const quantity = [];
+    const typeOrder = [];
+    itemsBag.forEach((item) => {
+      nameCheck.push(item.name);
+      itemIdCheck.push(item.item_id);
+      priceCheck.push(item.price_sale ? item.price_sale : item.cost);
+      quantity.push(1);
+      typeOrder.push(item.quantity <= 0 ? 1 : 0);
+    });
 
+    const dataCheck = {
+      nameItem: nameCheck,
+      item_id: itemIdCheck,
+      phoneNumber,
+      email,
+      price: priceCheck,
+      address: address + "," + specStreet,
+      quantity: quantity,
+      nameUser: user ? user.username : "guest",
+      accountId: user ? user.id : null,
+      typeOrder: typeOrder,
+    };
+    const result = await Services.callApi("/api/item/order", dataCheck);
+    if (result.status === 200) {
+      setAlert({
+        type: "success",
+        message: "Order successfully ",
+      });
+      setItemsBag([]);
+      localStorage.clear();
+      return true;
+    } else {
+      setAlert({
+        type: "error",
+        message: "Order failed ",
+      });
+      return false;
+    }
+  };
   return (
     <div>
       <Header />
@@ -207,7 +298,22 @@ export default function CheckOut() {
                   transform: activeStep !== 0 ? "translateX(-200%)" : "",
                 }}
               >
-                <DeliveryInformation handleNext={handleNext} />
+                <DeliveryInformation
+                  handleNext={handleNext}
+                  setName={setName}
+                  setPhoneNumber={setPhoneNumber}
+                  setEmail={setEmail}
+                  setAddress={setAddress}
+                  setSpecStreet={setSpecStreet}
+                  name={name}
+                  phoneNumber={phoneNumber}
+                  email={email}
+                  address={address}
+                  specStreet={specStreet}
+                  readProvic={readProvic}
+                  setReadProvic={setReadProvic}
+                  userDetail={userDetail}
+                />
               </div>
               <div
                 className="col-span-1 flex justify-start flex-col p-4"
@@ -231,11 +337,9 @@ export default function CheckOut() {
                       borderBottom: "1px solid #ccc",
                     }}
                   >
-                    <h5 className="text-xl font-barlow">
-                      Items ({images.length}):
-                    </h5>
+                    <h5 className="text-xl font-barlow">Items :</h5>
                     <span className="text-xl font-barlow text-orange-400">
-                      $ 45
+                      {itemsBag.length}
                     </span>
                   </div>
                   <div
@@ -246,7 +350,7 @@ export default function CheckOut() {
                   >
                     <h5 className="text-xl font-barlow">Shipping :</h5>
                     <span className="text-xl font-barlow text-orange-400">
-                      $ 3
+                      free
                     </span>
                   </div>
                   <div
@@ -257,11 +361,11 @@ export default function CheckOut() {
                   >
                     <h5 className="text-xl font-barlow">Total :</h5>
                     <span className="text-xl font-barlow text-orange-400">
-                      $ 48
+                      ${total}
                     </span>
                   </div>
                 </div>
-                {images.map((item) => {
+                {itemsBag.map((item) => {
                   return <ItemCheckOut key={uuid()} data={item} />;
                 })}
               </div>
@@ -271,6 +375,13 @@ export default function CheckOut() {
           <ViewOrder
             show={activeStep === 1 ? true : false}
             handleNext={handleNext}
+            name={name}
+            phoneNumber={phoneNumber}
+            email={email}
+            address={address}
+            specStreet={specStreet}
+            total={total}
+            checkOut={checkOut}
           />
           <OrderSuccess show={activeStep === 2 ? true : false} />
         </div>

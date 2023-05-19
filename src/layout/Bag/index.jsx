@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import MostItemRelative from "./MostItemRelative";
@@ -16,25 +16,61 @@ import { IoMdAdd } from "react-icons/io";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { BsTelephone, BsWallet2 } from "react-icons/bs";
 import ItemBag from "./ItemBag";
+import { useContextStore } from "../../Store";
+import { Alert } from "@mui/material";
 
 function Bag() {
-  const images = [
-    product1,
-    product2,
-    product3,
-    product1,
-    product2,
-    product3,
-    product2,
-  ];
-  const remainingProduct = 3;
+  const { itemsBag, setItemsBag } = useContextStore();
+  const [itemShowBag, setItemShowBag] = useState(itemsBag);
+
   const sizes = [36, 37, 38, 39, 40];
   const [size, setSize] = useState(sizes[0]);
   const [quantity, setQuantity] = useState(1);
   const history = useNavigate();
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    let calculatedTotal = 0;
+    itemsBag.forEach((item) => {
+      if (item.price_sale) {
+        calculatedTotal += item.price_sale;
+      } else {
+        calculatedTotal += item.cost;
+      }
+    });
+
+    setTotal(calculatedTotal);
+
+    return () => {
+      // Clean up any necessary resources here
+    };
+  }, [itemsBag]);
 
   const [value, setValue] = useState(2);
+  const handleRemoveItem = (id) => {
+    setItemsBag((prev) => {
+      return prev.filter((it) => it.item_id !== id);
+    });
+    localStorage.setItem(
+      "bag",
+      JSON.stringify(itemsBag.filter((item) => item.item_id !== id))
+    );
+  };
 
+  useEffect(() => {
+    const itemFilter = itemsBag.reduce((accumulator, currentItem) => {
+      if (!accumulator.some((item) => item.item_id === currentItem.item_id)) {
+        const count = itemsBag.filter(
+          (item) => item.item_id === currentItem.item_id
+        ).length;
+        const updatedItem = { ...currentItem, quantityOrder: 1 };
+        return [...accumulator, updatedItem];
+      }
+      return accumulator;
+    }, []);
+
+    setItemShowBag(itemFilter);
+  }, [itemsBag]);
   return (
     <div className="w-full ">
       <Header />
@@ -53,9 +89,27 @@ function Bag() {
           </div>
           <div className="grid grid-cols-2 gap-20">
             <div className="col-span-1 overflow-hidden">
-              {images.map((item) => {
-                return <ItemBag key={uuid()} data={item} />;
+              {itemShowBag.map((item) => {
+                return (
+                  <ItemBag
+                    key={uuid()}
+                    data={item}
+                    handleRemoveItem={handleRemoveItem}
+                  />
+                );
               })}
+
+              {itemsBag.length === 0 && (
+                <Alert
+                  severity="info"
+                  sx={{
+                    fontSize: "1.5rem",
+                    marginTop: "1rem",
+                  }}
+                >
+                  No item in your bag
+                </Alert>
+              )}
             </div>
             <div className="col-span-1 flex justify-start flex-col p-4">
               <div className=" flex flex-col">
@@ -66,11 +120,9 @@ function Bag() {
                     borderBottom: "1px solid #ccc",
                   }}
                 >
-                  <h5 className="text-xl font-barlow">
-                    Items ({images.length}):
-                  </h5>
+                  <h5 className="text-xl font-barlow">Items :</h5>
                   <span className="text-xl font-barlow text-orange-400">
-                    $ 45
+                    {itemsBag.length}
                   </span>
                 </div>
                 <div
@@ -81,7 +133,7 @@ function Bag() {
                 >
                   <h5 className="text-xl font-barlow">Shipping :</h5>
                   <span className="text-xl font-barlow text-orange-400">
-                    $ 3
+                    free
                   </span>
                 </div>
                 <div
@@ -92,7 +144,7 @@ function Bag() {
                 >
                   <h5 className="text-xl font-barlow">Total :</h5>
                   <span className="text-xl font-barlow text-orange-400">
-                    $ 48
+                    $ {total}
                   </span>
                 </div>
               </div>

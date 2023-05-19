@@ -4,11 +4,12 @@ import MenuItem from "@mui/material/MenuItem";
 
 import { CiTrash } from "react-icons/ci";
 
-function ItemBag({ data }) {
+function ItemBag({ data, handleRemoveItem = () => {} }) {
   const [age, setAge] = useState("36");
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+
   return (
     <div
       className="p-4 flex "
@@ -16,18 +17,37 @@ function ItemBag({ data }) {
         borderBottom: "1px solid #ccc",
       }}
     >
-      <div className="w-44 h-32 bg-blur rounded-xl mr-4">
-        <img className="w-full h-full object-contain   " src={data} />
+      <div className="w-44 h-32 rounded-xl mr-4 center">
+        <img
+          className=" h-full rounded-2xl   "
+          src={
+            Array.isArray(data.link_photo)
+              ? data.link_photo[0]
+              : data.link_photo
+          }
+          style={{
+            width: "7rem",
+            height: "7rem",
+          }}
+        />
       </div>
 
       <div className="flex flex-col items-start w-full font-barlow">
         <div className="justify-between flex w-full">
-          <h5 className="text-xl font-barlow font-bold ">Nike</h5>
-          <h5 className="text-xl font-barlow  text-orange-400">$ 42</h5>
+          <h5 className="text-md font-barlow font-bold ">{data.name}</h5>
+          <div className="text-md font-barlow  text-orange-400">
+            {data.price_sale && (
+              <>
+                <span className="text-md line-through">${data.cost}</span>
+                <span className="text-xl ml-2">${data.price_sale}</span>
+              </>
+            )}
+            {!data.price_sale && <>${data.cost}</>}
+          </div>
         </div>
         <div className="flex flex-col ">
           <div className="start flex mt-2">
-            Status : <span className="ml-2"> 95%</span>
+            Status : <span className="ml-2"> {data.status}</span>
           </div>
 
           <div className="start flex ">
@@ -37,45 +57,29 @@ function ItemBag({ data }) {
                 borderRight: "1px solid #ccc",
               }}
             >
-              <span className="text-md mr-2">Size :</span>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={age}
-                label=""
-                onChange={handleChange}
-                sx={{
-                  height: "2rem",
-                  fontFamily: `"Barlow Condensed", "sans-serif"`,
-                }}
-              >
-                <MenuItem value={36}>36</MenuItem>
-                <MenuItem value={37}>37</MenuItem>
-                <MenuItem value={38}>38</MenuItem>
-              </Select>
+              <span className="text-md mr-2">Size : {data.size}</span>
             </div>
             <div className="start flex mt-2 ">
-              <span className="text-md mr-2">Quantity :</span>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={age}
-                label=""
-                onChange={handleChange}
-                sx={{
-                  height: "2rem",
-                  fontFamily: `"Barlow Condensed", "sans-serif"`,
-                }}
-              >
-                <MenuItem value={36}>36</MenuItem>
-                <MenuItem value={37}>37</MenuItem>
-                <MenuItem value={38}>38</MenuItem>
-              </Select>
+              <span className="text-md mr-2">
+                Quantity : {data.quantityOrder}
+              </span>
             </div>
+
+            {data.quantity <= 0 && (
+              <div className="p-2 rounded-xl bg-orange-400 mt-2 text-white">
+                Pre-order
+              </div>
+            )}
           </div>
         </div>
         <div>
-          <CiTrash className="text-3xl hover:text-red-400 cursor-pointer " />
+          <CiTrash
+            className="text-3xl hover:text-red-400 cursor-pointer "
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRemoveItem(data.item_id);
+            }}
+          />
         </div>
       </div>
     </div>

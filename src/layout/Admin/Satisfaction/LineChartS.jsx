@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
   ResponsiveContainer,
@@ -11,16 +11,65 @@ import {
   Legend,
 } from "recharts";
 
-export default function LineChartS() {
+import Services from "../../../Services";
+
+export default function LineChartS({ order, setOrder }) {
   const [data, setData] = useState([
-    { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
-    { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
-    { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
-    { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
-    { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
-    { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
-    { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
+    { name: "January", number_order: 0, total: 0 },
+    { name: "February", number_order: 0, total: 0 },
+    { name: "March", number_order: 0, total: 0 },
+    { name: "April", number_order: 0, total: 0 },
+    { name: "May", number_order: 0, total: 0 },
+    { name: "June", number_order: 0, total: 0 },
+    { name: "July", number_order: 0, total: 0 },
+    { name: "August", number_order: 0, total: 0 },
+    { name: "September", number_order: 0, total: 0 },
+    { name: "October", number_order: 0, total: 0 },
+    { name: "November", number_order: 0, total: 0 },
+    { name: "December", number_order: 0, total: 0 },
   ]);
+
+  useEffect(() => {
+    // Calculate number_order and total from the given objects
+    const updatedData = data.map((month) => {
+      let { number_order, total } = month;
+      total = 0;
+      number_order = 0;
+      // Iterate through the objects and update the values
+      for (const obj of order) {
+        const orderDate = new Date(obj.order_date);
+        const orderMonth = orderDate.getMonth();
+        const orderYear = orderDate.getFullYear();
+        // Check if the order's month and year match the current month
+        if (
+          orderMonth === data.indexOf(month) &&
+          orderYear === new Date().getFullYear()
+        ) {
+          number_order += 1;
+          total += obj.total;
+        }
+      }
+      return { ...month, number_order, total };
+    });
+    setData(updatedData);
+  }, [order]);
+
+  useEffect(() => {
+    const initOrder = async () => {
+      const res = await Services.getDataFromApi("/api/item/order/all-sold");
+      if (res.status === 200) {
+        setOrder(
+          JSON.parse(res.data).map((item, index) => {
+            return {
+              ...item,
+              id: index + 1,
+            };
+          })
+        );
+      }
+    };
+    initOrder();
+  }, []);
   return (
     <ResponsiveContainer className="chart" height={300}>
       <LineChart
@@ -36,11 +85,11 @@ export default function LineChartS() {
         <Legend />
         <Line
           type="monotone"
-          dataKey="pv"
+          dataKey="total"
           stroke="#8884d8"
           activeDot={{ r: 8 }}
         />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        <Line type="monotone" dataKey="number_order" stroke="#82ca9d" />
       </LineChart>
     </ResponsiveContainer>
   );

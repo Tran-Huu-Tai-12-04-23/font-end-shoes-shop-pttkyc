@@ -1,7 +1,7 @@
 import Billing from "../Order/Billing";
 import { v4 as uuid } from "uuid";
 
-function BillingInformation() {
+function BillingInformation({ orderRecently }) {
   const data = [
     {
       id: uuid(),
@@ -27,10 +27,10 @@ function BillingInformation() {
   ];
   return (
     <div className="w-full flex flex-col p-4 rounded-xl bg-slate-50 mb-10">
-      <h1 className="text-2xl font-barlow font-bold p-2 ">
+      <h1 className="text-xl font-barlow font-bold p-2 ">
         Billing Information
       </h1>
-      {data.map((bill) => {
+      {orderRecently.map((bill) => {
         return (
           <Billing
             key={uuid()}

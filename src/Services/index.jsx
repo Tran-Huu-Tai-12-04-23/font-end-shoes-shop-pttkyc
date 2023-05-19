@@ -33,7 +33,7 @@ class Services {
     }
   }
   async getDataFromApiOrder(link, params = "") {
-    link = "http://localhost:3300" + link;
+    link = link + params;
     try {
       const response = await axios.get(link);
       return response.data;
@@ -41,6 +41,36 @@ class Services {
       return null;
     }
   }
+  async getDataFromApi(link, params = "") {
+    link = "http://localhost:3300" + link + params;
+    try {
+      const response = await axios.get(link);
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+  }
+  async update(link, data) {
+    link = "http://localhost:3300" + link;
+    try {
+      const response = await axios.put(link, { ...data });
+      return response;
+    } catch (error) {
+      return null;
+    }
+  }
+  async remove(link, query) {
+    const url = "http://localhost:3300" + link + query;
+    console.log(url);
+    try {
+      const response = await axios.delete(url);
+      return response;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
   async uploadListPhoto(photos) {
     const listUrlPhoto = await Promise.all(
       photos.map(async (photo) => {
@@ -57,4 +87,4 @@ class Services {
   }
 }
 
-export default Services;
+export default new Services();

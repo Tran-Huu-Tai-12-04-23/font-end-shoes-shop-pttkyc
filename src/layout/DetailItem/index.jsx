@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Rating from "@mui/material/Rating";
 
 import WrapperFeedback from "./WrapperFeedback";
@@ -17,24 +17,60 @@ import { RxDividerHorizontal } from "react-icons/rx";
 import { IoMdAdd } from "react-icons/io";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { BsTelephone, BsWallet2 } from "react-icons/bs";
+import { useContextStore } from "../../Store";
+
+import Services from "../../Services";
+import { useNavigate } from "react-router-dom";
 
 function DetailItem() {
-  const images = [
-    product1,
-    product2,
-    product3,
-    product1,
-    product2,
-    product3,
-    product2,
-  ];
+  const { idProductDetail, setAlert, itemSale, setItemsBag, itemsBag } =
+    useContextStore();
+  const [item, setItem] = useState([]);
+
   const remainingProduct = 3;
   const sizes = [36, 37, 38, 39, 40];
   const [size, setSize] = useState(sizes[0]);
   const [quantity, setQuantity] = useState(1);
 
   const [value, setValue] = useState(2);
+  const history = useNavigate();
+  const addToCart = () => {
+    setItemsBag((prev) => {
+      return [...prev, item];
+    });
+    localStorage.setItem("bag", JSON.stringify([...itemsBag, item]));
+    setAlert({
+      type: "success",
+      message: "Add new item to your bag!",
+    });
+  };
+  const checkOutItem = () => {
+    addToCart();
+    history("/check-out");
+  };
+  useEffect(() => {
+    const handleGetDetailItem = async () => {
+      const res = await Services.getDataFromApi(
+        "/api/item/detail/",
+        `?id=${idProductDetail}`
+      );
+      if (res.status === 200) {
+        setItem(JSON.parse(res.data));
+      } else {
+        setAlert({
+          type: "error",
+          message: "Server is error. Please try again",
+        });
+      }
+    };
+    handleGetDetailItem();
+  }, [idProductDetail]);
 
+  useEffect(() => {
+    if (!idProductDetail) {
+      history("/");
+    }
+  }, []);
   return (
     <div className="w-full ">
       <Header />
@@ -42,92 +78,50 @@ function DetailItem() {
         <div className="xl:w-5/6 w-full">
           <div className="grid grid-cols-2 gap-20">
             <div className="col-span-1 overflow-hidden">
-              <ShowImageProduct data={images} />
+              <ShowImageProduct data={item.link_photo} />
             </div>
             <div className="col-span-1 flex justify-center flex-col p-4">
-              <h1 className="text-3xl font-barlow font-bold">Nike air max 1</h1>
-              <div className="start flex font-bold  text-xl font-barlow mt-4 mb-4 p-2 border-slate-400 border-solid border-b-2">
+              <h1 className="text-2xl font-barlow font-bold">
+                {item.price_sale && (
+                  <span className="p-2 rounded-xl bg-orange-400 font-bold text-white font-barlow ml-2 mr-2 text-md">
+                    Discount up to :{" "}
+                    {Math.round((item.price_sale / item.cost) * 100) + "%"}
+                  </span>
+                )}
+                {item.name}
+              </h1>
+              <h5 className="font-barlow text-sm text-gray-500 mt-2">
+                Description : {item.des}
+              </h5>
+              <div className="start flex  text-xl font-barlow mt-4 mb-4 p-2 border-slate-400 border-solid border-b-2">
                 Status :
                 <span className="text-orange-500 font-bold font-barlow ml-2 text-xl">
-                  95%
+                  {item.status}
                 </span>
               </div>
-              <div className="start font-bold flex text-xl font-barlow mt-4 mb-4 p-2 border-slate-400 border-solid border-b-2">
-                Cost :
-                <span className="text-orange-500 font-bold font-barlow ml-2 text-xl">
-                  $ 42.2
-                </span>
+              <div className="start flex text-xl font-barlow mt-4 mb-4 p-2 border-slate-400 border-solid border-b-2">
+                Cost :{" "}
+                {item.price_sale && (
+                  <>
+                    <span className="line-through font-bold text-orange-500 font-barlow ml-2 text-md">
+                      ${item.cost}
+                    </span>
+                    <span className="font-bold text-orange-500 font-barlow ml-2 text-xl">
+                      ${item.price_sale}
+                    </span>
+                  </>
+                )}
+                {!item.price_sale && (
+                  <span className="font-bold text-orange-500 font-barlow ml-2 text-xl">
+                    ${item.cost}
+                  </span>
+                )}
               </div>
-              <div className="flex-col font-bold flex text-xl font-barlow mt-4 mb-4 p-2 border-slate-400 border-solid border-b-2">
+              <div className="start flex text-xl font-barlow mt-4 mb-4 p-2 border-slate-400 border-solid border-b-2">
                 <h5>Size :</h5>
-                <div className="flex flex-wrap">
-                  {sizes.map((sizeI) => {
-                    return (
-                      <ButtonCustom
-                        key={uuid()}
-                        nameButton={sizeI}
-                        sx={{
-                          fontSize: "1rem",
-                          fontWeight: "bold",
-                          padding: ".5rem",
-                          border: "1px solid #ccc",
-                          borderRadius: "1rem",
-                          margin: ".5rem",
-                          borderColor: size === sizeI ? "#fb923c" : "#ccc",
-                        }}
-                        onClick={(e) => setSize(sizeI)}
-                      />
-                    );
-                  })}
-                </div>
+                <h6 className="ml-2 font-bold">{item.size}</h6>
               </div>
-              <div className="start font-bold flex text-xl font-barlow mt-4 mb-4 p-2 border-slate-400 border-solid border-b-2">
-                <h5>Quantity :</h5>
-                <div
-                  className="pt-1 pb-1 pl-2 pr-2 rounded-xl ml-2 start flex "
-                  style={{
-                    border: "1px solid #ccc",
-                  }}
-                >
-                  <IoMdAdd
-                    onClick={(e) => {
-                      if (quantity < remainingProduct) {
-                        setQuantity(quantity + 1);
-                      }
-                    }}
-                    className="text-xl cursor-pointer hover:bg-slate-300 rounded-xl"
-                  />
-                  <input
-                    type="number"
-                    className="text-center w-10 hide-button-change reset"
-                    value={quantity}
-                    onChange={(e) => {
-                      setQuantity(e.target.value);
-                    }}
-                    onBlur={(e) => {
-                      if (e.target.value > 0 && remainingProduct) {
-                        setQuantity(e.target.value);
-                      } else {
-                        setQuantity(1);
-                      }
-                    }}
-                  />
-                  <RxDividerHorizontal
-                    onClick={(e) => {
-                      if (quantity > 1) {
-                        setQuantity(quantity - 1);
-                      }
-                    }}
-                    className="text-xl cursor-pointer hover:bg-slate-300  rounded-xl"
-                  />
-                </div>
-              </div>
-              <div className="start font-bold flex text-xl font-barlow mt-4 mb-4 p-2 border-slate-400 border-solid border-b-2">
-                Remaining products :
-                <span className="text-orange-500 font-bold font-barlow ml-2 text-xl">
-                  {remainingProduct}
-                </span>
-              </div>
+
               <Rating
                 name="simple-controlled"
                 value={value}
@@ -136,11 +130,13 @@ function DetailItem() {
                 }}
                 sx={{
                   fontSize: "2rem",
+                  marginTop: "1rem",
                 }}
               />
 
               <div className="w-full mt-10">
                 <ButtonCustom
+                  onClick={addToCart}
                   nameButton="Add to cart"
                   sx={{
                     padding: ".5rem 2rem",
@@ -149,7 +145,12 @@ function DetailItem() {
                   }}
                 />
                 <ButtonCustom
-                  nameButton="Buy now"
+                  nameButton={
+                    item.quantity <= 0
+                      ? "Item sold-out (Pre - order)"
+                      : "Buy now"
+                  }
+                  onClick={checkOutItem}
                   sx={{
                     color: "#fff",
                     padding: ".5rem 2rem",
@@ -168,16 +169,6 @@ function DetailItem() {
                 <span className="text-blue-500 font-bold font-barlow ml-2 text-xl">
                   (hotline free)
                 </span>
-              </div>
-
-              <div className="w-full">
-                <ButtonCustom
-                  nameButton="Detail about it"
-                  sx={{
-                    fontWeight: "bold",
-                    borderBottom: "1px solid #fa8533",
-                  }}
-                />
               </div>
             </div>
           </div>
@@ -209,7 +200,7 @@ function DetailItem() {
       {/* begin feed back */}
       <WrapperFeedback />
 
-      <MostItemRelative />
+      <MostItemRelative itemSale={itemSale} />
 
       <Footer />
     </div>

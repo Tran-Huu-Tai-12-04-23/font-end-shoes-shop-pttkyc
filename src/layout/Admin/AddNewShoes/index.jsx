@@ -36,11 +36,9 @@ function AddNewShoes({ setActive }) {
 
   const history = useNavigate();
 
-  const Service = new Services();
-
   useEffect(() => {
     async function fetchData() {
-      const result = await Service.getDataFromApiOrder("/api/get-branch");
+      const result = await Services.getDataFromApi("/api/get-branch");
       if (result.status === 200) {
         setBranch(JSON.parse(result.data));
         setBranchSelected(JSON.parse(result.data)[0]?.name);
@@ -69,9 +67,9 @@ function AddNewShoes({ setActive }) {
   };
   const handleNextStep = (value = 0) => {
     setShowLoad(true);
-    setStep(value);
     const timeOut = setTimeout(() => {
       setShowLoad(false);
+      setStep(value);
     }, 1000);
     return () => {
       clearTimeout(timeOut);
@@ -83,9 +81,8 @@ function AddNewShoes({ setActive }) {
     if (verify) {
       setShowLoad(true);
       const brandID = branch.filter((item) => item.name === branchSelected);
-      console.log(brandID);
-      const listUrlPhotoOfStorage = await Service.uploadListPhoto(listPhoto);
-      const resultInsertNewShoes = await Service.callApi("/api/item/add", {
+      const listUrlPhotoOfStorage = await Services.uploadListPhoto(listPhoto);
+      const resultInsertNewShoes = await Services.callApi("/api/item/add", {
         name,
         des,
         status,
@@ -106,6 +103,7 @@ function AddNewShoes({ setActive }) {
           type: "success",
           message: "Add new products successfully!",
         });
+        setStep(2);
         setShowLoad(false);
         history("/admin");
         setActive(1);

@@ -47,14 +47,18 @@ function Slider({
     };
 
     return (
-      <button
-        className={`${
+      <div
+        className={`cursor-pointer  ${
           active ? "active" : "inactive"
-        } border-2 rounded-2xl relative shadow-xl m-2 w-full`}
+        } border-2 rounded-2xl relative shadow-xl m-2 `}
+        style={{
+          width: "10rem",
+          backgroundColor: "#f5f5f5",
+        }}
         onClick={handleClick}
       >
         {React.Children.toArray(carouselItems)[index]}
-      </button>
+      </div>
     );
   };
 
