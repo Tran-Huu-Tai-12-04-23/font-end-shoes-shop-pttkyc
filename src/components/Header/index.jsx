@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 
 import logo from "../../assets/img/home/logo.png";
 import { IoMdSearch } from "react-icons/io";
+import { AiOutlineUnlock } from "react-icons/ai";
 import { IoCloseSharp } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout, CiShoppingCart } from "react-icons/ci";
@@ -240,6 +241,13 @@ function Header() {
                   name: "Settings",
                   onClick: () => {},
                   icon: <FiSettings className="text-xl mr-3" />,
+                },
+                {
+                  name: "Change password",
+                  action: () => {
+                    history("/change-password");
+                  },
+                  icon: <AiOutlineUnlock className="text-xl mr-3" />,
                 },
                 {
                   name: "Log out",

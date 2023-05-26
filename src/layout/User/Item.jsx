@@ -133,7 +133,17 @@ function OrderItem({ data, setOrder, order }) {
             Order cancelled
           </Button>
         )}
-        {data.status_process !== -1 && data.status_process <= 4 && (
+        {data.status_process === 3 && (
+          <Button sx={{ color: "orange", marginTop: "1rem" }}>
+            {data.status}
+          </Button>
+        )}
+        {data.status_process == 5 && (
+          <Button sx={{ color: "green", marginTop: "1rem" }}>
+            {data.status}
+          </Button>
+        )}
+        {data.status_process !== -1 && data.status_process <= 3 && (
           <Button
             onClick={(e) => setCommitCancelledOrder(true)}
             sx={{

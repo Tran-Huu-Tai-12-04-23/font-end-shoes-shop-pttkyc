@@ -14,6 +14,7 @@ import WrapperApp from "./WrapperApp";
 import AlertCustom from "./components/AlertCustom";
 import { useContextStore } from "./Store";
 import ForgetPass from "./layout/ForgetPass";
+import ChangePassword from "./layout/ChangePassword";
 
 function App() {
   const [theme, setTheme] = useState("dark");
@@ -97,6 +98,7 @@ function App() {
           <Route path="/check-out" element={<CheckOut />} />
           <Route path="/bag" element={<Bag />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/change-password" element={<ChangePassword />} />
           <Route
             path="/sign"
             element={<Sign alert={alert} setAlert={setAlert} />}

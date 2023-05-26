@@ -43,6 +43,7 @@ function a11yProps(index) {
 }
 
 function OrderHistory({ order, setOrder }) {
+  console.log(order);
   const [orderWait, setOrderWait] = useState([]);
   const [orderConfirmed, setConfirmed] = useState([]);
   const [orderDelivery, setOrderDelivery] = useState([]);
@@ -71,7 +72,7 @@ function OrderHistory({ order, setOrder }) {
       if (od.status_process === 3) {
         setOrderReceived((prev) => [...prev, od]);
       }
-      if (od.status_process === 4) {
+      if (od.status_process === 5) {
         setOrderComplete((prev) => [...prev, od]);
       }
       if (od.status_process === -1) {
