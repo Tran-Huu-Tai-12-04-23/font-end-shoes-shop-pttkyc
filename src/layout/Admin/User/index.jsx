@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-import Table from "../../../components/table";
-import { v4 as uuid } from "uuid";
+import Table from "../../../components/Table";
 import { users } from "../../../Services/fectchApi";
 
 import { Avatar } from "@mui/material";

@@ -1,16 +1,13 @@
 import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { BsDatabaseCheck } from "react-icons/bs";
-import { AiOutlineStock } from "react-icons/ai";
 import { FaCoins } from "react-icons/fa";
 import LineCharts from "../Satisfaction/LineChartS";
 import BarChart from "../Satisfaction/BarChart";
 import PieChart from "../Satisfaction/PieChart";
 import OrderRecently from "./OrderRecently";
 import BillingInformation from "./BillingInformation";
-import TransactionInformation from "./TransactionInformation";
 
-import { itemsApi } from "../../../Services/fectchApi";
 import { useEffect, useState } from "react";
 import Services from "../../../Services";
 
@@ -185,12 +182,12 @@ function Overview({ show, setActive }) {
         <div className="mt-10">
           <LineCharts order={order} setOrder={setOrder} />
         </div>
-        <div className="mt-10 pl-12 mb-10">
+        {/* <div className="mt-10 pl-12 mb-10">
           <BarChart order={order} />
-        </div>
-        <div className="mt-10 pl-12 mb-10">
+        </div> */}
+        {/* <div className="mt-10 pl-12 mb-10">
           <PieChart order={order} />
-        </div>
+        </div> */}
 
         <div className="mt-10">
           <OrderRecently

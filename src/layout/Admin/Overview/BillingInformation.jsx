@@ -2,29 +2,6 @@ import Billing from "../Order/Billing";
 import { v4 as uuid } from "uuid";
 
 function BillingInformation({ orderRecently }) {
-  const data = [
-    {
-      id: uuid(),
-      name: "Tran Huu Tai",
-      item: 2,
-      total: 42,
-      date: "1/1/2023",
-    },
-    {
-      id: uuid(),
-      name: "Tran Huu Tai",
-      item: 2,
-      total: 42,
-      date: "1/1/2023",
-    },
-    {
-      id: uuid(),
-      name: "Tran Huu Tai",
-      item: 2,
-      total: 42,
-      date: "1/1/2023",
-    },
-  ];
   return (
     <div className="w-full flex flex-col p-4 rounded-xl bg-slate-50 mb-10">
       <h1 className="text-xl font-barlow font-bold p-2 ">

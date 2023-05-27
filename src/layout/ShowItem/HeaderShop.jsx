@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ButtonCustom from "../../components/Button";
-import filter from "../../assets/icon/Filter.svg";
+import filter from "../../assets/icon/filter.svg";
 
 import { IoIosArrowDown } from "react-icons/io";
 

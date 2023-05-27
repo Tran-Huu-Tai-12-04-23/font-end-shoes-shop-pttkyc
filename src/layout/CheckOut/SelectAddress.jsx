@@ -12,7 +12,7 @@ import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import Utils from "../../util";
+import Util from "../../util";
 
 import { v4 as uuid } from "uuid";
 
@@ -52,7 +52,7 @@ function a11yProps(index) {
   };
 }
 
-function SelectAddress({ address, setAddress}) {
+function SelectAddress({ address, setAddress }) {
   const [placeholderAddress, setPlaceholderAddress] = useState("");
   const [provinces, setProvinces] = useState([]);
   const [district, setDistrict] = useState(null);
@@ -68,7 +68,6 @@ function SelectAddress({ address, setAddress}) {
   const [loadDistrictSearch, setLoadDistrictSearch] = useState(true);
   const [loadCommuneSearch, setLoadCommuneSearch] = useState(true);
 
-  const Util = new Utils();
   //
   const [value, setValue] = useState(0);
 

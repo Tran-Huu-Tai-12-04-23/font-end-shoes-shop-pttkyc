@@ -8,7 +8,6 @@ import { GiRank1 } from "react-icons/gi";
 import ButtonCustom from "../../components/Button";
 
 function Overview({ userDetail, numberOrder }) {
-
   const [nav, setNav] = useState([
     {
       id: uuid(),

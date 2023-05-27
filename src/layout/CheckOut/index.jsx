@@ -229,6 +229,12 @@ export default function CheckOut() {
       return false;
     }
   };
+
+  useEffect(() => {
+    if (itemsBag.length <= 0) {
+      history("/bag");
+    }
+  }, [itemsBag]);
   return (
     <div>
       <Header />

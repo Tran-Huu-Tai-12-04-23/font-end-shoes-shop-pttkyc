@@ -1,6 +1,21 @@
 import unidecode from "unidecode";
+import { formatRelative } from "date-fns";
 
-class Utils {
+class Util {
+  formatDate(date) {
+    let dateTime = new Date(date);
+    let seconds = dateTime.getTime() / 1000;
+    let formattedDate = "";
+
+    if (seconds) {
+      formattedDate = formatRelative(new Date(seconds * 1000), new Date());
+
+      formattedDate =
+        formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+    }
+
+    return formattedDate;
+  }
   isValidDate(startDate, endDate) {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -236,4 +251,4 @@ function dataURItoFile(dataURI, fileName) {
   return file;
 }
 
-export default Utils;
+export default new Util();

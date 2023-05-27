@@ -11,6 +11,8 @@ import SelectAddress from "../../layout/CheckOut/SelectAddress";
 import Utils from "../../util";
 import { UseAuthUserContext } from "../../AuthUser";
 import Services from "../../Services";
+import Util from "../../util";
+
 function splitString(str) {
   if (!str) {
     return {
@@ -289,7 +291,7 @@ function UserManager({ userDetail, setUserDetail }) {
               borderRadius: ".4rem",
               border: "1px solid #b3adb8",
             }}
-            value={joinDate}
+            value={Utils.formatDate(joinDate)}
             disabled={true}
             placeholder={"No updating"}
             inputProps={{ "aria-label": "search google maps" }}

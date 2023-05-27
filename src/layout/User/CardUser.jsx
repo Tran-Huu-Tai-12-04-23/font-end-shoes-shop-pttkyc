@@ -5,6 +5,7 @@ import { BsCalendar4Event, BsBookmarks } from "react-icons/bs";
 import { CiMedal } from "react-icons/ci";
 import Services from "../../Services";
 import { UseAuthUserContext } from "../../AuthUser";
+import Util from "../../util";
 
 function CardUser({ data }) {
   const [point, setPoint] = useState(0);
@@ -42,7 +43,7 @@ function CardUser({ data }) {
           <h5 className="mt-2  ml-auto mr-auto w-fit">Day Join </h5>
           <BsCalendar4Event className="mt-2 mb-2 text-5xl ml-auto mr-auto  text-orange-400"></BsCalendar4Event>
           <h3 className=" font-bold text-orange-400 text-sm text-center">
-            {data.create_at}
+            {Util.formatDate(data.create_at)}
           </h3>
         </div>
         <div className="flex flex-col items-center w-1/3 ">
@@ -54,10 +55,7 @@ function CardUser({ data }) {
           <h5 className="mt-2  ml-auto mr-auto w-fit">Your points </h5>
           <BsBookmarks className="mt-2 mb-2 text-5xl ml-auto mr-auto  text-orange-400"></BsBookmarks>
           <h3 className="text-sm font-bold text-orange-400">
-            <span className="text-slate-500 ">
-              {" "}
-              {point ? parseFloat(point).toFixed(2) : 0}
-            </span>
+            $ {point ? parseFloat(point).toFixed(2) : 0}
           </h3>
         </div>
       </div>

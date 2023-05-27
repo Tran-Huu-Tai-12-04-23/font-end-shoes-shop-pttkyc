@@ -1,5 +1,4 @@
 import { useState, memo } from "react";
-import Nav from "./Nav";
 import NewNav from "./NewNav";
 import { HiOutlineBellAlert } from "react-icons/hi2";
 import { RiAddLine } from "react-icons/ri";
@@ -12,6 +11,7 @@ import Product from "./Product";
 import User from "./User";
 import AddNewShoes from "./AddNewShoes";
 import OrderDetail from "./OrderDetail";
+import ItemTrash from "./ItemTrash";
 import { UseAuthUserContext } from "../../AuthUser";
 import { useNavigate } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
@@ -172,6 +172,7 @@ function Admin() {
             )}
             {active === 1.2 && <SaleSetting handleNextStep={handleNextStep} />}
             {active === 1.3 && <ItemSaleing />}
+            {active === 1.4 && <ItemTrash />}
             {active === 2 && (
               <Orders
                 handleNextStep={handleNextStep}

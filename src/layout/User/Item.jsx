@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Modal } from "@mui/material";
+import { Modal, Select, MenuItem } from "@mui/material";
 import Box from "@mui/material/Box";
 import { FcFullTrash } from "react-icons/fc";
 import { Button } from "@mui/material";
 import { useContextStore } from "../../Store";
 
 import Services from "../../Services";
+import Util from "../../util";
 
 const style = {
   position: "absolute",
@@ -23,11 +24,15 @@ const style = {
 function OrderItem({ data, setOrder, order }) {
   const { setAlert } = useContextStore();
   const [commitCancelledOrder, setCommitCancelledOrder] = useState(false);
+  const [reason, setReason] = useState("Change address");
+  const [enterReason, setEnterReason] = useState(false);
   const handleClose = () => setCommitCancelledOrder(false);
 
   const cancelOrder = async (orderDetailId) => {
     const res = await Services.update("/api/item/order/cancel", {
       order_detail_id: orderDetailId,
+      order_id: order.order_id,
+      reason,
     });
     if (res.status === 200) {
       setAlert({
@@ -99,17 +104,76 @@ function OrderItem({ data, setOrder, order }) {
           </div>
         </Box>
       </Modal>
-      <div className="flex flex-col items-start w-full font-barlow">
-        <div className="justify-between flex w-full">
+      <Modal
+        open={enterReason}
+        onClose={(e) => setEnterReason(false)}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div className="rounded-xl bg-slate-300 p-4  min-w-30 text-xl font-barlow">
+          <h5 className="text-md mb-5 ">Enter reason to cancel order</h5>
+          <Select
+            labelId="demo-simple-select-required-label"
+            value={reason}
+            sx={{ width: "100%" }}
+            onChange={(e) => setReason(e.target.value)}
+          >
+            <MenuItem value={"Change address"}>Change address</MenuItem>
+            <MenuItem value={"Change item"}>Change item</MenuItem>
+            <MenuItem value={"Other"}>Other</MenuItem>
+          </Select>
+          <div className="end flex mt-4">
+            <Button
+              onClick={(e) => setEnterReason(false)}
+              sx={{
+                "&:hover": {
+                  color: "red",
+                },
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              sx={{
+                marginLeft: "1rem",
+                background: "#fb923c",
+                color: "#fff",
+
+                "&:hover": {
+                  background: "rgba(251, 146, 60, .8)",
+                },
+              }}
+              onClick={(e) => {
+                if (reason) {
+                  setCommitCancelledOrder(true);
+                  setEnterReason(false);
+                } else {
+                  setAlert({
+                    type: "warning",
+                    message: "Please enter reason for order",
+                  });
+                }
+              }}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      </Modal>
+      <div className="flex flex-col items-start w-full font-barlow relative">
+        {data.type === 1 && (
+          <h5 className="absolute p-2 right-0 top-1/2 text-white text-xl font-barlow bg-orange-400 rounded-xl">
+            Pre order
+          </h5>
+        )}
+        <div className="justify-between flex w-full ">
           <h5 className="text-xl font-barlow font-bold">{data.name_item}</h5>
           <h5 className="text-xl font-barlow text-orange-400">
-            $ {data.total}
+            $ {data.price}
           </h5>
-          {data.type === 1 && (
-            <h5 className=" p-2 text-white text-xl font-barlow bg-orange-400 rounded-xl">
-              Pre order
-            </h5>
-          )}
         </div>
         <div className="flex flex-col">
           <div className="start flex">
@@ -120,7 +184,7 @@ function OrderItem({ data, setOrder, order }) {
               }}
             >
               <span className="text-md mr-2">
-                Date order: {data.order_date}
+                Date order: {Util.formatDate(data.order_date)}
               </span>
             </div>
             <div className="start flex mt-2">
@@ -145,7 +209,7 @@ function OrderItem({ data, setOrder, order }) {
         )}
         {data.status_process !== -1 && data.status_process <= 3 && (
           <Button
-            onClick={(e) => setCommitCancelledOrder(true)}
+            onClick={(e) => setEnterReason(true)}
             sx={{
               color: "orange",
               border: "1px solid orange",

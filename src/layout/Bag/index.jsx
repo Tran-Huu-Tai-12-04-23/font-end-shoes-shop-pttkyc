@@ -20,6 +20,7 @@ import { useContextStore } from "../../Store";
 import { Alert } from "@mui/material";
 
 function Bag() {
+  const { setAlert } = useContextStore();
   const { itemsBag, setItemsBag } = useContextStore();
   const [itemShowBag, setItemShowBag] = useState(itemsBag);
 
@@ -150,7 +151,16 @@ function Bag() {
               </div>
               <div className="w-full mt-10">
                 <ButtonCustom
-                  onClick={(e) => history("/check-out")}
+                  onClick={(e) => {
+                    if (itemsBag.length > 0) {
+                      history("/check-out");
+                    } else {
+                      setAlert({
+                        type: "warning",
+                        message: "You have to choose item for check out",
+                      });
+                    }
+                  }}
                   nameButton="Check Out"
                   sx={{
                     color: "#fff",
