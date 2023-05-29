@@ -15,6 +15,7 @@ import {
   GrTransaction,
   GrEdit,
 } from "react-icons/gr";
+import { SiGoogletagmanager } from "react-icons/si";
 import {
   MdOutlineProductionQuantityLimits,
   MdOutlineAppRegistration,
@@ -61,7 +62,7 @@ const AccordionSummary = styled(({ showIcon, ...props }) => (
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({}));
 
-function NewNav({ active, handleNextStep }) {
+function NewNav({ active, handleNextStep, handleLogout }) {
   const [navbar] = useState([
     {
       id: 0,
@@ -77,7 +78,7 @@ function NewNav({ active, handleNextStep }) {
         {
           id: 0,
           name: "Manager",
-          icon: <GrUserManager />,
+          icon: <SiGoogletagmanager />,
           action: () => handleNextStep(1),
         },
         {
@@ -113,7 +114,7 @@ function NewNav({ active, handleNextStep }) {
       submenu: [
         {
           id: 0,
-          name: "Orders",
+          name: "Manager",
           icon: <FiBook />,
           action: () => handleNextStep(2),
         },
@@ -123,19 +124,26 @@ function NewNav({ active, handleNextStep }) {
           icon: <BiDetail />,
           action: () => handleNextStep(2.1),
         },
-        {
-          id: 2,
-          name: "Orders recently",
-          icon: <MdBorderColor />,
-          action: () => handleNextStep(2.2),
-        },
       ],
     },
     {
       id: 3,
       name: "Users",
       icon: <FiUsers className="text-md" />,
-      action: () => handleNextStep(3),
+      submenu: [
+        {
+          id: 0,
+          name: "Manager",
+          icon: <FiBook />,
+          action: () => handleNextStep(3),
+        },
+        {
+          id: 1,
+          name: "User detail",
+          icon: <BiDetail />,
+          action: () => handleNextStep(3.1),
+        },
+      ],
     },
     {
       id: 4,
@@ -241,7 +249,7 @@ function NewNav({ active, handleNextStep }) {
       ))}
       <button
         className="fixed bottom-4 left-10 ml-auto mr-auto center flex hover:text-orange-500 pt-1 w-32 pb-1 pr-4 pl-4 rounded-md cursor-pointer font-barlow text-md"
-        onClick={() => handleNextStep(navbar.length)}
+        onClick={() => handleLogout()}
       >
         <RiLogoutBoxLine className="text-3xl" />
         <h5 className="ml-4 cursor-pointer">Logout</h5>

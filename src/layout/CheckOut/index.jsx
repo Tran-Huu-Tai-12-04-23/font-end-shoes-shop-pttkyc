@@ -11,10 +11,6 @@ import StepConnector, {
 } from "@mui/material/StepConnector";
 import Header from "../../components/Header";
 
-import product1 from "../../assets/img/home/product1.png";
-import product2 from "../../assets/img/home/product2.png";
-import product3 from "../../assets/img/home/product3.png";
-
 import { AiFillEdit } from "react-icons/ai";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { BsUiChecks, BsCheck2Square } from "react-icons/bs";

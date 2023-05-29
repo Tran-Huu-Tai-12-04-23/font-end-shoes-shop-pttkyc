@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import SelectAddress from "./SelectAddress";
 
 import ButtonCustom from "../../components/Button";
-import Utils from "../../util";
+import Util from "../../util";
 
 import TextField from "@mui/material/TextField";
 import { useContextStore } from "../../Store";
@@ -67,7 +67,6 @@ function DeliveryInformation({
       });
       return;
     }
-    const Util = new Utils();
     if (!Util.isValidPhoneNumber(phoneNumber)) {
       setAlert({
         type: "error",

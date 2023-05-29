@@ -1,7 +1,7 @@
 import { useEffect, useState, memo } from "react";
 import Services from "../../../Services";
 import { v4 as uuid } from "uuid";
-import Utils from "../../../util";
+import Util from "../../../util";
 
 import Table from "../../../components/Table";
 import ButtonCustom from "../../../components/Button";
@@ -142,7 +142,6 @@ function SaleSetting({ handleNextStep }) {
   const [selectedDiscount, setSelectDiscount] = useState(null);
   const [dateStart, setDateStart] = useState("");
   const [dateEnd, setDateEnd] = useState("");
-  const Util = new Utils();
 
   const handleAutocompleteChange = (event, value) => {
     setSelectDiscount(value);

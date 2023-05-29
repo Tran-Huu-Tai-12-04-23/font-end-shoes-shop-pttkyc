@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { useState, memo, useEffect } from "react";
 import NewNav from "./NewNav";
 import { HiOutlineBellAlert } from "react-icons/hi2";
 import { RiAddLine } from "react-icons/ri";
@@ -50,6 +50,12 @@ function Admin() {
     );
   };
 
+  useEffect(() => {
+    if (!user) {
+      history("/login");
+    }
+  }, [user]);
+
   return (
     <>
       <div
@@ -67,7 +73,11 @@ function Admin() {
             className="fixed left-0 bottom-0 top-0 col-span-1 bg-blur overflow-auto custom-scrollbar"
             style={{ width: "15rem" }}
           >
-            <NewNav handleNextStep={handleNextStep} active={active}></NewNav>
+            <NewNav
+              handleNextStep={handleNextStep}
+              active={active}
+              handleLogout={handleLogout}
+            ></NewNav>
           </div>
         </div>
         <div
@@ -118,7 +128,7 @@ function Admin() {
                   color: "#fff",
                 }}
               />
-
+              <h5 className="text-xl ml-2 font-barlow">{user?.username}</h5>
               <Avatar
                 sx={{
                   width: 30,
@@ -128,25 +138,6 @@ function Admin() {
                 className="ml-3 cursor-pointer"
                 alt={user?.username}
                 src={user?.avatar}
-              />
-              <MenuCustom
-                activeMenu={activeMenuUser}
-                setActiveMenu={setActiveMenuUser}
-                data={[
-                  {
-                    name: "Settings",
-                    onClick: () => {},
-                    icon: <FiSettings className="text-xl mr-3" />,
-                  },
-                  {
-                    name: "Log out",
-                    onClick: handleLogout,
-                    icon: <CiLogout className="text-xl mr-3" />,
-                    action: () => {
-                      handleLogout();
-                    },
-                  },
-                ]}
               />
             </div>
           </div>

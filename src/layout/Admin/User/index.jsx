@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Table from "../../../components/Table";
 import { users } from "../../../Services/fectchApi";
 
-import { Avatar } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import ButtonCustom from "../../../components/Button";
 import CustomizedMenus from "../../../components/CustomizedMenu";
+import Services from "../../../Services";
 
 function User({}) {
-  const [productSelected, setProductSelected] = useState([]);
+  const [userSelected, setUserSelected] = useState([]);
   const [activeFilter, settActiveFilter] = useState(true);
   const [filter, setFilter] = useState("");
+  const [user, setUser] = useState([]);
+  const [userShow, setUserShow] = useState([]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
@@ -22,7 +25,7 @@ function User({}) {
       renderCell: (params) => (
         <Avatar
           src={params.row.avatar_url}
-          alt={params.row.first_name}
+          alt={params.row.username}
           sx={{ width: 30, height: 30 }}
         />
       ),
@@ -50,26 +53,36 @@ function User({}) {
       width: "300",
       renderCell: (params) => (
         <>
-          <ButtonCustom
-            nameButton="Remove"
+          <Button
             style={{
               color: "red",
+              padding: ".3rem 2rem",
+              fontSize: ".8rem",
             }}
             onClick={(e) => {
               handleRemove(params.row.user_id);
             }}
-          ></ButtonCustom>
-          <ButtonCustom
-            style={{
+          >
+            Remove
+          </Button>
+          <Button
+            sx={{
               marginLeft: "1rem",
-              background: "#fb923c",
+              background: "rgb(251, 146, 60)",
               color: "#fff",
+              padding: ".3rem 2rem",
+              fontSize: ".8rem",
+              "&:hover": {
+                background: "rgb(251, 146, 60)",
+                filter: "brightness(120%)",
+              },
             }}
-            nameButton="Detail"
             onClick={(e) => {
               handleDetail(params.row.user_id);
             }}
-          ></ButtonCustom>
+          >
+            Detail
+          </Button>
         </>
       ),
     },
@@ -82,11 +95,27 @@ function User({}) {
   function handleDetail(id) {
     console.log(`Show detail for product with ID ${id}`);
   }
+  useEffect(() => {
+    const initUser = async () => {
+      const result = await Services.getDataFromApi("/api/user/all");
+      const usersWithId = result.data.map((user, index) => ({
+        ...user,
+        id: index + 1,
+      }));
+      if (result.status === 200) {
+        setUser(usersWithId);
+        setUserShow(usersWithId);
+      } else {
+        console.log(result.status);
+      }
+    };
+    initUser();
+  }, []);
 
   return (
     <div className="w-full mt-12">
       <div className="w-full end flex mb-4">
-        {productSelected.length > 0 && (
+        {userSelected.length > 0 && (
           <ButtonCustom
             nameButton="Remove product selected"
             style={{ marginRight: "1rem", color: "red" }}
@@ -148,11 +177,10 @@ function User({}) {
         </CustomizedMenus>
       </div>
       <Table
-        data={users}
+        data={userShow}
         columns={columns}
         pageSize={12}
-        productSelected={productSelected}
-        setProductSelected={setProductSelected}
+        setSelection={setUserSelected}
       ></Table>
     </div>
   );
