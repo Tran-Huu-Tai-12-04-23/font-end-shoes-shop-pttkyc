@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
-import { Modal } from "@mui/material";
-import Box from "@mui/material/Box";
+import {
+  Modal,
+  Select,
+  MenuItem,
+  Rating,
+  Box,
+  Button,
+  TextField,
+} from "@mui/material";
 import { FcFullTrash } from "react-icons/fc";
-import { Button } from "@mui/material";
+import { AiOutlineClose } from "react-icons/ai";
 import { useContextStore } from "../../Store";
 
 import Services from "../../Services";
+import Util from "../../util";
+import { UseAuthUserContext } from "../../AuthUser";
 
 const style = {
   position: "absolute",
@@ -19,15 +28,30 @@ const style = {
   borderRadius: ".6rem",
   p: 4,
 };
-
+const nameRank = {
+  1: "Very Poor",
+  2: "Poor",
+  3: "Average",
+  4: "Good",
+  5: "Excellent",
+};
 function OrderItem({ data, setOrder, order }) {
+  const { user } = UseAuthUserContext();
   const { setAlert } = useContextStore();
   const [commitCancelledOrder, setCommitCancelledOrder] = useState(false);
+  const [reason, setReason] = useState("Change address");
+  const [enterReason, setEnterReason] = useState(false);
+  const [enterReview, setEnterReview] = useState(false);
+  const [rank, setRank] = useState(5);
+  const [contentReview, setContentReview] = useState("");
+
   const handleClose = () => setCommitCancelledOrder(false);
 
   const cancelOrder = async (orderDetailId) => {
     const res = await Services.update("/api/item/order/cancel", {
       order_detail_id: orderDetailId,
+      order_id: order.order_id,
+      reason,
     });
     if (res.status === 200) {
       setAlert({
@@ -55,7 +79,52 @@ function OrderItem({ data, setOrder, order }) {
       });
     }
   };
+  const sendReview = async () => {
+    if (!contentReview) {
+      setAlert({
+        type: "warning",
+        message: "Please enter your review",
+      });
+      return;
+    }
+    if (rank === 0) {
+      setAlert({
+        type: "warning",
+        message: "Please choose order rank",
+      });
+      return;
+    }
 
+    const dataRV = {
+      account_id: user?.id,
+      review: contentReview,
+      rank: rank,
+      item_id: data.item_id,
+      order_id: data.order_id,
+    };
+    const result = await Services.callApi("/api/order/review/add", dataRV);
+
+    if (result.status === 200) {
+      setAlert({
+        type: "success",
+        message: result.message,
+      });
+      setEnterReview(false);
+      setOrder((prev) => {
+        return prev.map((od) => {
+          if (od.order_id === data.order_id) {
+            od.is_check_review = 1;
+          }
+          return od;
+        });
+      });
+    } else {
+      setAlert({
+        type: "error",
+        message: result.message,
+      });
+    }
+  };
   return (
     <div
       className="p-4 flex "
@@ -99,17 +168,152 @@ function OrderItem({ data, setOrder, order }) {
           </div>
         </Box>
       </Modal>
-      <div className="flex flex-col items-start w-full font-barlow">
-        <div className="justify-between flex w-full">
+      <Modal
+        open={enterReason}
+        onClose={(e) => setEnterReason(false)}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div className="rounded-xl bg-slate-300 p-4  min-w-30 text-xl font-barlow">
+          <h5 className="text-md mb-5 ">Enter reason to cancel order</h5>
+          <Select
+            labelId="demo-simple-select-required-label"
+            value={reason}
+            sx={{ width: "100%" }}
+            onChange={(e) => setReason(e.target.value)}
+          >
+            <MenuItem value={"Change address"}>Change address</MenuItem>
+            <MenuItem value={"Change item"}>Change item</MenuItem>
+            <MenuItem value={"Other"}>Other</MenuItem>
+          </Select>
+          <div className="end flex mt-4">
+            <Button
+              onClick={(e) => setEnterReason(false)}
+              sx={{
+                "&:hover": {
+                  color: "red",
+                },
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              sx={{
+                marginLeft: "1rem",
+                background: "#fb923c",
+                color: "#fff",
+
+                "&:hover": {
+                  background: "rgba(251, 146, 60, .8)",
+                },
+              }}
+              onClick={(e) => {
+                if (reason) {
+                  setCommitCancelledOrder(true);
+                  setEnterReason(false);
+                } else {
+                  setAlert({
+                    type: "warning",
+                    message: "Please enter reason for order",
+                  });
+                }
+              }}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        open={enterReview}
+        onClose={(e) => setEnterReview(false)}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div className="rounded-xl bg-slate-300 p-4  min-w-30 text-xl font-barlow">
+          <div className="flex justify-between">
+            <h5 className="text-xl mb-5 font-barlow font-bold">Your review</h5>
+            <AiOutlineClose
+              onClick={(e) => setEnterReview(false)}
+              className="text-xl cursor-pointer hover:text-red-500 hover:scale-125 "
+            ></AiOutlineClose>
+          </div>
+          <div className="flex center flex-col">
+            <Rating
+              value={rank}
+              onChange={(event, newValue) => {
+                setRank(newValue);
+              }}
+              sx={{
+                fontSize: "3rem",
+              }}
+            />
+            <h5
+              className={`text-xl mt-2 mb-5 font-barlow
+            ${
+              rank === 1
+                ? "text-red-500"
+                : rank === 2
+                ? "text-pink-500"
+                : rank === 3
+                ? "text-orange-500"
+                : rank === 4
+                ? "text-blue-500"
+                : rank === 5
+                ? "text-green-500"
+                : ""
+            }
+            `}
+            >
+              {nameRank[rank]}
+            </h5>
+
+            <TextField
+              label="Enter your review"
+              multiline
+              minRows={10}
+              sx={{
+                width: "100%",
+              }}
+              value={contentReview}
+              onChange={(e) => setContentReview(e.target.value)}
+            />
+
+            <Button
+              sx={{
+                marginTop: "1rem",
+                padding: ".3rem 2rem",
+                color: "orange",
+                fontSize: "1rem",
+                border: "1px solid orange",
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                sendReview();
+              }}
+            >
+              Send
+            </Button>
+          </div>
+        </div>
+      </Modal>
+      <div className="flex flex-col items-start w-full font-barlow relative">
+        {data.type === 1 && (
+          <h5 className="absolute p-2 right-0 top-1/2 text-white text-xl font-barlow bg-orange-400 rounded-xl">
+            Pre order
+          </h5>
+        )}
+        <div className="justify-between flex w-full ">
           <h5 className="text-xl font-barlow font-bold">{data.name_item}</h5>
           <h5 className="text-xl font-barlow text-orange-400">
-            $ {data.total}
+            $ {data.price}
           </h5>
-          {data.type === 1 && (
-            <h5 className=" p-2 text-white text-xl font-barlow bg-orange-400 rounded-xl">
-              Pre order
-            </h5>
-          )}
         </div>
         <div className="flex flex-col">
           <div className="start flex">
@@ -120,7 +324,7 @@ function OrderItem({ data, setOrder, order }) {
               }}
             >
               <span className="text-md mr-2">
-                Date order: {data.order_date}
+                Date order: {Util.formatDate(data.order_date)}
               </span>
             </div>
             <div className="start flex mt-2">
@@ -143,9 +347,28 @@ function OrderItem({ data, setOrder, order }) {
             {data.status}
           </Button>
         )}
+        {data.status_process === 5 && data.is_check_review === 0 && (
+          <Button
+            onClick={(e) => setEnterReview(true)}
+            sx={{
+              color: "orange",
+              border: "1px solid orange",
+              marginLeft: "1rem",
+              padding: "0.3rem 2rem",
+              position: "absolute",
+              right: "0",
+              bottom: "1rem",
+              "&:hover": {
+                filter: "brightness(120%)",
+              },
+            }}
+          >
+            Review
+          </Button>
+        )}
         {data.status_process !== -1 && data.status_process <= 3 && (
           <Button
-            onClick={(e) => setCommitCancelledOrder(true)}
+            onClick={(e) => setEnterReason(true)}
             sx={{
               color: "orange",
               border: "1px solid orange",

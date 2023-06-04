@@ -14,7 +14,7 @@ import ButtonCustom from "../../../components/Button";
 
 import { CiEdit } from "react-icons/ci";
 import { useContextStore } from "../../../Store";
-import Utils from "../../../util";
+import Util from "../../../util";
 
 function handleGetPriceFromDis(cost, dis) {
   switch (dis) {
@@ -47,7 +47,6 @@ function EditSale({ data, setOpenEditSale, setItemSales }) {
   const [dateStart, setDateStart] = useState(data?.dateStart);
   const [dateEnd, setDateEnd] = useState(data?.dateEnd);
   const [priceSale, setPriceSale] = useState(data?.price_sale);
-  const Util = new Utils();
 
   const handleAutocompleteChange = (event, value) => {
     setSelectDiscount(value);

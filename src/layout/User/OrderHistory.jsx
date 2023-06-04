@@ -43,7 +43,6 @@ function a11yProps(index) {
 }
 
 function OrderHistory({ order, setOrder }) {
-  console.log(order);
   const [orderWait, setOrderWait] = useState([]);
   const [orderConfirmed, setConfirmed] = useState([]);
   const [orderDelivery, setOrderDelivery] = useState([]);
@@ -149,8 +148,8 @@ function OrderHistory({ order, setOrder }) {
   const calTotalOrderComplete = useMemo(() => {
     let totalOrder = 0;
     order.map((od) => {
-      if (order.status_process === 5) {
-        return (totalOrder += od.total);
+      if (od.status_process === 5) {
+        return (totalOrder += od.price);
       }
     });
 
@@ -160,7 +159,6 @@ function OrderHistory({ order, setOrder }) {
   useEffect(() => {
     setTotal(calTotalOrderComplete);
   }, [order]);
-
   return (
     <div className="w-full flex flex-col font-barlow">
       <h1 className="text-2xl text-orange-400 font-bold ml-auto mr-auto">

@@ -8,7 +8,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BiLockAlt } from "react-icons/bi";
 import { HiOutlineMail } from "react-icons/hi";
 
-import Utils from "../../util";
+import Util from "../../util";
 import Services from "../../Services";
 
 function Register({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
@@ -16,7 +16,6 @@ function Register({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
-  const Util = new Utils();
   const form = useRef(null);
 
   const handleRegister = async () => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import Table from "../../../components/table";
+import Table from "../../../components/Table";
 import { v4 as uuid } from "uuid";
 import { orders } from "../../../Services/fectchApi";
 
@@ -9,6 +9,7 @@ import Services from "../../../Services";
 import MenuItem from "@mui/material/MenuItem";
 import ButtonCustom from "../../../components/Button";
 import CustomizedMenus from "../../../components/CustomizedMenu";
+import { Button } from "@mui/material";
 
 function Order({ handleNextStep, setOrderDetail }) {
   const [order, setOrder] = useState([]);
@@ -75,17 +76,18 @@ function Order({ handleNextStep, setOrderDetail }) {
       headerName: "Action",
       width: 250,
       renderCell: (params) => (
-        <ButtonCustom
-          style={{
+        <Button
+          sx={{
             marginLeft: "1rem",
             background: "#fb923c",
             color: "#fff",
           }}
-          nameButton="Detail"
           onClick={(e) => {
             handleDetail(params.row.order_id);
           }}
-        ></ButtonCustom>
+        >
+          Detail
+        </Button>
       ),
     },
   ];

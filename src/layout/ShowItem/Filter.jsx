@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 import { v4 as uuid } from "uuid";
 
 import ButtonCustom from "../../components/Button";
@@ -44,7 +44,6 @@ function Filter({
     },
   ];
   const features = ["sale", "most"];
-
   const handleFilter = (e) => {
     const nameFilter = e.target.name;
     setGender(null);
@@ -99,28 +98,6 @@ function Filter({
     });
   };
 
-  const clearCondition = (e) => {
-    const isChecked = e.target.checked;
-
-    const nameFilter = e.target.name;
-    const checkboxes = ReactDOM.findDOMNode(filter?.current).querySelectorAll(
-      `input[type="checkbox"]:checked[name="${nameFilter}"]`
-    );
-    if (isChecked) {
-      checkboxes.forEach(function (checkbox) {
-        checkbox.checked = false;
-      });
-    }
-    setFilterCondition((prev) => {
-      return {
-        ...prev,
-        [nameFilter]: [e.target.value],
-      };
-    });
-
-    e.target.checked = isChecked;
-  };
-
   const renderColor = () => {
     return colors.map((color) => {
       return (
@@ -162,17 +139,6 @@ function Filter({
           {size}
         </div>
       );
-    });
-  };
-
-  const filterValue = (conditionName, valueFilter) => {
-    setFilterCondition((prev) => {
-      return {
-        ...prev,
-        [conditionName]: prev[conditionName].filter(
-          (item) => item !== valueFilter
-        ),
-      };
     });
   };
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Select, FormControl, MenuItem } from "@mui/material";
 
 import {
   ResponsiveContainer,
@@ -28,6 +29,11 @@ export default function LineChartS({ order, setOrder }) {
     { name: "November", number_order: 0, total: 0 },
     { name: "December", number_order: 0, total: 0 },
   ]);
+  const [statistic, setStatistic] = useState("year");
+
+  const handleChange = (event) => {
+    setStatistic(event.target.value);
+  };
 
   useEffect(() => {
     // Calculate number_order and total from the given objects
@@ -46,7 +52,7 @@ export default function LineChartS({ order, setOrder }) {
           orderYear === new Date().getFullYear()
         ) {
           number_order += 1;
-          total += obj.total;
+          total += obj.price;
         }
       }
       return { ...month, number_order, total };
@@ -71,26 +77,28 @@ export default function LineChartS({ order, setOrder }) {
     initOrder();
   }, []);
   return (
-    <ResponsiveContainer className="chart" height={300}>
-      <LineChart
-        width={600}
-        height={300}
-        data={data}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <XAxis dataKey="name" />
-        <YAxis />
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="total"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line type="monotone" dataKey="number_order" stroke="#82ca9d" />
-      </LineChart>
-    </ResponsiveContainer>
+    <>
+      <ResponsiveContainer className="chart" height={300}>
+        <LineChart
+          width={600}
+          height={300}
+          data={data}
+          margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
+        >
+          <XAxis dataKey="name" />
+          <YAxis />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="total"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+          <Line type="monotone" dataKey="number_order" stroke="#82ca9d" />
+        </LineChart>
+      </ResponsiveContainer>
+    </>
   );
 }

@@ -7,6 +7,7 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 
 import { v4 as uuid } from "uuid";
 import { BiPurchaseTag } from "react-icons/bi";
+import { HiOutlineTrash } from "react-icons/hi";
 
 import {
   GrOverview,
@@ -96,6 +97,12 @@ function NewNav({ active, handleNextStep }) {
           name: "Sale Items",
           icon: <BiPurchaseTag />,
           action: () => handleNextStep(1.3),
+        },
+        {
+          id: 4,
+          name: "Trash",
+          icon: <HiOutlineTrash />,
+          action: () => handleNextStep(1.4),
         },
       ],
     },

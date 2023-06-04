@@ -14,7 +14,7 @@ import { BiLockAlt } from "react-icons/bi";
 import google_icon from "../../assets/icon/google_icon.svg";
 import facebook_icon from "../../assets/icon/facebook_icon.svg";
 
-import Utils from "../../util/index";
+import Util from "../../util/index";
 import Services from "../../Services";
 
 import { googleSignIn } from "../../Firebase/AuthGoogle";
@@ -27,7 +27,6 @@ function Login({ active, setActiveLogin = () => {}, setAlert = () => {} }) {
   const { setUser, user } = UseAuthUserContext();
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
-  const Util = new Utils();
   const history = useNavigate();
 
   const handleGoogleSignIn = async () => {

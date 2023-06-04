@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Utils from "../../../util";
+import Util from "../../../util";
 
 import { FiTrash2 } from "react-icons/fi";
 import { CiEdit } from "react-icons/ci";
@@ -30,7 +30,6 @@ function PreviewItemSale({
 }) {
   const { setAlert } = useContextStore();
   const [commitRemoveModal, setCommitRemoveModal] = useState(false);
-  const Util = new Utils();
 
   const handleOpen = () => setCommitRemoveModal(true);
   const handleClose = () => setCommitRemoveModal(false);

@@ -63,7 +63,7 @@ export default function BarChart({ order }) {
     order.forEach((item) => {
       const orderDate = new Date(item.order_date);
       const month = orderDate.getMonth();
-      newScores[month] += item.total;
+      newScores[month] += item.price;
     });
     setScores(newScores);
   }, [order]);

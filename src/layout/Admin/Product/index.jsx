@@ -1,24 +1,40 @@
 import { useEffect, useState, memo, useMemo } from "react";
 
-import Table from "../../../components/table";
+import Table from "../../../components/Table";
 import { v4 as uuid } from "uuid";
-import { itemsApi } from "../../../Services/fectchApi";
 
 import MenuItem from "@mui/material/MenuItem";
 import ButtonCustom from "../../../components/Button";
 import CustomizedMenus from "../../../components/CustomizedMenu";
 
 import Services from "../../../Services";
-import { Button } from "@mui/material";
+import { Button, Modal, Box } from "@mui/material";
+import { FcFullTrash } from "react-icons/fc";
+import { useContextStore } from "../../../Store";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "1px solid #fb923c",
+  boxShadow: 24,
+  borderRadius: ".6rem",
+  p: 4,
+};
 
 function Product({ setProductDetail, setActive }) {
+  const { setAlert } = useContextStore();
   const [productSelected, setProductSelected] = useState([]);
   const [activeFilter, settActiveFilter] = useState(true);
   const [filter, setFilter] = useState({});
   const [product, setProduct] = useState([]);
   const [productShow, setProductShow] = useState([]);
   const [prevFilter, setPrevFilter] = useState({});
-  const [lazyLoadTable, setLazyLoadTable] = useState(true);
+  const [commitRemoveItem, setCommRemoveItem] = useState(false);
+  const [itemRemove, setItemRemove] = useState({});
   const columns = [
     {
       field: "item_id",
@@ -98,34 +114,42 @@ function Product({ setProductDetail, setActive }) {
       width: 250,
       renderCell: (params) => (
         <>
-          <ButtonCustom
-            nameButton="Remove"
-            style={{
+          <Button
+            sx={{
               color: "red",
             }}
             onClick={(e) => {
-              handleRemove(params.row.item_id);
+              setCommRemoveItem(true);
+              let data = productShow.filter((item) => {
+                return item.item_id === params.row.item_id;
+              });
+              if (data.length > 0) {
+                setItemRemove(data[0]);
+              }
             }}
-          ></ButtonCustom>
-          <ButtonCustom
-            style={{
-              marginLeft: "1rem",
-              background: "#fb923c",
-              color: "#fff",
-            }}
-            nameButton="Detail"
+          >
+            Remove
+          </Button>
+          <Button
             onClick={(e) => {
               handleDetail(params.row.item_id);
             }}
-          ></ButtonCustom>
+            sx={{
+              marginLeft: "1rem",
+              background: "#FB923C",
+              color: "#fff",
+              padding: ".5rem 1rem",
+              "&:hover": {
+                background: "rgba(251, 146, 60, .8)",
+              },
+            }}
+          >
+            Detail
+          </Button>
         </>
       ),
     },
   ];
-  // Function to handle remove action
-  function handleRemove(id) {
-    console.log(`Remove product with ID ${id}`);
-  }
 
   // Function to handle detail action
   function handleDetail(id) {
@@ -206,18 +230,69 @@ function Product({ setProductDetail, setActive }) {
   useEffect(() => {
     setProduct(filteredProduct);
   }, [filter, product]);
+  const removeItem = async (itemId) => {
+    const result = await Services.update("/api/item/delete", {
+      item_id: itemId,
+    });
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setLazyLoadTable(false);
-    }, 1000);
+    if (result.status === 200) {
+      setAlert({
+        type: "success",
+        message: "Delete product successfully!",
+      });
+    } else {
+      setAlert({
+        type: "error",
+        message: "Delete product failed!",
+      });
+    }
+    setItemRemove({});
+    setCommRemoveItem(false);
+  };
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
   return (
     <div className="w-full mt-12">
+      <Modal open={commitRemoveItem} onClose={(e) => setCommRemoveItem(false)}>
+        <Box sx={style}>
+          <div className="flex-col flex w-full center  ">
+            <FcFullTrash className="text-8xl" />
+            <h1 className="font-barlow font-bold w-fit mt-5 ">
+              Are you sure you want to remove item{" "}
+            </h1>
+            <span className="text-red-500 mt-2 font-barlow">
+              {itemRemove.name}
+            </span>
+
+            <div className="justify-between w-3/5 ml-auto mr-auto flex center mt-6">
+              <Button
+                sx={{
+                  border: "1px solid #fb923c",
+                  color: "#000",
+                  marginRight: "1rem",
+                }}
+                onClick={(e) => setCommRemoveItem(false)}
+              >
+                Close
+              </Button>
+              <Button
+                sx={{
+                  backgroundColor: "#ff5555",
+                  color: "#fff",
+                  "&:hover": {
+                    backgroundColor: "#ff6054",
+                  },
+                }}
+                onClick={(e) => {
+                  removeItem(itemRemove.item_id);
+                }}
+              >
+                Commit
+              </Button>
+            </div>
+          </div>
+        </Box>
+      </Modal>
+
       <div className="w-full end flex mb-4">
         {filter.type && (
           <>
@@ -239,7 +314,11 @@ function Product({ setProductDetail, setActive }) {
         {productSelected.length > 0 && (
           <ButtonCustom
             nameButton="Remove product selected"
-            style={{ marginRight: "1rem", color: "red" }}
+            style={{
+              marginRight: "1rem",
+              color: "red",
+              border: "1px solid red",
+            }}
           />
         )}
         <CustomizedMenus
@@ -434,14 +513,14 @@ function Product({ setProductDetail, setActive }) {
           </MenuItem>
         </CustomizedMenus>
       </div>
-      {!lazyLoadTable && product.length > 0 && (
+      {
         <Table
           data={productShow}
           columns={columns}
           pageSize={12}
           setSelection={setProductSelected}
         ></Table>
-      )}
+      }
     </div>
   );
 }

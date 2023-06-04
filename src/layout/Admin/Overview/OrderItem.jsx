@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { CiMenuKebab } from "react-icons/ci";
-import { AiOutlineEye, AiOutlineEdit } from "react-icons/ai";
+import Util from "../../../util";
 
 function OrderItem({ data }) {
   return (
@@ -16,11 +14,13 @@ function OrderItem({ data }) {
       </div>
       <div className="font-barlow  flex  flex-col mr-10 ml-10">
         <h5 className="">Date</h5>
-        <h6 className="text-md mt-2 text-orange-400">{data.order_date}</h6>
+        <h6 className="text-md mt-2 text-orange-400">
+          {Util.formatDate(data.order_date)}
+        </h6>
       </div>
       <div className="font-barlow  flex  flex-col mr-10 ml-10">
         <h5 className="">Total</h5>
-        <h6 className="text-md mt-2 text-orange-400">${data.total}</h6>
+        <h6 className="text-md mt-2 text-orange-400">${data.price}</h6>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import ButtonCustom from "../../../components/Button";
-import Utils from "../../../Util";
+import Utils from "../../../util";
 
 function AddPictureProduct({ listPhoto, setListPhoto }) {
   const choosePhoto = useRef(null);

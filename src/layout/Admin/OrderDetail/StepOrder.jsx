@@ -73,7 +73,7 @@ function switchDataStatusOrder(step, order_detail_id, item_id) {
   }
 }
 export default function StepOrder({
-  setCommitCancelledOrder,
+  setEnterReason,
   step = 0,
   statusProcess,
   setOrderDetail,
@@ -118,48 +118,53 @@ export default function StepOrder({
 
   return (
     <Box sx={{ maxWidth: 400 }}>
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((step, index) => (
-          <Step
-            key={step.label}
-            sx={{
-              "& svg": {
-                color: activeStep >= index ? "#ffae3c!important" : "",
-              },
-            }}
-          >
-            <StepLabel>{step.label}</StepLabel>
-            {activeStep == index && (
-              <Button
-                style={{
-                  background: "#ffae3c",
-                  color: "#fff",
-                  marginLeft: "2rem",
-                }}
-                onClick={(e) => {
-                  changeStatusOrder(statusProcess, orderDetail.order_detail_id);
-                }}
-              >
-                Confirm
-              </Button>
-            )}
-          </Step>
-        ))}
-      </Stepper>
       {orderDetail.status_process !== -1 && (
-        <Button
-          onClick={(e) => setCommitCancelledOrder(true)}
-          sx={{ color: "red", border: "1px solid red", marginTop: "1rem" }}
-        >
-          Cancel order
-        </Button>
-      )}{" "}
+        <Stepper activeStep={activeStep} orientation="vertical">
+          {steps.map((step, index) => (
+            <Step
+              key={step.label}
+              sx={{
+                "& svg": {
+                  color: activeStep >= index ? "#ffae3c!important" : "",
+                },
+              }}
+            >
+              <StepLabel>{step.label}</StepLabel>
+              {activeStep == index && (
+                <Button
+                  style={{
+                    background: "#ffae3c",
+                    color: "#fff",
+                    marginLeft: "2rem",
+                  }}
+                  onClick={(e) => {
+                    changeStatusOrder(
+                      statusProcess,
+                      orderDetail.order_detail_id
+                    );
+                  }}
+                >
+                  Confirm
+                </Button>
+              )}
+            </Step>
+          ))}
+        </Stepper>
+      )}
+
+      {orderDetail.status_process !== 5 &&
+        orderDetail.status_process !== -1 && (
+          <Button
+            onClick={(e) => setEnterReason(true)}
+            sx={{ color: "red", border: "1px solid red", marginTop: "1rem" }}
+          >
+            Cancel order
+          </Button>
+        )}
       {orderDetail.status_process === -1 && (
-        <Button
-          sx={{ color: "red", border: "1px solid red", marginTop: "1rem" }}
-        >
+        <h5 className=" font-barlow text-xl rounded-md bg-red-500 text-white mt-2 text-center w-fit pl-4 pr-4">
           Order cancelled
-        </Button>
+        </h5>
       )}
     </Box>
   );

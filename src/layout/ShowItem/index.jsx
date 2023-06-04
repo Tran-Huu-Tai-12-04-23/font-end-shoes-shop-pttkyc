@@ -9,7 +9,7 @@ import PaginationCustom from "../../components/PaginationCustom";
 import GridItem from "../../components/GridItem";
 import GridSkeleton from "../../components/GridSkeleton";
 
-import Utils from "../../util";
+import Util from "../../util";
 import Services from "../../Services";
 import { useContextStore } from "../../Store";
 import { memo } from "react";
@@ -22,7 +22,6 @@ function ShowItem() {
   const [loadItem, setLoadItem] = useState(true);
   const [items, setItems] = useState([]);
   const [itemsApi, setItemsApi] = useState([]);
-  const Util = new Utils();
   const [brand, setBrand] = useState("all");
 
   const [filterCondition, setFilterCondition] = useState({
@@ -85,10 +84,10 @@ function ShowItem() {
     setFilterCondition((prev) => {
       return {
         ...prev,
-        gender: [gender],
+        gender: gender ? [gender] : [],
       };
     });
-    if (gender !== "unisex") {
+    if (gender !== "unisex" && gender) {
       setItems(itemsApi.filter((item) => item.gender === gender));
     } else {
       setItems(itemsApi);

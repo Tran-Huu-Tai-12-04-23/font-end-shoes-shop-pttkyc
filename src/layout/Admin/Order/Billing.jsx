@@ -2,6 +2,7 @@ import ButtonCustom from "../../../components/Button";
 
 import { CiTrash } from "react-icons/ci";
 import { CgDetailsMore } from "react-icons/cg";
+import Util from "../../../util";
 
 function Billing({ data, style }) {
   return (
@@ -15,8 +16,8 @@ function Billing({ data, style }) {
         <h1 className="font-barlow font-bold">{data?.name_client}</h1>
       </div>
 
-      <div className="w- mt-2">Date: {data?.order_date}</div>
-      <div className="w- mt-2">Total: ${data?.total}</div>
+      <div className="w- mt-2">Date: {Util.formatDate(data?.order_date)}</div>
+      <div className="w- mt-2">Total: ${data?.price}</div>
       <div className="w- mt-2">Items: {data?.name_item}</div>
     </div>
   );
