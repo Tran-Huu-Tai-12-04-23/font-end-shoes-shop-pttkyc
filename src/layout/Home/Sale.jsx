@@ -25,7 +25,9 @@ function Sale() {
         {itemSale.map((item) => {
           return (
             <Item
-              discount={Math.round((item.price_sale / item.cost) * 100) + "%"}
+              discount={
+                Math.round((1 - item.price_sale / item.cost) * 100) + "%"
+              }
               key={uuid()}
               item={item}
               className="w-full flex-shrink-0 scale-90  "

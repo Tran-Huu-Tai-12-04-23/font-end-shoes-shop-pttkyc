@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import ButtonCustom from "../../components/Button";
+
+import { CircularProgress, Modal } from "@mui/material";
 
 function ViewOrder({
   checkOut,
@@ -13,8 +16,22 @@ function ViewOrder({
   total,
 }) {
   const history = useNavigate();
+  const [load, setLoad] = useState(false);
+
   return (
     <>
+      {load && (
+        <Modal
+          open={true}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress sx={{ color: "#fb923c" }}></CircularProgress>
+        </Modal>
+      )}
       <div
         className=" w-full center flex left-0 right-0 "
         style={{
@@ -79,8 +96,9 @@ function ViewOrder({
             nameButton="Commit Order"
             style={{ color: "#ffff", background: "var(--linear)" }}
             onClick={async (e) => {
+              setLoad(true);
               const res = await checkOut();
-
+              setLoad(false);
               if (res === true) {
                 handleNext();
                 history("/bag");

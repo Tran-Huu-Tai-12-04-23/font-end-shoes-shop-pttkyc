@@ -7,7 +7,7 @@ import { InputBase, FormControl, Select, MenuItem } from "@mui/material";
 import { useContextStore } from "../../Store";
 
 import { FiEdit } from "react-icons/fi";
-import SelectAddress from "../../layout/CheckOut/SelectAddress";
+import SelectAddress from "../../components/SelectAddress";
 import Utils from "../../util";
 import { UseAuthUserContext } from "../../AuthUser";
 import Services from "../../Services";

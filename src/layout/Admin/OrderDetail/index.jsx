@@ -30,7 +30,7 @@ function OrderDetail({ setOrderDetail, orderDetail, setActive }) {
   useEffect(() => {
     if (!orderDetail) {
       setAlert({
-        type: "error",
+        type: "warning",
         message: "Please select an order to watch detail",
       });
       setActive(2);
@@ -73,7 +73,7 @@ function OrderDetail({ setOrderDetail, orderDetail, setActive }) {
               Are you sure you want to cancelled order
             </h1>
             <h5 className="font-barlow w-fit text-red-400 mt-2">
-              "cancel order: " {orderDetail.order_detail_id}
+              "cancel order: " {orderDetail?.order_detail_id}
             </h5>
 
             <div className="justify-between w-3/5 ml-auto mr-auto flex center mt-6">

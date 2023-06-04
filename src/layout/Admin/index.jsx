@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { useState, memo, useEffect } from "react";
 import NewNav from "./NewNav";
 import { HiOutlineBellAlert } from "react-icons/hi2";
 import { RiAddLine } from "react-icons/ri";
@@ -11,6 +11,7 @@ import Product from "./Product";
 import User from "./User";
 import AddNewShoes from "./AddNewShoes";
 import OrderDetail from "./OrderDetail";
+import UserDetail from "./UserDetail";
 import ItemTrash from "./ItemTrash";
 import { UseAuthUserContext } from "../../AuthUser";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +31,7 @@ function Admin() {
   const [productDetail, setProductDetail] = useState(null);
   //
   const [orderDetail, setOrderDetail] = useState(null);
+  const [userDetail, setUserDetail] = useState(null);
   const history = useNavigate();
 
   const handleNextStep = (value = 0) => {
@@ -50,6 +52,12 @@ function Admin() {
     );
   };
 
+  useEffect(() => {
+    if (!user) {
+      history("/login");
+    }
+  }, [user]);
+
   return (
     <>
       <div
@@ -67,7 +75,11 @@ function Admin() {
             className="fixed left-0 bottom-0 top-0 col-span-1 bg-blur overflow-auto custom-scrollbar"
             style={{ width: "15rem" }}
           >
-            <NewNav handleNextStep={handleNextStep} active={active}></NewNav>
+            <NewNav
+              handleNextStep={handleNextStep}
+              active={active}
+              handleLogout={handleLogout}
+            ></NewNav>
           </div>
         </div>
         <div
@@ -118,7 +130,7 @@ function Admin() {
                   color: "#fff",
                 }}
               />
-
+              <h5 className="text-xl ml-2 font-barlow">{user?.username}</h5>
               <Avatar
                 sx={{
                   width: 30,
@@ -128,25 +140,6 @@ function Admin() {
                 className="ml-3 cursor-pointer"
                 alt={user?.username}
                 src={user?.avatar}
-              />
-              <MenuCustom
-                activeMenu={activeMenuUser}
-                setActiveMenu={setActiveMenuUser}
-                data={[
-                  {
-                    name: "Settings",
-                    onClick: () => {},
-                    icon: <FiSettings className="text-xl mr-3" />,
-                  },
-                  {
-                    name: "Log out",
-                    onClick: handleLogout,
-                    icon: <CiLogout className="text-xl mr-3" />,
-                    action: () => {
-                      handleLogout();
-                    },
-                  },
-                ]}
               />
             </div>
           </div>
@@ -180,7 +173,6 @@ function Admin() {
                 setOrderDetail={setOrderDetail}
               />
             )}
-
             {active === 2.1 && (
               <OrderDetail
                 orderDetail={orderDetail}
@@ -188,7 +180,12 @@ function Admin() {
                 setOrderDetail={setOrderDetail}
               />
             )}
-            {active === 3 && <User show={active === 3} />}
+            {active === 3 && (
+              <User setUserDetail={setUserDetail} setActive={setActive} />
+            )}
+            {active === 3.1 && (
+              <UserDetail setActive={setActive} userDetail={userDetail} />
+            )}
           </div>
         </div>
       </div>

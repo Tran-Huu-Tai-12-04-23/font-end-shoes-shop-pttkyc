@@ -24,7 +24,9 @@ const style = {
   borderRadius: ".6rem",
   p: 4,
 };
-
+const isEmptyObject = (obj) => {
+  return Object.keys(obj).length === 0;
+};
 function Product({ setProductDetail, setActive }) {
   const { setAlert } = useContextStore();
   const [productSelected, setProductSelected] = useState([]);
@@ -33,13 +35,16 @@ function Product({ setProductDetail, setActive }) {
   const [product, setProduct] = useState([]);
   const [productShow, setProductShow] = useState([]);
   const [prevFilter, setPrevFilter] = useState({});
-  const [commitRemoveItem, setCommRemoveItem] = useState(false);
+  const [commitRemoveItem, setCommitRemoveItem] = useState(false);
   const [itemRemove, setItemRemove] = useState({});
+  const [commitRemoveItemSelect, setCommitRemoveItemSelect] = useState(false);
+  const [addDateFilter, setAddDateFilter] = useState("");
+
   const columns = [
     {
       field: "item_id",
       headerName: "ID",
-      width: 70,
+      width: 40,
     },
     {
       field: "link_photo",
@@ -59,7 +64,7 @@ function Product({ setProductDetail, setActive }) {
     {
       field: "color",
       headerName: "Color",
-      width: 100,
+      width: 50,
       renderCell: (params) => (
         <div
           className="rounded-full p-2 h-3 w-3"
@@ -111,15 +116,17 @@ function Product({ setProductDetail, setActive }) {
     {
       field: "action",
       headerName: "Action",
-      width: 250,
+      width: "200",
       renderCell: (params) => (
-        <>
+        <div className="w-full justify-between flex items-center">
           <Button
             sx={{
               color: "red",
+              padding: ".3rem 2rem",
+              fontSize: ".8rem",
             }}
             onClick={(e) => {
-              setCommRemoveItem(true);
+              setCommitRemoveItem(true);
               let data = productShow.filter((item) => {
                 return item.item_id === params.row.item_id;
               });
@@ -136,17 +143,19 @@ function Product({ setProductDetail, setActive }) {
             }}
             sx={{
               marginLeft: "1rem",
-              background: "#FB923C",
+              background: "rgba(251, 146, 60, 1)",
               color: "#fff",
-              padding: ".5rem 1rem",
+              padding: ".3rem 2rem",
+              fontSize: ".8rem",
               "&:hover": {
-                background: "rgba(251, 146, 60, .8)",
+                background: "rgba(251, 146, 60, 1)",
+                filter: "brightness(120%)",
               },
             }}
           >
             Detail
           </Button>
-        </>
+        </div>
       ),
     },
   ];
@@ -171,7 +180,7 @@ function Product({ setProductDetail, setActive }) {
           data.map((item) => {
             return {
               ...item,
-              id: uuid(),
+              id: item.item_id,
             };
           })
         );
@@ -179,7 +188,7 @@ function Product({ setProductDetail, setActive }) {
           data.map((item) => {
             return {
               ...item,
-              id: uuid(),
+              id: item.item_id,
             };
           })
         );
@@ -193,43 +202,50 @@ function Product({ setProductDetail, setActive }) {
     handleGetAllItems();
   }, []);
 
-  const filterByStatus = () => {
-    return product.filter((item) => item.status === filter.value);
+  const filterByStatus = (data) => {
+    return data.filter((item) => {
+      return item.status === filter.status;
+    });
   };
 
-  const filterByType = () => {
-    return product.filter((item) => item.type === filter.value);
+  const filterByType = (data) => {
+    return data.filter(
+      (item) => item?.type?.toLowerCase() === filter?.type?.toLowerCase()
+    );
   };
 
-  const filterByDate = () => {
-    return product.filter((item) => {
+  const filterByDate = (data) => {
+    return data.filter((item) => {
       const date = new Date(item.add_date);
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0");
       const day = String(date.getDate()).padStart(2, "0");
       const formattedDate = `${year}-${month}-${day}`;
-      return formattedDate === filter.value;
+      return formattedDate === filter.addDate;
     });
   };
   const filteredProduct = useMemo(() => {
-    if (!filter.type) {
-      return product;
+    let itemFilter = product;
+    if (filter.status !== "other" && filter.status) {
+      itemFilter = filterByStatus(itemFilter);
+    }
+    console.log(itemFilter);
+    if (filter.type !== "other" && filter.type) {
+      itemFilter = filterByType(itemFilter);
+    }
+    if (addDateFilter) {
+      itemFilter = filterByDate(itemFilter);
     }
 
-    switch (filter.type) {
-      case "status":
-        return filterByStatus();
-      case "type":
-        return filterByType();
-      case "date":
-        return filterByDate();
-      default:
-        return product;
-    }
-  }, [filter, product]);
+    return itemFilter;
+  }, [filter]);
   useEffect(() => {
-    setProduct(filteredProduct);
-  }, [filter, product]);
+    if (!isEmptyObject(filter)) {
+      setProductShow(filteredProduct);
+    } else {
+      setProductShow(product);
+    }
+  }, [filter]);
   const removeItem = async (itemId) => {
     const result = await Services.update("/api/item/delete", {
       item_id: itemId,
@@ -240,6 +256,7 @@ function Product({ setProductDetail, setActive }) {
         type: "success",
         message: "Delete product successfully!",
       });
+      setProductShow(productShow.filter((item) => item.item_id !== itemId));
     } else {
       setAlert({
         type: "error",
@@ -247,12 +264,51 @@ function Product({ setProductDetail, setActive }) {
       });
     }
     setItemRemove({});
-    setCommRemoveItem(false);
+    setCommitRemoveItem(false);
   };
 
+  const handleRemoveItemSelected = async (itemId) => {
+    const removeItemsPromise = productSelected.map(async (itemId) => {
+      let result = await Services.update("/api/item/delete", {
+        item_id: itemId,
+      });
+
+      if (result.status === 200) {
+        return itemId;
+      } else {
+        return null;
+      }
+    });
+
+    const resultRemoveItem = await Promise.all(removeItemsPromise);
+    const successfulRemoveItems = resultRemoveItem.filter(
+      (itemId) => itemId !== null
+    );
+    const newListProducts = product.filter(
+      (item) => !successfulRemoveItems.includes(item.item_id)
+    );
+    setProduct(newListProducts);
+    setProductShow(newListProducts);
+
+    if (successfulRemoveItems.length > 0) {
+      setAlert({
+        type: "success",
+        message: "Remove items successfully!",
+      });
+      setCommitRemoveItemSelect(false);
+    } else {
+      setAlert({
+        type: "error",
+        message: "Remove items failed!",
+      });
+    }
+  };
   return (
     <div className="w-full mt-12">
-      <Modal open={commitRemoveItem} onClose={(e) => setCommRemoveItem(false)}>
+      <Modal
+        open={commitRemoveItem}
+        onClose={(e) => setCommitRemoveItem(false)}
+      >
         <Box sx={style}>
           <div className="flex-col flex w-full center  ">
             <FcFullTrash className="text-8xl" />
@@ -270,7 +326,7 @@ function Product({ setProductDetail, setActive }) {
                   color: "#000",
                   marginRight: "1rem",
                 }}
-                onClick={(e) => setCommRemoveItem(false)}
+                onClick={(e) => setCommitRemoveItem(false)}
               >
                 Close
               </Button>
@@ -292,23 +348,70 @@ function Product({ setProductDetail, setActive }) {
           </div>
         </Box>
       </Modal>
+      <Modal
+        open={commitRemoveItemSelect}
+        onClose={(e) => setCommitRemoveItemSelect(false)}
+      >
+        <Box sx={style}>
+          <div className="flex-col flex w-full center  ">
+            <FcFullTrash className="text-8xl" />
+            <h1 className="font-barlow font-bold w-fit mt-5 ">
+              Are you sure you want to remove all items selected{" "}
+            </h1>
+
+            <div className="justify-between w-3/5 ml-auto mr-auto flex center mt-6">
+              <Button
+                sx={{
+                  border: "1px solid #fb923c",
+                  color: "#000",
+                  marginRight: "1rem",
+                }}
+                onClick={(e) => setCommitRemoveItemSelect(false)}
+              >
+                Close
+              </Button>
+              <Button
+                sx={{
+                  backgroundColor: "#ff5555",
+                  color: "#fff",
+                  "&:hover": {
+                    backgroundColor: "#ff6054",
+                  },
+                }}
+                onClick={handleRemoveItemSelected}
+              >
+                Commit
+              </Button>
+            </div>
+          </div>
+        </Box>
+      </Modal>
 
       <div className="w-full end flex mb-4">
+        {!isEmptyObject(filter) && (
+          <div className="font-barlow mr-2">Filter :</div>
+        )}
+        {filter.status && (
+          <h5 className="font-barlow mr-2">status : {filter.status}</h5>
+        )}
         {filter.type && (
-          <>
-            <div className="font-barlow mr-2">
-              Filter : {filter.type} : {filter.value}
-            </div>
-            <Button
-              variant="outline"
-              sx={{
-                color: "red",
-              }}
-              onClick={(e) => setFilter({})}
-            >
-              Clear filter
-            </Button>
-          </>
+          <h5 className="font-barlow mr-2">- type : {filter.type}</h5>
+        )}
+        {filter.addDate && (
+          <h5 className="font-barlow mr-2">- add date : {filter.addDate}</h5>
+        )}
+        {!isEmptyObject(filter) && (
+          <Button
+            variant="outline"
+            sx={{
+              color: "red",
+              marginRight: "1rem",
+              border: "1px solid red",
+            }}
+            onClick={(e) => setFilter({})}
+          >
+            Clear filter
+          </Button>
         )}
 
         {productSelected.length > 0 && (
@@ -319,6 +422,7 @@ function Product({ setProductDetail, setActive }) {
               color: "red",
               border: "1px solid red",
             }}
+            onClick={(e) => setCommitRemoveItemSelect(true)}
           />
         )}
         <CustomizedMenus
@@ -331,9 +435,8 @@ function Product({ setProductDetail, setActive }) {
             onClick={(e) => {
               settActiveFilter(false);
               setPrevFilter(filter);
-              setFilter({
-                type: "status",
-                value: "90%",
+              setFilter((prev) => {
+                return { ...prev, status: "90%" };
               });
             }}
           >
@@ -344,9 +447,8 @@ function Product({ setProductDetail, setActive }) {
             onClick={(e) => {
               setPrevFilter(filter);
               settActiveFilter(false);
-              setFilter({
-                type: "status",
-                value: "95%",
+              setFilter((prev) => {
+                return { ...prev, status: "95%" };
               });
             }}
           >
@@ -357,9 +459,8 @@ function Product({ setProductDetail, setActive }) {
             onClick={(e) => {
               setPrevFilter(filter);
               settActiveFilter(false);
-              setFilter({
-                type: "status",
-                value: "99%",
+              setFilter((prev) => {
+                return { ...prev, status: "99%" };
               });
             }}
           >
@@ -370,26 +471,10 @@ function Product({ setProductDetail, setActive }) {
             onClick={(e) => {
               setPrevFilter(filter);
               settActiveFilter(false);
-              setFilter({
-                type: "status",
-                value: "other",
-              });
+              return { ...prev, status: "other" };
             }}
           >
             other
-          </MenuItem>
-          <MenuItem
-            disableRipple
-            sx={{
-              color: "red",
-              bproductTop: "1px solid red",
-            }}
-            onClick={(e) => {
-              setFilter(prevFilter);
-              settActiveFilter(false);
-            }}
-          >
-            Cancel
           </MenuItem>
         </CustomizedMenus>
         <CustomizedMenus
@@ -402,9 +487,8 @@ function Product({ setProductDetail, setActive }) {
             onClick={(e) => {
               setPrevFilter(filter);
               settActiveFilter(false);
-              setFilter({
-                type: "type",
-                value: "running",
+              setFilter((prev) => {
+                return { ...prev, type: "running" };
               });
             }}
           >
@@ -415,9 +499,8 @@ function Product({ setProductDetail, setActive }) {
             onClick={(e) => {
               setPrevFilter(filter);
               settActiveFilter(false);
-              setFilter({
-                type: "type",
-                value: "sneaker",
+              setFilter((prev) => {
+                return { ...prev, type: "sneaker" };
               });
             }}
           >
@@ -428,9 +511,9 @@ function Product({ setProductDetail, setActive }) {
             onClick={(e) => {
               setPrevFilter(filter);
               settActiveFilter(false);
-              setFilter({
-                type: "type",
-                value: "sandals",
+
+              setFilter((prev) => {
+                return { ...prev, type: "sandals" };
               });
             }}
           >
@@ -441,9 +524,8 @@ function Product({ setProductDetail, setActive }) {
             onClick={(e) => {
               setPrevFilter(filter);
               settActiveFilter(false);
-              setFilter({
-                type: "type",
-                value: "hiking",
+              setFilter((prev) => {
+                return { ...prev, type: "hiking" };
               });
             }}
           >
@@ -454,26 +536,12 @@ function Product({ setProductDetail, setActive }) {
             onClick={(e) => {
               setPrevFilter(filter);
               settActiveFilter(false);
-              setFilter({
-                type: "type",
-                value: "other",
+              setFilter((prev) => {
+                return { ...prev, type: "other" };
               });
             }}
           >
             Other
-          </MenuItem>
-          <MenuItem
-            disableRipple
-            sx={{
-              color: "red",
-              bproductTop: "1px solid red",
-            }}
-            onClick={(e) => {
-              setFilter(prevFilter);
-              settActiveFilter(false);
-            }}
-          >
-            Cancel
           </MenuItem>
         </CustomizedMenus>
         <CustomizedMenus
@@ -491,12 +559,16 @@ function Product({ setProductDetail, setActive }) {
             <input
               type="date"
               onClick={(e) => e.stopPropagation()}
-              onChange={(e) =>
-                setFilter({
-                  type: "date",
-                  value: e.target.value,
-                })
-              }
+              value={addDateFilter}
+              onChange={(e) => {
+                setAddDateFilter(e.target.value);
+                setFilter((prev) => {
+                  return {
+                    ...prev,
+                    addDate: e.target.value,
+                  };
+                });
+              }}
             />
           </MenuItem>
           <MenuItem
@@ -513,14 +585,12 @@ function Product({ setProductDetail, setActive }) {
           </MenuItem>
         </CustomizedMenus>
       </div>
-      {
-        <Table
-          data={productShow}
-          columns={columns}
-          pageSize={12}
-          setSelection={setProductSelected}
-        ></Table>
-      }
+      <Table
+        data={productShow}
+        columns={columns}
+        pageSize={12}
+        setSelection={setProductSelected}
+      ></Table>
     </div>
   );
 }

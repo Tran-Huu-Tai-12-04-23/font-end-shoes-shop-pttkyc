@@ -11,10 +11,6 @@ import StepConnector, {
 } from "@mui/material/StepConnector";
 import Header from "../../components/Header";
 
-import product1 from "../../assets/img/home/product1.png";
-import product2 from "../../assets/img/home/product2.png";
-import product3 from "../../assets/img/home/product3.png";
-
 import { AiFillEdit } from "react-icons/ai";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { BsUiChecks, BsCheck2Square } from "react-icons/bs";
@@ -26,7 +22,6 @@ import OrderSuccess from "./OrderSuccess";
 
 import { useContextStore } from "../../Store";
 import ViewOrder from "./ViewOrder";
-import { useRadioGroup } from "@mui/material";
 import { UseAuthUserContext } from "../../AuthUser";
 import Services from "../../Services";
 
@@ -229,6 +224,12 @@ export default function CheckOut() {
       return false;
     }
   };
+
+  useEffect(() => {
+    if (itemsBag.length <= 0) {
+      history("/bag");
+    }
+  }, [itemsBag]);
   return (
     <div>
       <Header />

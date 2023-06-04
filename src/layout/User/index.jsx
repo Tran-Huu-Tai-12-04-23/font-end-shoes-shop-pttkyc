@@ -5,7 +5,6 @@ import { v4 as uuid } from "uuid";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { VscHistory, VscAccount } from "react-icons/vsc";
 import { GiRank2 } from "react-icons/gi";
-import { AiOutlineTags } from "react-icons/ai";
 import { BiSupport } from "react-icons/bi";
 import { GoReport } from "react-icons/go";
 import { CiLogout } from "react-icons/ci";
