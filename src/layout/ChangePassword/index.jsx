@@ -4,7 +4,7 @@ import { Button, TextField, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { UseAuthUserContext } from "../../AuthUser";
-import Utils from "../../util";
+import Util from "../../util";
 import Services from "../../Services";
 import { useContextStore } from "../../Store";
 import WaitEnterCode from "./WaitEnterCode";
@@ -21,7 +21,6 @@ function ChangePassword() {
   const [isCheckCode, setIsCheckCode] = useState(false);
   const [loadSend, setLoadSend] = useState(false);
   const [timeValid, setTimeValid] = useState(0);
-  const Util = new Utils();
   const history = useNavigate();
 
   const handleSendCode = async () => {

@@ -114,14 +114,15 @@ function ShowItem() {
       <Header />
       <div className=" w-full  ">
         <div
-          className="grid grid-cols-12 mt-5 pt-20 pl-10 pr-10 transition-all"
+          className=" grid grid-cols-12 mt-5 pt-20 pl-10 pr-10 transition-all"
           style={{
             transition: ".4s",
           }}
         >
           <div
-            className={` xl:w-1/4  w-1/3 pl-10 pr-10 fixed bottom-0 left-0 transition-all`}
+            className={`xl:bg-transparent lg:bg-transparent  bg-blur xl:w-1/4  lg:w-1/3 w-full pl-10 pr-10 fixed bottom-0 left-0 transition-all`}
             style={{
+              zIndex: 10,
               transition: ".4s",
               display: showFilter ? "block" : "none",
             }}
@@ -136,10 +137,9 @@ function ShowItem() {
           </div>
 
           <div
-            className="xl:col-span-3 col-span-4 pt-10 p-10 transition-all"
+            className={`hidden xl:block lg:block  xl:col-span-3 col-span-4 pt-10 p-10 transition-all`}
             style={{
               transition: ".4s",
-              display: showFilter ? "block" : "none",
             }}
           ></div>
           <div

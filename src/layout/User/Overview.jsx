@@ -34,12 +34,12 @@ function Overview({ userDetail, numberOrder }) {
     <div className="w-full flex flex-col">
       <CardUser data={userDetail}></CardUser>
 
-      <div className="w-full flex justify-around mt-10 ">
+      <div className="w-full grid grid-cols-1  xl:grid-cols-3 lg:grid-cols-3 mt-10 gap-10 ">
         {nav.map((item, index) => {
           return (
             <div
               onClick={item.action}
-              className={`p-4 flex center flex-col  min-w-15 w-1/3 rounded-xl scale-95 ${
+              className={`p-4 flex center flex-col rounded-xl ${
                 index === 0
                   ? "bg-orange-200"
                   : index === 1

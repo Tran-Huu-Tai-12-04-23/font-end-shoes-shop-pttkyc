@@ -27,7 +27,7 @@ import { FaSleigh } from "react-icons/fa";
 import { UseAuthUserContext } from "../../AuthUser";
 
 function Header() {
-  const { setGender, itemsBag } = useContextStore();
+  const { setGender, itemsBag, scrollTop } = useContextStore();
   const { user, setUser } = UseAuthUserContext();
   const searchPopular = ["Nike air", "Bitis Hunter", "Adidas"];
   const { setSearch, search } = useContextStore();
@@ -61,18 +61,18 @@ function Header() {
 
   return (
     <div
-      className="fixed items-center top-0 left-0 right-0 h-12 w-full grid grid-cols-12 pl-4 pr-4"
+      className={`bg-blur fixed items-center top-0 left-0 right-0 h-12 w-full grid grid-cols-12 pl-4 pr-4`}
       style={{
-        zIndex: "100",
+        zIndex: "100000",
       }}
     >
       <img
         src={logo}
-        className="w-20 col-span-3"
+        className="w-20 xl:col-span-3 lg:col-span-3 col-span-6"
         onClick={(e) => history("/")}
       ></img>
-      <div className="col-span-6">
-        <ul className="justify-center items-center flex">
+      <div className="col-span-6 hidden xl:block lg:block">
+        <ul className="justify-center items-center flex ">
           <li
             onClick={(e) => history("/")}
             className="pt-2 text-md pb-2 pl-4 pr-4 font-barlow cursor-pointer hover:bg-slate-50 rounded-sm"
@@ -109,7 +109,7 @@ function Header() {
         </ul>
       </div>
       <div
-        className={`col-span-3 relative end flex `}
+        className={`xl:col-span-3 lg:col-span-3 col-span-6 relative end flex `}
         style={{
           zIndex: "3",
         }}

@@ -6,7 +6,7 @@ import { useContextStore } from "../../Store";
 function MostItemRelative() {
   const { itemSale } = useContextStore();
   return (
-    <div className="w-full center mt-20">
+    <div className="w-full center mt-20 pl-10 pr-10">
       <div className="xl:w-5/6 w-full mt-20">
         <h1 className="w-fit text-3xl border-b-4 border-solid border-slate-400">
           You might also like

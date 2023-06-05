@@ -90,35 +90,6 @@ const columns = [
     headerName: "Status",
     width: 100,
   },
-  {
-    field: "action",
-    headerName: "Action",
-    width: 250,
-    renderCell: (params) => (
-      <>
-        <ButtonCustom
-          nameButton="Remove"
-          style={{
-            color: "red",
-          }}
-          onClick={(e) => {
-            handleRemove(params.row.item_id);
-          }}
-        ></ButtonCustom>
-        <ButtonCustom
-          style={{
-            marginLeft: "1rem",
-            background: "#fb923c",
-            color: "#fff",
-          }}
-          nameButton="Detail"
-          onClick={(e) => {
-            handleDetail(params.row.item_id);
-          }}
-        ></ButtonCustom>
-      </>
-    ),
-  },
 ];
 function convertPercentageToFraction(percentage) {
   if (typeof percentage !== "string") {

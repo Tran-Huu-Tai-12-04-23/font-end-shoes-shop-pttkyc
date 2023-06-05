@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100;200;300;500;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -437,4 +438,8 @@ table {
     -webkit-transform: translateY(-305%);
     transform: translateY(-305%);
   }
+}
+
+* {
+  font-family: "Barlow Condensed", "sans-serif";
 }

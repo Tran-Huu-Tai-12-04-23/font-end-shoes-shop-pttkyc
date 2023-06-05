@@ -95,6 +95,8 @@ function User({ setActive, setUserDetail }) {
               fontSize: ".8rem",
             }}
             onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
               setIdUserRemove(params.row.account_id);
               setShowModalCommitRemoveUser(true);
             }}
@@ -104,16 +106,18 @@ function User({ setActive, setUserDetail }) {
           <Button
             sx={{
               marginLeft: "1rem",
-              background: "rgb(251, 146, 60)",
-              color: "#fff",
+              background: "rgba(255, 195, 0, .2)",
+              color: "orange",
               padding: ".3rem 2rem",
               fontSize: ".8rem",
               "&:hover": {
-                background: "rgb(251, 146, 60)",
+                background: "rgba(255, 195, 0, .2)",
                 filter: "brightness(120%)",
               },
             }}
             onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
               handleDetail(params.row.account_id);
             }}
           >
@@ -281,7 +285,7 @@ function User({ setActive, setUserDetail }) {
             </div>
           </div>
         </Box>
-      </Modal>{" "}
+      </Modal>
       <Modal
         open={showCommitUserSelectRemove}
         onClose={(e) => setShowCommitUserSelectRemove(false)}
@@ -340,10 +344,13 @@ function User({ setActive, setUserDetail }) {
           <ButtonCustom
             nameButton="Remove user selected"
             style={{
-              marginRight: "1rem",
               color: "red",
-              border: "1px solid red",
               marginLeft: "auto",
+              background: "rgba(204, 12, 0, .1)",
+              "&:hover": {
+                background: "rgba(204, 12, 0, .1)",
+                filter: "brightness(120%)",
+              },
             }}
             onClick={(e) => setShowCommitUserSelectRemove(true)}
           />

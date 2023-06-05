@@ -88,23 +88,41 @@ const ItemTrash = () => {
       headerName: "Action",
       width: 250,
       renderCell: (params) => (
-        <Button
-          sx={{
-            color: "white",
-            background: "rgba(25, 118, 210, .7)",
-            padding: "0.3rem 2rem",
-            fontSize: ".8rem",
+        <>
+          <Button
+            sx={{
+              color: "red",
+              padding: ".3rem 2rem",
+              fontSize: ".8rem",
+              "&:hover": {
+                filter: "brightness(120%)",
+              },
+            }}
+            onClick={(e) => {
+              handleDetail(params.row.account_id);
+            }}
+          >
+            Destroy
+          </Button>
+          <Button
+            style={{
+              padding: ".3rem 2rem",
+              fontSize: ".8rem",
+              background: "rgba(37, 134, 248, .1)",
+              marginLeft: "1rem",
 
-            "&:hover": {
-              background: "rgba(25, 118, 210, .8)",
-            },
-          }}
-          onClick={(e) => {
-            restore(params.row.item_id);
-          }}
-        >
-          Restore
-        </Button>
+              "&:hover": {
+                background: "rgba(37, 134, 248, .1)",
+                filter: "brightness(120%)",
+              },
+            }}
+            onClick={(e) => {
+              restore(params.row.item_id);
+            }}
+          >
+            Restore
+          </Button>
+        </>
       ),
     },
   ];
@@ -176,6 +194,8 @@ const ItemTrash = () => {
 
   return (
     <div>
+      <h1 className="text-xl font-barlow mt-5 mb-5">All items deleted</h1>
+
       {productSelected.length > 0 && (
         <div className="end flex ">
           <Button

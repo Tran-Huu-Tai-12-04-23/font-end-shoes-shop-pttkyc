@@ -233,7 +233,7 @@ export default function CheckOut() {
   return (
     <div>
       <Header />
-      <div className="center flex w-full pt-12">
+      <div className="center flex w-full pt-12 pr-10 pl-10">
         <div className="w-full xl:w-4/6 pt-12 flex flex-col pb-12">
           <div className="start flex items-center">
             {activeStep === 1 && (
@@ -287,7 +287,7 @@ export default function CheckOut() {
 
           {
             <div
-              className="grid grid-cols-2 gap-10 mt-10 "
+              className="grid xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 gap-10 mt-10 "
               style={{
                 position: activeStep !== 0 ? "fixed" : "",
               }}

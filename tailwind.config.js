@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        barlow: ["sans-serif"],
+        barlow: ['"Barlow Condensed"', "Dosis", "sans-serif"],
       },
       height: {
         "30vh": "30vh",

@@ -61,7 +61,6 @@ class Services {
   }
   async remove(link, query) {
     const url = "http://localhost:3300" + link + query;
-    console.log(url);
     try {
       const response = await axios.delete(url);
       return response;

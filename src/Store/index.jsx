@@ -25,6 +25,7 @@ function Store({ children }) {
   const [itemsBag, setItemsBag] = useState([]);
   const [itemSale, setItemSale] = useState([]);
   const [product, setProduct] = useState([]);
+  const [scrollTop, setScrollTop] = useState(false);
   useEffect(() => {
     const initItemSale = async () => {
       const result = await Services.getDataFromApi("/api/item/sale/all");
@@ -78,6 +79,8 @@ function Store({ children }) {
         setItemSale,
         product,
         setProduct,
+        scrollTop,
+        setScrollTop,
       }}
     >
       {children}

@@ -13,7 +13,7 @@ function WrapperFeedback() {
   const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
   return (
-    <div className="w-full center">
+    <div className="w-full bg-blur center pl-10 pr-10">
       <div className="xl:w-5/6 w-full mt-10">
         <h1 className="w-fit font-bold font-barlow text-2xl border-b-4 border-solid border-slate-400">
           Feedback Of customer
@@ -29,7 +29,7 @@ function WrapperFeedback() {
           }}
         ></ButtonCustom> */}
 
-        <div className="start flex mt-10 w-full justify-center items-center pt-10 pb-10">
+        {/* <div className="start flex mt-10 w-full justify-center items-center pt-10 pb-10">
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           <Input
             style={{
@@ -50,7 +50,7 @@ function WrapperFeedback() {
               marginLeft: "2rem",
             }}
           />
-        </div>
+        </div> */}
 
         <div className="w-full mt-20">
           <Slider

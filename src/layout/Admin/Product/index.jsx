@@ -126,6 +126,8 @@ function Product({ setProductDetail, setActive }) {
               fontSize: ".8rem",
             }}
             onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
               setCommitRemoveItem(true);
               let data = productShow.filter((item) => {
                 return item.item_id === params.row.item_id;
@@ -139,16 +141,18 @@ function Product({ setProductDetail, setActive }) {
           </Button>
           <Button
             onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
               handleDetail(params.row.item_id);
             }}
             sx={{
               marginLeft: "1rem",
-              background: "rgba(251, 146, 60, 1)",
-              color: "#fff",
+              background: "rgba(255, 195, 0, .2)",
+              color: "orange",
               padding: ".3rem 2rem",
               fontSize: ".8rem",
               "&:hover": {
-                background: "rgba(251, 146, 60, 1)",
+                background: "rgba(255, 195, 0, .2)",
                 filter: "brightness(120%)",
               },
             }}
@@ -405,8 +409,11 @@ function Product({ setProductDetail, setActive }) {
             variant="outline"
             sx={{
               color: "red",
-              marginRight: "1rem",
-              border: "1px solid red",
+              background: "rgba(204, 12, 0, .1)",
+              "&:hover": {
+                background: "rgba(204, 12, 0, .1)",
+                filter: "brightness(120%)",
+              },
             }}
             onClick={(e) => setFilter({})}
           >
@@ -415,15 +422,19 @@ function Product({ setProductDetail, setActive }) {
         )}
 
         {productSelected.length > 0 && (
-          <ButtonCustom
-            nameButton="Remove product selected"
-            style={{
-              marginRight: "1rem",
+          <Button
+            sx={{
               color: "red",
-              border: "1px solid red",
+              background: "rgba(204, 12, 0, .1)",
+              "&:hover": {
+                background: "rgba(204, 12, 0, .1)",
+                filter: "brightness(120%)",
+              },
             }}
             onClick={(e) => setCommitRemoveItemSelect(true)}
-          />
+          >
+            Remove product selected
+          </Button>
         )}
         <CustomizedMenus
           nameButton={"Status"}

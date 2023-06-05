@@ -172,7 +172,7 @@ function HeaderShop({
         background: activeHeader ? "rgba(255, 255, 255, 0.1)" : "transparent",
       }}
     >
-      <div className="">{renderBrand()}</div>
+      <div className=" md:hidden sm:hidden">{renderBrand()}</div>
       <div className="end flex">
         <ButtonCustom
           nameButton={showFilter ? "Filters" : "Hide Filters"}

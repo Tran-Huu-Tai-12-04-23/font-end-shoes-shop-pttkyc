@@ -8,7 +8,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import Search from "./layout/Search";
 import Bag from "./layout/Bag";
 import CheckOut from "./layout/CheckOut";
-// import User from "./layout/User";
+import User from "./layout/User";
 import Admin from "./layout/Admin";
 import WrapperApp from "./WrapperApp";
 import AlertCustom from "./components/AlertCustom";
@@ -18,8 +18,7 @@ import ChangePassword from "./layout/ChangePassword";
 
 function App() {
   const [theme, setTheme] = useState("dark");
-  const [scrollTop, setScrollTop] = useState(false);
-  const { alert, setAlert } = useContextStore();
+  const { alert, setAlert, scrollTop, setScrollTop } = useContextStore();
 
   useEffect(() => {
     window.onscroll = () => {

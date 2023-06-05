@@ -88,10 +88,12 @@ function DeliveryInformation({
   return (
     <div
       className="w-full p-4 transition-all"
-      style={{
-        borderRight: "1px solid #f2f2f2",
-        borderLeft: "1px solid #afb5bc",
-      }}
+      style={
+        {
+          // borderRight: "1px solid #f2f2f2",
+          // borderLeft: "1px solid #afb5bc",
+        }
+      }
     >
       <h5
         className="text-xl font-barlow"

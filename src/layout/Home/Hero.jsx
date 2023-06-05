@@ -20,7 +20,7 @@ function Hero({ productNewest }) {
           ]}
         ></CarouselComponent>
       </div>
-      <div className="grid grid-cols-2 pt-12 ">
+      <div className="grid xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 pt-12 ">
         <div className="col-span-1 font-barlow flex-col  items-center justify-center flex relative">
           <h1 className="text-5xl xl:w-4/6 md:w-full min-w-15 mb-2">
             Looking for new<br></br> shoes in
@@ -47,14 +47,14 @@ function Hero({ productNewest }) {
             />
           </div>
         </div>
-        <div className="col-span-1 container  mx-auto flex justify-center flex-wrap">
+        <div className="col-span-1 container mt-5 mx-auto flex justify-center flex-wrap">
           {productNewest.length > 0 &&
             productNewest.map((product) => {
               return (
                 <div
                   onClick={(e) => history("/detail-item")}
                   key={uuid()}
-                  className="w-2/5 show-icon max-h-60 hover:bg-slate-200 cursor-pointer transition-all  bg-slate-100  rounded-xl m-1"
+                  className="xl:w-2/5 lg:w-2/5 md:w-full w-full show-icon max-h-60 hover:bg-slate-200 cursor-pointer transition-all  bg-slate-100  rounded-xl m-1"
                 >
                   <img
                     src={product?.link_photo}

@@ -14,7 +14,7 @@ function Brand() {
       <h1 className="w-max rounded-sm text-3xl font-bold font-barlow border-b-4 border-solid border-slate-600">
         Brands
       </h1>
-      <div className="grid grid-cols-4 p-4 gap-10">
+      <div className="grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 p-4 gap-10">
         <div className="flex-col ">
           <div className="rounded-2xl p-4 h-48 bg-slate-200 center hover:shadow-xl cursor-pointer flex-col">
             <img className="object-contain w-40  " src={bitisLogo}></img>

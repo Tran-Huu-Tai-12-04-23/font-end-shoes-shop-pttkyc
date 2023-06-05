@@ -10,7 +10,7 @@ function Slider({
   autoPlay = false,
   superLargeDesktop = 5,
   desktop = 4,
-  tablet = 3,
+  tablet = 2,
   mobile = 1,
   dot = false,
 }) {

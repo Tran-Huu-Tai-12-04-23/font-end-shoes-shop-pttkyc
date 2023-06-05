@@ -13,6 +13,7 @@ import AddNewShoes from "./AddNewShoes";
 import OrderDetail from "./OrderDetail";
 import UserDetail from "./UserDetail";
 import ItemTrash from "./ItemTrash";
+import UserTrash from "./UserTrash";
 import { UseAuthUserContext } from "../../AuthUser";
 import { useNavigate } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
@@ -186,6 +187,7 @@ function Admin() {
             {active === 3.1 && (
               <UserDetail setActive={setActive} userDetail={userDetail} />
             )}
+            {active === 3.2 && <UserTrash />}
           </div>
         </div>
       </div>

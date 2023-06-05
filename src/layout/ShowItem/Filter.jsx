@@ -128,7 +128,7 @@ function Filter({
           onClick={(e) => {
             handleFilterSize(size);
           }}
-          className={`text-center cursor-pointer hover:brightness-125 w-1/4 m-2 bg-slate-300 h-unset rounded-md font-barlow p-2 col-span-1 `}
+          className={`text-center cursor-pointer hover:brightness-125 w-1/4 scale-95 mb-2 mt-2 bg-slate-300 h-unset rounded-md font-barlow p-2 col-span-1 `}
           style={{
             border: "1px solid #ccc",
             borderColor: filterCondition.size.includes(size)

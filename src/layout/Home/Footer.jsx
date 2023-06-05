@@ -18,9 +18,9 @@ function Footer() {
         borderTopRightRadius: "2rem",
       }}
     >
-      <div className="xl:w-5/6 w-full pt-12 pb-5 text-white">
-        <div className="grid grid-cols-3">
-          <div className="font-barlow flex-col flex items-start justify-center">
+      <div className="w-5/6 pt-12 pb-5 text-white">
+        <div className="grid xl:grid-cols-3 lg:grid-cols-3 grid-cols-1">
+          <div className="xl:items-start lg:items-start font-barlow flex-col flex items-center justify-center">
             <h5 className="font-bold tracking-wider font-barlow">FAQs</h5>
             <ul className="mt-2">
               <li className="pt-2 rounded-xl hover:text-blue-200 cursor-pointer">
@@ -35,7 +35,11 @@ function Footer() {
             </ul>
           </div>
           <div className="">
-            <img src={footer} alt="footer" className="min-w-1/2 w-4/6" />
+            <img
+              src={footer}
+              alt="footer"
+              className="ml-auto mr-auto mt-4 min-w-1/2 w-4/6"
+            />
           </div>
           <div className="flex flex-col justify-center">
             <h1 className="font-barlow font-bold text-xl mb-2">Contact us</h1>
@@ -62,7 +66,7 @@ function Footer() {
                 maxWidth: "8rem",
               }}
             />
-            <div className="w-full mt-4 start flex">
+            <div className=" mt-4 ml-auto mr-auto flex">
               <div className="w-fit mr-4 rounded-full flex justify-center items-center bg-slate-300 p-2 hover:bg-slate-200 cursor-pointer">
                 <FaFacebookF className="text-blue-600" />
               </div>

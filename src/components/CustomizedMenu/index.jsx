@@ -83,8 +83,13 @@ export default function CustomizedMenus({
         aria-expanded={open ? "true" : undefined}
         disableElevation
         sx={{
-          border: "1px solid #fb923c",
-          color: "#fb923c",
+          background: "rgba(255, 195, 0, .2)",
+          color: "orange",
+          fontSize: ".9rem",
+          "&:hover": {
+            background: "rgba(255, 195, 0, .2)",
+            filter: "brightness(120%)",
+          },
         }}
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}

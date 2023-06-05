@@ -113,8 +113,6 @@ function UserManager({ userDetail, setUserDetail }) {
   };
 
   const verifyEmailAndPhone = () => {
-    const Util = new Utils();
-
     if (!Util.checkIsEmail(email)) {
       setAlert({ type: "error", message: "Email is invalid" });
       return false;

@@ -12,8 +12,8 @@ function GridSkeleton({ data = [], showFilter = false }) {
             key={uuid()}
             className={`scale-90 p-5 ${
               showFilter
-                ? "xl:w-1/4 lg:w-1/3 md:w-1/2 sm:w-full"
-                : "xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-full"
+                ? "xl:w-1/4 lg:w-1/3 md:w-1/2 sm:w-full w-full"
+                : "xl:w-1/5 lg:w-1/4 md:w-1/2 sm:w-full w-full"
             }`}
             cx={{
               transition: ".4s",

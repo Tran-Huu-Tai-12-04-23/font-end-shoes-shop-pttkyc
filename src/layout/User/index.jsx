@@ -13,6 +13,7 @@ import OrderHistory from "./OrderHistory";
 import YourRank from "./YourRank";
 import UserManager from "./UserManager";
 import Support from "./Support";
+import NavigateFooter from "./NavigateFooter";
 import Services from "../../Services";
 import { UseAuthUserContext } from "../../AuthUser";
 
@@ -23,44 +24,32 @@ function User() {
     {
       id: uuid(),
       name: "Overview",
-      action: null,
-      icon: <MdOutlineManageAccounts className="text-xl" />,
+      action: (e) => setActive(0),
+      icon: <MdOutlineManageAccounts className="text-2xl" />,
     },
     {
       id: uuid(),
       name: "Order history",
-      action: null,
-      icon: <VscHistory className="text-xl" />,
+      action: (e) => setActive(1),
+      icon: <VscHistory className="text-2xl" />,
     },
     {
       id: uuid(),
       name: "Your rank",
-      action: null,
-      icon: <GiRank2 className="text-xl" />,
+      action: (e) => setActive(2),
+      icon: <GiRank2 className="text-2xl" />,
     },
     {
       id: uuid(),
       name: "Your account",
-      action: null,
-      icon: <VscAccount className="text-xl" />,
+      action: (e) => setActive(3),
+      icon: <VscAccount className="text-2xl" />,
     },
     {
       id: uuid(),
       name: "Support",
-      action: null,
-      icon: <BiSupport className="text-xl" />,
-    },
-    {
-      id: uuid(),
-      name: "Report",
-      action: null,
-      icon: <GoReport className="text-xl" />,
-    },
-    {
-      id: uuid(),
-      name: "logout",
-      action: null,
-      icon: <CiLogout className="text-xl" />,
+      action: (e) => setActive(4),
+      icon: <BiSupport className="text-2xl" />,
     },
   ]);
   const [userDetail, setUserDetail] = useState({});
@@ -94,20 +83,26 @@ function User() {
       <Header />
 
       <div className="w-full pt-12 font-barlow text-xl center flex">
-        <div className="xl:w-4/6 w-full grid grid-cols-12 pt-12 gap-10">
+        <div className=" w-full grid grid-cols-12 pt-12 gap-10 pr-10 pl-10">
           <div
-            className="col-span-4 p-4 bg-blur rounded-xl"
+            className="col-span-3 p-4 rounded-xl xl:block lg:block hidden"
             style={{
-              background: "#f6fbfc",
+              minHeight: "88vh",
+            }}
+          ></div>
+          <div
+            className="fixed left-0 w-1/5 col-span-3 p-4 bg-blur rounded-xl xl:block lg:block hidden"
+            style={{
+              // background: "#f6fbfc",
               minHeight: "88vh",
             }}
           >
-            <ul>
+            <ul className="">
               {nav.map((item, index) => {
                 return (
                   <div
                     key={item.id}
-                    onClick={(e) => setActive(index)}
+                    onClick={item.action}
                     className={`start flex ml-2 mt-2 pl-2 pr-2 rounded-xl hover:bg-slate-200 cursor-pointer ${
                       active === index ? "bg-slate-300" : ""
                     }`}
@@ -125,7 +120,7 @@ function User() {
               })}
             </ul>
           </div>
-          <div className="col-span-8 mb-20">
+          <div className="xl:col-span-9 lg:col-span-9  mb-20 col-span-12 ">
             {active === 0 && (
               <Overview userDetail={userDetail} numberOrder={order.length} />
             )}
@@ -141,6 +136,7 @@ function User() {
           </div>
         </div>
       </div>
+      <NavigateFooter nav={nav} active={active} />
     </div>
   );
 }

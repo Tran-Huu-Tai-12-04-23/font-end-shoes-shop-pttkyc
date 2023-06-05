@@ -1,8 +1,6 @@
-import Utils from "../../../util";
+import Util from "../../../util";
 
 function PreviewItemSale({ data }) {
-  const Util = new Utils();
-
   return (
     <div className="p-4 rounded-xl bg-slate-50 grid-cols-2 grid mb-5 gap-10 relative">
       {data.sale && (

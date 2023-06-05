@@ -143,6 +143,12 @@ function NewNav({ active, handleNextStep, handleLogout }) {
           icon: <BiDetail />,
           action: () => handleNextStep(3.1),
         },
+        {
+          id: 2,
+          name: "Trash",
+          icon: <HiOutlineTrash />,
+          action: () => handleNextStep(3.2),
+        },
       ],
     },
     {

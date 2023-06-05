@@ -74,9 +74,9 @@ function DetailItem() {
   return (
     <div className="w-full ">
       <Header />
-      <div className="w-full center flex pt-20 pb-20">
+      <div className="w-full center flex pt-20 pb-20 pl-10 pr-10">
         <div className="xl:w-5/6 w-full">
-          <div className="grid grid-cols-2 gap-20">
+          <div className="grid xl:grid-cols-2 lg:grid-cols-1 gap-20">
             <div className="col-span-1 overflow-hidden">
               <ShowImageProduct data={item.link_photo} />
             </div>
@@ -134,7 +134,7 @@ function DetailItem() {
                 }}
               />
 
-              <div className="w-full mt-10">
+              <div className="w-fit mt-10 md:mr-auto md:ml-auto xl:mr-auto xl:ml-auto">
                 <ButtonCustom
                   onClick={addToCart}
                   nameButton="Add to cart"
@@ -174,22 +174,22 @@ function DetailItem() {
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-evenly bg-blur grid-cols-3 p-10">
-        <div className="flex flex-col items-center col-span-1">
+      <div className="w-full grid gap-10 justify-evenly bg-blur xl:grid-cols-3 lg:grid-cols-3 grid-cols-1 p-10 ">
+        <div className="flex flex-col items-center">
           <BsWallet2 className="text-6xl text-black " />
           <h5 className="text-3xl font-barlow font-bold text-orange-500">
             100% Genuine commitment
           </h5>
           <h5 className="text-xl font-barlow text-black">100% Authentic</h5>
         </div>
-        <div className="flex flex-col items-center col-span-1">
+        <div className="flex flex-col items-center">
           <CiDeliveryTruck className="text-7xl text-back " />
           <h5 className="text-3xl font-barlow font-bold text-orange-500">
             Delivery fast
           </h5>
           <h5 className="text-xl font-barlow  text-black">3 - 4 N</h5>
         </div>
-        <div className="flex flex-col items-center col-span-1">
+        <div className="flex flex-col items-center">
           <BsTelephone className="text-6xl text-back " />
           <h5 className="text-3xl font-barlow font-bold text-orange-500">
             Hotline free 24/24

@@ -76,7 +76,7 @@ function Bag() {
     <div className="w-full ">
       <Header />
 
-      <div className="w-full center flex pt-20 pb-20">
+      <div className="w-full center flex pt-20 pb-20 pl-10 pr-10">
         <div className="xl:w-5/6 w-full">
           <div className="w-full">
             <h1
@@ -88,7 +88,7 @@ function Bag() {
               Your bag
             </h1>
           </div>
-          <div className="grid grid-cols-2 gap-20">
+          <div className="grid xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 gap-20">
             <div className="col-span-1 overflow-hidden">
               {itemShowBag.map((item) => {
                 return (
@@ -149,7 +149,7 @@ function Bag() {
                   </span>
                 </div>
               </div>
-              <div className="w-full mt-10">
+              <div className="w-fit md:mr-auto md:ml-auto sm:mr-auto sm:ml-auto mt-10">
                 <ButtonCustom
                   onClick={(e) => {
                     if (itemsBag.length > 0) {
@@ -174,7 +174,7 @@ function Bag() {
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-evenly bg-blur grid-cols-3 p-10">
+      <div className="w-full grid justify-evenly bg-blur xl:grid-cols-3 lg:grid-cols-3 grid-cols-1 gap-10 p-10">
         <div className="flex flex-col items-center col-span-1">
           <BsWallet2 className="text-6xl text-black " />
           <h5 className="text-3xl font-barlow font-bold text-orange-500">

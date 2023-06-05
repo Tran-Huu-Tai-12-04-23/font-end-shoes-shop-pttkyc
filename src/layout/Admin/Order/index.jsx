@@ -71,7 +71,20 @@ function Order({ handleNextStep, setOrderDetail }) {
         <div
           className="w-fix rounded-xl p-2 center "
           style={{
-            color: "#000",
+            color:
+              params.row.status_process === 0
+                ? "rgba(37, 134, 248, 1)"
+                : params.row.status_process === 1
+                ? "rgba(150, 76, 232, 1)"
+                : params.row.status_process === 2
+                ? "rgba(255, 174, 60, 1)"
+                : params.row.status_process === 3
+                ? "rgba(255, 229, 0, 1)"
+                : params.row.status_process === 4
+                ? "rgba(255, 175, 72, 1)"
+                : params.row.status_process === 5
+                ? "rgba(118, 165, 9, 1)"
+                : "rgba(255, 0, 0, 1)",
             background:
               params.row.status_process === 0
                 ? "rgba(37, 134, 248, .1)"
@@ -105,13 +118,12 @@ function Order({ handleNextStep, setOrderDetail }) {
         <Button
           sx={{
             marginLeft: "1rem",
-            backgroundColor: "rgba(251, 146, 60, 1)",
+            background: "rgba(255, 195, 0, .2)",
+            color: "orange",
             padding: ".3rem 2rem",
             fontSize: ".8rem",
-            color: "#fff",
-
             "&:hover": {
-              backgroundColor: "rgba(251, 146, 60, 1)",
+              background: "rgba(255, 195, 0, .2)",
               filter: "brightness(120%)",
             },
           }}
@@ -178,12 +190,12 @@ function Order({ handleNextStep, setOrderDetail }) {
   return (
     <div className="w-full mt-12">
       <div className="w-full end flex mb-4">
-        {orderSelected.length > 0 && (
+        {/* {orderSelected.length > 0 && (
           <ButtonCustom
             nameButton="Remove order selected"
             style={{ marginRight: "1rem", color: "red" }}
           />
-        )}
+        )} */}
 
         {!isEmptyObject(filter) && (
           <div className="start flex">
